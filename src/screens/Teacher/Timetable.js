@@ -8,8 +8,8 @@ import {
   SafeAreaView,
   TouchableOpacity,
 } from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Ionicons } from '@react-native-vector-icons/ionicons';
+import { MaterialDesignIcons as Icon } from '@react-native-vector-icons/material-design-icons';
 
 import {useAuth} from '../../auth/AuthContext';
 import {fetchTimetableByClassRoomId} from '../../util/Apicall';

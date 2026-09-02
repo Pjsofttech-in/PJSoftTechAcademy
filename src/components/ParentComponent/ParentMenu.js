@@ -13,8 +13,8 @@ import {
   Image,
   Easing,
 } from 'react-native';
-import Feather from 'react-native-vector-icons/Feather';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { Feather } from '@react-native-vector-icons/feather';
+import { MaterialIcons } from '@react-native-vector-icons/material-icons';
 import companyLogo from '../../assets/companyLogo.jpg'; // Adjust path if needed
 import {useNavigation} from '@react-navigation/native';
 

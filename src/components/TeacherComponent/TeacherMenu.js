@@ -14,8 +14,8 @@ import {
 
 import {SafeAreaView} from 'react-native-safe-area-context';
 
-import Feather from 'react-native-vector-icons/Feather';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { Feather } from '@react-native-vector-icons/feather';
+import { MaterialIcons } from '@react-native-vector-icons/material-icons';
 import {
   CommonActions,
   useNavigation,

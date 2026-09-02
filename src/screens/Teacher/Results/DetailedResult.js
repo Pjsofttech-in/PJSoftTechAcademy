@@ -17,7 +17,7 @@ import {
 import React, {useState, useEffect, useRef} from 'react';
 import ExamPaperTypeSelector from '../../../components/ExamPaperTypeSelector';
 import Icon from 'react-native-vector-icons/Feather';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Ionicons } from '@react-native-vector-icons/ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useAuth} from '../../../auth/AuthContext';
 import {

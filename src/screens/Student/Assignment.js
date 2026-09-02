@@ -13,7 +13,7 @@ import {
   TextInput,
   RefreshControl,
 } from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Ionicons } from '@react-native-vector-icons/ionicons';
 import DocumentPicker from 'react-native-document-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {fetchHomeworkForStudent, submitHomeworkApi} from '../../util/Apicall';

@@ -13,7 +13,7 @@ import {
   RefreshControl,
 } from 'react-native';
 import {Users, Clock, AlertCircle} from 'lucide-react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Ionicons } from '@react-native-vector-icons/ionicons';
 import TeacherHeader from '../../components/TeacherComponent/TeacherHeader';
 import TeacherFooter from '../../components/TeacherComponent/TeacherFooter';
 import {useAuth} from '../../auth/AuthContext';

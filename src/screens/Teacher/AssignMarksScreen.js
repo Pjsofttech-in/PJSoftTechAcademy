@@ -17,7 +17,7 @@ import {
   Dimensions,
 } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Ionicons } from '@react-native-vector-icons/ionicons';
 import {useNavigation} from '@react-navigation/native';
 import {useAuth} from '../../auth/AuthContext';
 import {

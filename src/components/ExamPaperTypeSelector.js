@@ -10,7 +10,7 @@ import {
   Dimensions,
 } from 'react-native';
 import {fetchExamTypes, fetchPaperTypes} from '../util/Apicall';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Ionicons } from '@react-native-vector-icons/ionicons';
 import {useAuth} from '../auth/AuthContext';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;

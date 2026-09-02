@@ -11,7 +11,7 @@ import {
   Dimensions,
   ActivityIndicator,
 } from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Ionicons } from '@react-native-vector-icons/ionicons';
 import {User, UserX, ClipboardCheck} from 'lucide-react-native';
 import TeacherHeader from '../../components/TeacherComponent/TeacherHeader';
 import TeacherFooter from '../../components/TeacherComponent/TeacherFooter';

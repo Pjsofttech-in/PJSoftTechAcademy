@@ -13,7 +13,7 @@ import {
   Image,
 } from 'react-native';
 import {useRoute, useNavigation} from '@react-navigation/native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Ionicons } from '@react-native-vector-icons/ionicons';
 import TeacherHeader from '../../components/TeacherComponent/TeacherHeader';
 import TeacherFooter from '../../components/TeacherComponent/TeacherFooter';
 import {fetchSubmissionsForHomework} from '../../util/Apicall';

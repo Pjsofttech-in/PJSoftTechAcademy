@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Ionicons } from '@react-native-vector-icons/ionicons';
 import {useAuth} from '../../auth/AuthContext';
 import {useNavigation} from '@react-navigation/native';
 import TeacherHeader from '../../components/TeacherComponent/TeacherHeader';

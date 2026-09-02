@@ -9,7 +9,7 @@ import {
   Clipboard,
   Alert,
 } from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Ionicons } from '@react-native-vector-icons/ionicons';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {fetchClassroomByTeacher} from '../../../util/Apicall';
 import {useAuth} from '../../../auth/AuthContext';

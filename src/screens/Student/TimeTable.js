@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   FlatList,
 } from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Ionicons } from '@react-native-vector-icons/ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {fetchTimetableByClassRoomId} from '../../util/Apicall';
 import StudentHeader from '../../components/StudentComponent/StudentHeader';

@@ -12,7 +12,7 @@ import {
   Dimensions,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Ionicons } from '@react-native-vector-icons/ionicons';
 import StudentHeader from '../../components/StudentComponent/StudentHeader';
 import StudentFooter from '../../components/StudentComponent/StudentFooter';
 import BarChartComponent from '../../components/StudentComponent/BarChartComponent';

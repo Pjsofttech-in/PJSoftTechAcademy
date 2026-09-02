@@ -13,7 +13,7 @@ import {
   ActivityIndicator,
   SafeAreaView,
 } from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Ionicons } from '@react-native-vector-icons/ionicons';
 import {fetchStudentResultByTeacher} from '../../../util/Apicall';
 import {useAuth} from '../../../auth/AuthContext';
 import RNHTMLtoPDF from 'react-native-html-to-pdf';
