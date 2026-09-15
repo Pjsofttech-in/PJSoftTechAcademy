@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   KeyboardAvoidingView,
   Platform,
@@ -15,20 +15,20 @@ import {
   Modal,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
   loginStudent,
   checkTokenValidity,
   sendOtp,
   resetUserPassword,
 } from '../util/Apicall';
-import {useAuth} from '../auth/AuthContext';
+import { useAuth } from '../auth/AuthContext';
 
-const {height} = Dimensions.get('window');
+const { height } = Dimensions.get('window');
 
 // ─── Forgot Password Modal ────────────────────────────────────────────────────
 
-const ForgotPasswordModal = ({visible, onClose}) => {
+const ForgotPasswordModal = ({ visible, onClose }) => {
   const [resetEmail, setResetEmail] = useState('');
   const [otp, setOtp] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -161,16 +161,20 @@ const ForgotPasswordModal = ({visible, onClose}) => {
       visible={visible}
       transparent
       animationType="none"
-      onRequestClose={closeModal}>
-      <Animated.View style={[styles.modalBackdrop, {opacity: backdropOpacity}]}>
+      onRequestClose={closeModal}
+    >
+      <Animated.View
+        style={[styles.modalBackdrop, { opacity: backdropOpacity }]}
+      >
         <Animated.View
           style={[
             styles.modalBox,
-            {opacity: modalOpacity, transform: [{scale: modalScale}]},
-          ]}>
+            { opacity: modalOpacity, transform: [{ scale: modalScale }] },
+          ]}
+        >
           {/* Modal header */}
           <View style={styles.modalHeader}>
-            <View style={{flex: 1}}>
+            <View style={{ flex: 1 }}>
               <Text style={styles.modalTitle}>
                 {step === 1 ? 'Reset Password' : 'Set New Password'}
               </Text>
@@ -183,7 +187,8 @@ const ForgotPasswordModal = ({visible, onClose}) => {
             <TouchableOpacity
               onPress={closeModal}
               style={styles.modalCloseBtn}
-              hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}>
+              hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+            >
               <Text style={styles.modalCloseIcon}>✕</Text>
             </TouchableOpacity>
           </View>
@@ -224,7 +229,8 @@ const ForgotPasswordModal = ({visible, onClose}) => {
                 style={[styles.primaryBtn, isLoading && styles.btnDisabled]}
                 onPress={handleSendOTP}
                 disabled={isLoading}
-                activeOpacity={0.85}>
+                activeOpacity={0.85}
+              >
                 {isLoading ? (
                   <ActivityIndicator size="small" color="#fff" />
                 ) : (
@@ -265,7 +271,8 @@ const ForgotPasswordModal = ({visible, onClose}) => {
                   <TouchableOpacity
                     onPress={() => setShowNewPassword(v => !v)}
                     style={styles.toggleBtn}
-                    hitSlop={{top: 8, bottom: 8, left: 8, right: 8}}>
+                    hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+                  >
                     <Text style={styles.toggleText}>
                       {showNewPassword ? 'Hide' : 'Show'}
                     </Text>
@@ -276,7 +283,8 @@ const ForgotPasswordModal = ({visible, onClose}) => {
                 style={[styles.primaryBtn, isLoading && styles.btnDisabled]}
                 onPress={handleResetPassword}
                 disabled={isLoading}
-                activeOpacity={0.85}>
+                activeOpacity={0.85}
+              >
                 {isLoading ? (
                   <ActivityIndicator size="small" color="#fff" />
                 ) : (
@@ -285,7 +293,8 @@ const ForgotPasswordModal = ({visible, onClose}) => {
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => setStep(1)}
-                style={styles.backLinkRow}>
+                style={styles.backLinkRow}
+              >
                 <Text style={styles.backLinkText}>‹ Back to email</Text>
               </TouchableOpacity>
             </>
@@ -298,9 +307,9 @@ const ForgotPasswordModal = ({visible, onClose}) => {
 
 // ─── StudentLogin ─────────────────────────────────────────────────────────────
 
-const StudentLogin = ({navigation, route}) => {
+const StudentLogin = ({ navigation, route }) => {
   const insets = useSafeAreaInsets();
-  const {role} = route.params || {};
+  const { role } = route.params || {};
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -308,7 +317,7 @@ const StudentLogin = ({navigation, route}) => {
   const [error, setError] = useState('');
   const [focusedField, setFocusedField] = useState(null);
   const [showForgotModal, setShowForgotModal] = useState(false);
-  const {login} = useAuth();
+  const { login } = useAuth();
 
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(24)).current;
@@ -356,7 +365,7 @@ const StudentLogin = ({navigation, route}) => {
       if (storedToken) {
         const valid = await checkTokenValidity(storedToken);
         if (valid) {
-          const result = {token: storedToken};
+          const result = { token: storedToken };
           if (role === 'user') {
             try {
               const storedStudentData = await AsyncStorage.getItem(
@@ -381,14 +390,14 @@ const StudentLogin = ({navigation, route}) => {
               routes: [
                 {
                   name: dashboardMap[role],
-                  params: {studentData: result.studentData},
+                  params: { studentData: result.studentData },
                 },
               ],
             });
           } else {
             navigation.reset({
               index: 0,
-              routes: [{name: dashboardMap[role] || 'Role'}],
+              routes: [{ name: dashboardMap[role] || 'Role' }],
             });
           }
         } else {
@@ -440,19 +449,19 @@ const StudentLogin = ({navigation, route}) => {
       }
 
       const loginSuccess = await login(
-        {token: result.token, userData: studentData},
+        { token: result.token, userData: studentData },
         role,
       );
       if (loginSuccess) {
         if (role === 'user') {
           navigation.reset({
             index: 0,
-            routes: [{name: dashboardMap[role], params: {studentData}}],
+            routes: [{ name: dashboardMap[role], params: { studentData } }],
           });
         } else {
           navigation.reset({
             index: 0,
-            routes: [{name: dashboardMap[role] || 'Role'}],
+            routes: [{ name: dashboardMap[role] || 'Role' }],
           });
         }
       } else {
@@ -480,9 +489,10 @@ const StudentLogin = ({navigation, route}) => {
           {
             paddingTop: insets.top + 20,
             opacity: fadeAnim,
-            transform: [{translateY: slideAnim}],
+            transform: [{ translateY: slideAnim }],
           },
-        ]}>
+        ]}
+      >
         <View style={styles.roleBadge}>
           <Text style={styles.roleBadgeIcon}>🎓</Text>
           <Text style={styles.roleBadgeText}>Student Portal</Text>
@@ -494,21 +504,24 @@ const StudentLogin = ({navigation, route}) => {
       </Animated.View>
 
       <KeyboardAvoidingView
-        style={{flex: 1}}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+        style={{ flex: 1 }}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      >
         <ScrollView
           contentContainerStyle={[
             styles.scrollContainer,
-            {paddingBottom: insets.bottom + 24},
+            { paddingBottom: insets.bottom + 24 },
           ]}
           showsVerticalScrollIndicator={false}
-          keyboardShouldPersistTaps="handled">
+          keyboardShouldPersistTaps="handled"
+        >
           {/* Card */}
           <Animated.View
             style={[
               styles.card,
-              {opacity: cardAnim, transform: [{translateY: cardSlide}]},
-            ]}>
+              { opacity: cardAnim, transform: [{ translateY: cardSlide }] },
+            ]}
+          >
             {/* Error */}
             {error ? (
               <View style={styles.errorBanner}>
@@ -545,7 +558,8 @@ const StudentLogin = ({navigation, route}) => {
                 style={[
                   styles.passwordRow,
                   focusedField === 'password' && styles.inputFocused,
-                ]}>
+                ]}
+              >
                 <TextInput
                   style={styles.passwordInput}
                   placeholder="Enter your password"
@@ -563,7 +577,8 @@ const StudentLogin = ({navigation, route}) => {
                   onPress={() => setShowPassword(v => !v)}
                   disabled={isLoading}
                   style={styles.toggleBtn}
-                  hitSlop={{top: 8, bottom: 8, left: 8, right: 8}}>
+                  hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+                >
                   <Text style={styles.toggleText}>
                     {showPassword ? 'Hide' : 'Show'}
                   </Text>
@@ -575,7 +590,8 @@ const StudentLogin = ({navigation, route}) => {
             <View style={styles.forgotRow}>
               <TouchableOpacity
                 onPress={() => setShowForgotModal(true)}
-                activeOpacity={0.6}>
+                activeOpacity={0.6}
+              >
                 <Text style={styles.forgotText}>Forgot password?</Text>
               </TouchableOpacity>
             </View>
@@ -585,7 +601,8 @@ const StudentLogin = ({navigation, route}) => {
               style={[styles.loginBtn, isLoading && styles.loginBtnDisabled]}
               onPress={handleLogin}
               disabled={isLoading}
-              activeOpacity={0.85}>
+              activeOpacity={0.85}
+            >
               {isLoading ? (
                 <ActivityIndicator size="small" color="#FFFFFF" />
               ) : (
@@ -670,7 +687,7 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 13,
     color: '#fff',
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'Poppins-Regular',
     lineHeight: 19,
   },
 
@@ -682,7 +699,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#E2E8F0',
     shadowColor: '#1A2332',
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.06,
     shadowRadius: 12,
     elevation: 4,
@@ -701,12 +718,12 @@ const styles = StyleSheet.create({
     marginBottom: 18,
     gap: 8,
   },
-  errorIcon: {fontSize: 12, color: '#D93025', marginTop: 1},
+  errorIcon: { fontSize: 12, color: '#D93025', marginTop: 1 },
   errorText: {
     flex: 1,
     color: '#D93025',
     fontSize: 12,
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'Poppins-Regular',
     lineHeight: 18,
   },
 
@@ -721,17 +738,17 @@ const styles = StyleSheet.create({
     marginBottom: 18,
     gap: 8,
   },
-  successIcon: {fontSize: 12, color: '#1A7A4A', marginTop: 1},
+  successIcon: { fontSize: 12, color: '#1A7A4A', marginTop: 1 },
   successText: {
     flex: 1,
     color: '#1A7A4A',
     fontSize: 12,
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'Poppins-Regular',
     lineHeight: 18,
   },
 
   // Fields
-  fieldGroup: {marginBottom: 18},
+  fieldGroup: { marginBottom: 18 },
   fieldLabel: {
     fontSize: 12,
     fontFamily: 'Poppins-SemiBold',
@@ -747,6 +764,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
     paddingVertical: 13,
     fontSize: 14,
+    fontFamily: 'Poppins-Regular',
     color: '#1A2332',
   },
   inputFocused: {
@@ -767,10 +785,15 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingVertical: 13,
     fontSize: 14,
+    fontFamily: 'Poppins-Regular',
     color: '#1A2332',
   },
-  toggleBtn: {paddingHorizontal: 10, paddingVertical: 8},
-  toggleText: {fontSize: 12, fontFamily: 'Poppins-SemiBold', color: '#6366f1'},
+  toggleBtn: { paddingHorizontal: 10, paddingVertical: 8 },
+  toggleText: {
+    fontSize: 12,
+    fontFamily: 'Poppins-SemiBold',
+    color: '#6366f1',
+  },
 
   // Forgot
   forgotRow: {
@@ -792,7 +815,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     alignItems: 'center',
     shadowColor: '#6495ED',
-    shadowOffset: {width: 0, height: 4},
+    shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.25,
     shadowRadius: 10,
     elevation: 6,
@@ -816,11 +839,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: 24,
   },
-  footerHintText: {fontSize: 12, color: '#9AAABB'},
+  footerHintText: {
+    fontSize: 12,
+    fontFamily: 'Poppins-Regular',
+    color: '#9AAABB',
+  },
   footerHintLink: {
     fontSize: 12,
     color: '#6366f1',
-    fontFamily: 'Poppins-SemiBold',
+    fontFamily: 'Poppins-Medium',
     textDecorationLine: 'underline',
   },
 
@@ -840,7 +867,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#E2E8F0',
     shadowColor: '#1A2332',
-    shadowOffset: {width: 0, height: 8},
+    shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 0.12,
     shadowRadius: 24,
     elevation: 16,
@@ -859,11 +886,12 @@ const styles = StyleSheet.create({
   },
   modalSubtitle: {
     fontSize: 12,
+    fontFamily: 'Poppins-Regular',
     color: '#6B7A8D',
     lineHeight: 17,
     maxWidth: '85%',
   },
-  modalCloseBtn: {padding: 4},
+  modalCloseBtn: { padding: 4 },
   modalCloseIcon: {
     fontSize: 15,
     color: '#9AAABB',
@@ -883,19 +911,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 4,
     shadowColor: '#1A7A4A',
-    shadowOffset: {width: 0, height: 4},
+    shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2,
     shadowRadius: 8,
     elevation: 4,
   },
-  btnDisabled: {opacity: 0.55},
+  btnDisabled: { opacity: 0.55 },
   primaryBtnText: {
     color: '#FFFFFF',
     fontSize: 14,
     fontFamily: 'Poppins-SemiBold',
     letterSpacing: 0.4,
   },
-  backLinkRow: {alignItems: 'center', paddingTop: 16},
+  backLinkRow: { alignItems: 'center', paddingTop: 16 },
   backLinkText: {
     fontSize: 12,
     color: '#000080',

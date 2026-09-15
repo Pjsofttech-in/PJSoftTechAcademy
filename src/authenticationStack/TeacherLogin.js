@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Alert,
   KeyboardAvoidingView,
@@ -15,22 +15,22 @@ import {
   StatusBar,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {loginTeacher, checkTokenValidity} from '../util/Apicall';
-import {useAuth} from '../auth/AuthContext';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { loginTeacher, checkTokenValidity } from '../util/Apicall';
+import { useAuth } from '../auth/AuthContext';
 
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
-const TeacherLogin = ({navigation, route}) => {
+const TeacherLogin = ({ navigation, route }) => {
   const insets = useSafeAreaInsets();
-  const {role} = route.params || {};
+  const { role } = route.params || {};
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [focusedField, setFocusedField] = useState(null);
-  const {login} = useAuth();
+  const { login } = useAuth();
 
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(24)).current;
@@ -78,11 +78,11 @@ const TeacherLogin = ({navigation, route}) => {
       if (storedToken) {
         const valid = await checkTokenValidity(storedToken);
         if (valid) {
-          const result = {token: storedToken};
+          const result = { token: storedToken };
           await login(result, role);
           navigation.reset({
             index: 0,
-            routes: [{name: dashboardMap[role] || 'Role'}],
+            routes: [{ name: dashboardMap[role] || 'Role' }],
           });
         }
       }
@@ -112,7 +112,7 @@ const TeacherLogin = ({navigation, route}) => {
       if (loginSuccess) {
         navigation.reset({
           index: 0,
-          routes: [{name: dashboardMap[role] || 'Role'}],
+          routes: [{ name: dashboardMap[role] || 'Role' }],
         });
       } else {
         showError('Login failed. Please try again.');
@@ -139,9 +139,10 @@ const TeacherLogin = ({navigation, route}) => {
           {
             paddingTop: insets.top + 20,
             opacity: fadeAnim,
-            transform: [{translateY: slideAnim}],
+            transform: [{ translateY: slideAnim }],
           },
-        ]}>
+        ]}
+      >
         <View style={styles.roleBadge}>
           <Text style={styles.roleBadgeIcon}>👨‍🏫</Text>
           <Text style={styles.roleBadgeText}>Teacher Portal</Text>
@@ -153,21 +154,24 @@ const TeacherLogin = ({navigation, route}) => {
       </Animated.View>
 
       <KeyboardAvoidingView
-        style={{flex: 1}}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+        style={{ flex: 1 }}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      >
         <ScrollView
           contentContainerStyle={[
             styles.scrollContainer,
-            {paddingBottom: insets.bottom + 24},
+            { paddingBottom: insets.bottom + 24 },
           ]}
           showsVerticalScrollIndicator={false}
-          keyboardShouldPersistTaps="handled">
+          keyboardShouldPersistTaps="handled"
+        >
           {/* Card */}
           <Animated.View
             style={[
               styles.card,
-              {opacity: cardAnim, transform: [{translateY: cardSlide}]},
-            ]}>
+              { opacity: cardAnim, transform: [{ translateY: cardSlide }] },
+            ]}
+          >
             {/* Error */}
             {error ? (
               <View style={styles.errorBanner}>
@@ -202,7 +206,8 @@ const TeacherLogin = ({navigation, route}) => {
                 style={[
                   styles.passwordRow,
                   focusedField === 'password' && styles.inputFocused,
-                ]}>
+                ]}
+              >
                 <TextInput
                   style={styles.passwordInput}
                   placeholder="Enter your password"
@@ -220,7 +225,8 @@ const TeacherLogin = ({navigation, route}) => {
                   onPress={() => setShowPassword(v => !v)}
                   disabled={isLoading}
                   style={styles.toggleBtn}
-                  hitSlop={{top: 8, bottom: 8, left: 8, right: 8}}>
+                  hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+                >
                   <Text style={styles.toggleText}>
                     {showPassword ? 'Hide' : 'Show'}
                   </Text>
@@ -237,7 +243,8 @@ const TeacherLogin = ({navigation, route}) => {
                     'Password reset link will be sent to your registered email.',
                   )
                 }
-                activeOpacity={0.6}>
+                activeOpacity={0.6}
+              >
                 <Text style={styles.forgotText}>Forgot password?</Text>
               </TouchableOpacity>
             </View>
@@ -247,7 +254,8 @@ const TeacherLogin = ({navigation, route}) => {
               style={[styles.loginBtn, isLoading && styles.loginBtnDisabled]}
               onPress={handleLogin}
               disabled={isLoading}
-              activeOpacity={0.85}>
+              activeOpacity={0.85}
+            >
               {isLoading ? (
                 <ActivityIndicator size="small" color="#FFFFFF" />
               ) : (
@@ -339,7 +347,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#E2E8F0',
     shadowColor: '#1A2332',
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.06,
     shadowRadius: 12,
     elevation: 4,
@@ -377,7 +385,7 @@ const styles = StyleSheet.create({
   },
   fieldLabel: {
     fontSize: 12,
-    fontFamily: 'DMSans-Bold',
+    fontFamily: 'Poppins-SemiBold',
     color: '#3D4F62',
     marginBottom: 7,
     letterSpacing: 0.2,
@@ -390,6 +398,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
     paddingVertical: 13,
     fontSize: 14,
+    fontFamily: 'Poppins-Regular',
     color: '#1A2332',
   },
   inputFocused: {
@@ -410,6 +419,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingVertical: 13,
     fontSize: 14,
+    fontFamily: 'Poppins-Regular',
     color: '#1A2332',
   },
   toggleBtn: {
@@ -418,7 +428,7 @@ const styles = StyleSheet.create({
   },
   toggleText: {
     fontSize: 12,
-    fontFamily: 'DMSans-Bold',
+    fontFamily: 'Poppins-SemiBold',
     color: '#6366f1',
   },
 
@@ -432,7 +442,7 @@ const styles = StyleSheet.create({
   forgotText: {
     fontSize: 12,
     color: '#000080',
-    fontFamily: 'DMSans-Bold',
+    fontFamily: 'Poppins-SemiBold',
   },
 
   // Login button
@@ -442,7 +452,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     alignItems: 'center',
     shadowColor: '#6495ED',
-    shadowOffset: {width: 0, height: 4},
+    shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.25,
     shadowRadius: 10,
     elevation: 6,
@@ -455,7 +465,7 @@ const styles = StyleSheet.create({
   loginBtnText: {
     color: '#FFFFFF',
     fontSize: 14,
-    fontFamily: 'DMSans-Bold',
+    fontFamily: 'Poppins-SemiBold',
     letterSpacing: 0.5,
   },
 
@@ -468,12 +478,13 @@ const styles = StyleSheet.create({
   },
   footerHintText: {
     fontSize: 12,
+    fontFamily: 'Poppins-Regular',
     color: '#9AAABB',
   },
   footerHintLink: {
     fontSize: 12,
     color: '#6366f1',
-    fontWeight: '600',
+    fontFamily: 'Poppins-Medium',
     textDecorationLine: 'underline',
   },
 });

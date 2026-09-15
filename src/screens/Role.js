@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
@@ -10,9 +10,9 @@ import {
   Modal,
   Linking,
 } from 'react-native';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 const ROLES = [
   {
@@ -44,7 +44,7 @@ const ROLES = [
   },
 ];
 
-const RoleCard = ({role, isSelected, onPress, animDelay}) => {
+const RoleCard = ({ role, isSelected, onPress, animDelay }) => {
   const scaleAnim = useRef(new Animated.Value(0.92)).current;
   const opacityAnim = useRef(new Animated.Value(0)).current;
 
@@ -89,8 +89,9 @@ const RoleCard = ({role, isSelected, onPress, animDelay}) => {
     <Animated.View
       style={[
         styles.cardWrapper,
-        {opacity: opacityAnim, transform: [{scale: scaleAnim}]},
-      ]}>
+        { opacity: opacityAnim, transform: [{ scale: scaleAnim }] },
+      ]}
+    >
       <TouchableOpacity
         style={[
           styles.roleCard,
@@ -101,17 +102,18 @@ const RoleCard = ({role, isSelected, onPress, animDelay}) => {
           },
         ]}
         onPress={handlePress}
-        activeOpacity={0.9}>
+        activeOpacity={0.9}
+      >
         <View
-          style={[styles.accentStripe, {backgroundColor: role.accentColor}]}
+          style={[styles.accentStripe, { backgroundColor: role.accentColor }]}
         />
 
-        <View style={[styles.iconBox, {backgroundColor: role.bgColor}]}>
+        <View style={[styles.iconBox, { backgroundColor: role.bgColor }]}>
           <Text style={styles.iconText}>{role.icon}</Text>
         </View>
 
         <View style={styles.cardText}>
-          <Text style={[styles.roleTitle, {color: role.accentColor}]}>
+          <Text style={[styles.roleTitle, { color: role.accentColor }]}>
             {role.title}
           </Text>
           <Text style={styles.roleSubtitle}>{role.subtitle}</Text>
@@ -121,8 +123,9 @@ const RoleCard = ({role, isSelected, onPress, animDelay}) => {
           <Text
             style={[
               styles.chevron,
-              {color: isSelected ? role.accentColor : '#BEC8D4'},
-            ]}>
+              { color: isSelected ? role.accentColor : '#BEC8D4' },
+            ]}
+          >
             ›
           </Text>
         </View>
@@ -131,7 +134,7 @@ const RoleCard = ({role, isSelected, onPress, animDelay}) => {
   );
 };
 
-const ComingSoonModal = ({visible, onClose}) => {
+const ComingSoonModal = ({ visible, onClose }) => {
   const scaleAnim = useRef(new Animated.Value(0.85)).current;
   const opacityAnim = useRef(new Animated.Value(0)).current;
 
@@ -161,16 +164,19 @@ const ComingSoonModal = ({visible, onClose}) => {
       transparent
       visible={visible}
       animationType="none"
-      onRequestClose={onClose}>
+      onRequestClose={onClose}
+    >
       <TouchableOpacity
         style={styles.modalOverlay}
         activeOpacity={1}
-        onPress={onClose}>
+        onPress={onClose}
+      >
         <Animated.View
           style={[
             styles.modalCard,
-            {opacity: opacityAnim, transform: [{scale: scaleAnim}]},
-          ]}>
+            { opacity: opacityAnim, transform: [{ scale: scaleAnim }] },
+          ]}
+        >
           <View style={styles.modalIconWrap}>
             <Text style={styles.modalIcon}>🚀</Text>
           </View>
@@ -194,7 +200,7 @@ const ComingSoonModal = ({visible, onClose}) => {
   );
 };
 
-const Role = ({navigation}) => {
+const Role = ({ navigation }) => {
   const insets = useSafeAreaInsets();
   const [selectedRole, setSelectedRole] = useState(null);
   const [showComingSoon, setShowComingSoon] = useState(false);
@@ -220,11 +226,11 @@ const Role = ({navigation}) => {
   const handleRoleSelection = role => {
     setSelectedRole(role);
     if (role === 'parent') {
-      navigation.navigate('StudentLogin', {role});
+      navigation.navigate('StudentLogin', { role });
     } else if (role === 'teacher') {
-      navigation.navigate('TeacherLogin', {role});
+      navigation.navigate('TeacherLogin', { role });
     } else if (role === 'student') {
-      navigation.navigate('StudentLogin', {role});
+      navigation.navigate('StudentLogin', { role });
     }
   };
 
@@ -243,9 +249,10 @@ const Role = ({navigation}) => {
           {
             paddingTop: insets.top + 20,
             opacity: headerOpacity,
-            transform: [{translateY: headerSlide}],
+            transform: [{ translateY: headerSlide }],
           },
-        ]}>
+        ]}
+      >
         <Text style={styles.pageLabel}>PORTAL ACCESS</Text>
         <Text style={styles.title}>Select Your Role</Text>
         <Text style={styles.subtitle}>
@@ -267,9 +274,10 @@ const Role = ({navigation}) => {
       </View>
 
       {/* Footer Section with Bottom Dynamic Inset */}
-      <View style={[styles.footer, {paddingBottom: insets.bottom + 20}]}>
+      <View style={[styles.footer, { paddingBottom: insets.bottom + 20 }]}>
         <TouchableOpacity
-          onPress={() => Linking.openURL('https://pjsofttech.com')}>
+          onPress={() => Linking.openURL('https://pjsofttech.com')}
+        >
           <Text style={styles.footerText}>
             Having trouble?{' '}
             <Text style={styles.footerLink}>Contact Support</Text>
@@ -304,7 +312,7 @@ const styles = StyleSheet.create({
   },
   pageLabel: {
     fontSize: 10,
-    fontFamily: 'DMSans-Bold',
+    fontFamily: 'Poppins-SemiBold',
     color: '#fff',
     letterSpacing: 2,
     marginBottom: 6,
@@ -330,7 +338,7 @@ const styles = StyleSheet.create({
   },
   cardWrapper: {
     shadowColor: '#1A2332',
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.06,
     shadowRadius: 8,
     elevation: 3,
@@ -352,7 +360,7 @@ const styles = StyleSheet.create({
     width: 46,
     height: 46,
     borderRadius: 12,
-    justifyContent: 'center',
+    justifycontent: 'center',
     alignItems: 'center',
     marginRight: 14,
   },
@@ -364,7 +372,7 @@ const styles = StyleSheet.create({
   },
   roleTitle: {
     fontSize: 15,
-    fontFamily: 'DMSans-Bold',
+    fontFamily: 'Poppins-SemiBold',
     marginBottom: 3,
     letterSpacing: 0.1,
   },
@@ -397,7 +405,7 @@ const styles = StyleSheet.create({
   },
   footerLink: {
     color: '#000080',
-    fontFamily: 'DMSans-Bold',
+    fontFamily: 'Poppins-Medium',
     textDecorationLine: 'underline',
   },
   footerCopyright: {
@@ -422,7 +430,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     alignItems: 'center',
     shadowColor: '#1A2332',
-    shadowOffset: {width: 0, height: 12},
+    shadowOffset: { width: 0, height: 12 },
     shadowOpacity: 0.18,
     shadowRadius: 24,
     elevation: 16,
@@ -448,13 +456,13 @@ const styles = StyleSheet.create({
   },
   modalBadgeText: {
     fontSize: 10,
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
     color: '#7B3FA0',
     letterSpacing: 2,
   },
   modalTitle: {
     fontSize: 20,
-    fontFamily: 'DMSans-Bold',
+    fontFamily: 'Poppins-SemiBold',
     color: '#1A2332',
     marginBottom: 10,
     letterSpacing: -0.2,
@@ -478,7 +486,7 @@ const styles = StyleSheet.create({
   modalBtnText: {
     color: '#FFFFFF',
     fontSize: 14,
-    fontFamily: 'DMSans-Bold',
+    fontFamily: 'Poppins-SemiBold',
     letterSpacing: 0.3,
   },
 });

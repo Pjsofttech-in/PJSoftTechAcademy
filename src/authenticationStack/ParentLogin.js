@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Alert,
   KeyboardAvoidingView,
@@ -16,20 +16,20 @@ import {
   Modal,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
   parentLogin,
   sendOtpParent,
   resetParentPassword,
   checkTokenValidity,
 } from '../util/Apicall';
-import {useAuth} from '../auth/AuthContext';
+import { useAuth } from '../auth/AuthContext';
 
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 // ─── Forgot Password Modal ───────────────────────────────────────────────────
 
-const ForgotPasswordModal = ({visible, onClose}) => {
+const ForgotPasswordModal = ({ visible, onClose }) => {
   const [resetEmail, setResetEmail] = useState('');
   const [otp, setOtp] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -164,13 +164,17 @@ const ForgotPasswordModal = ({visible, onClose}) => {
       visible={visible}
       transparent
       animationType="none"
-      onRequestClose={closeModal}>
-      <Animated.View style={[styles.modalBackdrop, {opacity: backdropOpacity}]}>
+      onRequestClose={closeModal}
+    >
+      <Animated.View
+        style={[styles.modalBackdrop, { opacity: backdropOpacity }]}
+      >
         <Animated.View
           style={[
             styles.modalBox,
-            {opacity: modalOpacity, transform: [{scale: modalScale}]},
-          ]}>
+            { opacity: modalOpacity, transform: [{ scale: modalScale }] },
+          ]}
+        >
           {/* Modal header */}
           <View style={styles.modalHeader}>
             <View>
@@ -186,7 +190,8 @@ const ForgotPasswordModal = ({visible, onClose}) => {
             <TouchableOpacity
               onPress={closeModal}
               style={styles.modalCloseBtn}
-              hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}>
+              hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+            >
               <Text style={styles.modalCloseIcon}>✕</Text>
             </TouchableOpacity>
           </View>
@@ -226,12 +231,13 @@ const ForgotPasswordModal = ({visible, onClose}) => {
               <TouchableOpacity
                 style={[
                   styles.primaryBtn,
-                  {backgroundColor: '#7B3FA0'},
+                  { backgroundColor: '#7B3FA0' },
                   isLoading && styles.btnDisabled,
                 ]}
                 onPress={handleSendOTP}
                 disabled={isLoading}
-                activeOpacity={0.85}>
+                activeOpacity={0.85}
+              >
                 {isLoading ? (
                   <ActivityIndicator size="small" color="#fff" />
                 ) : (
@@ -272,12 +278,13 @@ const ForgotPasswordModal = ({visible, onClose}) => {
               <TouchableOpacity
                 style={[
                   styles.primaryBtn,
-                  {backgroundColor: '#7B3FA0'},
+                  { backgroundColor: '#7B3FA0' },
                   isLoading && styles.btnDisabled,
                 ]}
                 onPress={handleResetPassword}
                 disabled={isLoading}
-                activeOpacity={0.85}>
+                activeOpacity={0.85}
+              >
                 {isLoading ? (
                   <ActivityIndicator size="small" color="#fff" />
                 ) : (
@@ -286,7 +293,8 @@ const ForgotPasswordModal = ({visible, onClose}) => {
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => setStep(1)}
-                style={styles.backLinkRow}>
+                style={styles.backLinkRow}
+              >
                 <Text style={styles.backLinkText}>‹ Back to email</Text>
               </TouchableOpacity>
             </>
@@ -299,9 +307,9 @@ const ForgotPasswordModal = ({visible, onClose}) => {
 
 // ─── ParentLogin ─────────────────────────────────────────────────────────────
 
-const ParentLogin = ({navigation, route}) => {
+const ParentLogin = ({ navigation, route }) => {
   const insets = useSafeAreaInsets();
-  const {role} = route.params || {};
+  const { role } = route.params || {};
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -309,7 +317,7 @@ const ParentLogin = ({navigation, route}) => {
   const [error, setError] = useState('');
   const [focusedField, setFocusedField] = useState(null);
   const [showForgotModal, setShowForgotModal] = useState(false);
-  const {login} = useAuth();
+  const { login } = useAuth();
 
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(24)).current;
@@ -357,14 +365,14 @@ const ParentLogin = ({navigation, route}) => {
       if (storedToken) {
         const valid = await checkTokenValidity(storedToken);
         if (valid) {
-          const result = {token: storedToken};
+          const result = { token: storedToken };
           await login(result, role);
           navigation.reset({
             index: 0,
             routes: [
               {
                 name: dashboardMap[role] || 'Role',
-                params: {parentData: result},
+                params: { parentData: result },
               },
             ],
           });
@@ -397,7 +405,10 @@ const ParentLogin = ({navigation, route}) => {
         navigation.reset({
           index: 0,
           routes: [
-            {name: dashboardMap[role] || 'Role', params: {parentData: result}},
+            {
+              name: dashboardMap[role] || 'Role',
+              params: { parentData: result },
+            },
           ],
         });
       } else {
@@ -425,13 +436,15 @@ const ParentLogin = ({navigation, route}) => {
           {
             paddingTop: insets.top + 12,
             opacity: fadeAnim,
-            transform: [{translateY: slideAnim}],
+            transform: [{ translateY: slideAnim }],
           },
-        ]}>
+        ]}
+      >
         <TouchableOpacity
           style={styles.backBtn}
           onPress={() => navigation.goBack()}
-          hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}>
+          hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+        >
           <Text style={styles.backArrow}>‹</Text>
         </TouchableOpacity>
         <View style={styles.logoMark}>
@@ -443,21 +456,24 @@ const ParentLogin = ({navigation, route}) => {
       <View style={styles.topDivider} />
 
       <KeyboardAvoidingView
-        style={{flex: 1}}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+        style={{ flex: 1 }}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      >
         <ScrollView
           contentContainerStyle={[
             styles.scrollContainer,
-            {paddingBottom: insets.bottom + 40},
+            { paddingBottom: insets.bottom + 40 },
           ]}
           showsVerticalScrollIndicator={false}
-          keyboardShouldPersistTaps="handled">
+          keyboardShouldPersistTaps="handled"
+        >
           {/* Page header */}
           <Animated.View
             style={[
               styles.headerSection,
-              {opacity: fadeAnim, transform: [{translateY: slideAnim}]},
-            ]}>
+              { opacity: fadeAnim, transform: [{ translateY: slideAnim }] },
+            ]}
+          >
             <View style={styles.roleBadge}>
               <Text style={styles.roleBadgeIcon}>👨‍👩‍👧</Text>
               <Text style={styles.roleBadgeText}>Parent Portal</Text>
@@ -472,8 +488,9 @@ const ParentLogin = ({navigation, route}) => {
           <Animated.View
             style={[
               styles.card,
-              {opacity: cardAnim, transform: [{translateY: cardSlide}]},
-            ]}>
+              { opacity: cardAnim, transform: [{ translateY: cardSlide }] },
+            ]}
+          >
             {/* Error */}
             {error ? (
               <View style={styles.errorBanner}>
@@ -510,7 +527,8 @@ const ParentLogin = ({navigation, route}) => {
                 style={[
                   styles.passwordRow,
                   focusedField === 'password' && styles.inputFocused,
-                ]}>
+                ]}
+              >
                 <TextInput
                   style={styles.passwordInput}
                   placeholder="Enter your password"
@@ -528,7 +546,8 @@ const ParentLogin = ({navigation, route}) => {
                   onPress={() => setShowPassword(v => !v)}
                   disabled={isLoading}
                   style={styles.toggleBtn}
-                  hitSlop={{top: 8, bottom: 8, left: 8, right: 8}}>
+                  hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+                >
                   <Text style={styles.toggleText}>
                     {showPassword ? 'Hide' : 'Show'}
                   </Text>
@@ -539,7 +558,8 @@ const ParentLogin = ({navigation, route}) => {
             {/* Forgot password */}
             <TouchableOpacity
               style={styles.forgotRow}
-              onPress={() => setShowForgotModal(true)}>
+              onPress={() => setShowForgotModal(true)}
+            >
               <Text style={styles.forgotText}>Forgot password?</Text>
             </TouchableOpacity>
 
@@ -548,7 +568,8 @@ const ParentLogin = ({navigation, route}) => {
               style={[styles.loginBtn, isLoading && styles.loginBtnDisabled]}
               onPress={handleLogin}
               disabled={isLoading}
-              activeOpacity={0.85}>
+              activeOpacity={0.85}
+            >
               {isLoading ? (
                 <ActivityIndicator size="small" color="#FFFFFF" />
               ) : (
@@ -596,7 +617,7 @@ const styles = StyleSheet.create({
   backArrow: {
     fontSize: 28,
     color: '#1A2332',
-    fontWeight: '300',
+    fontFamily: 'Poppins-Regular',
     lineHeight: 30,
     marginTop: -3,
   },
@@ -612,11 +633,11 @@ const styles = StyleSheet.create({
   logoLetter: {
     color: '#FFFFFF',
     fontSize: 15,
-    fontWeight: '800',
+    fontFamily: 'Poppins-SemiBold',
   },
   institutionName: {
     fontSize: 15,
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
     color: '#1A2332',
   },
   topDivider: {
@@ -654,13 +675,13 @@ const styles = StyleSheet.create({
   },
   roleBadgeText: {
     fontSize: 11,
-    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold',
     color: '#7B3FA0',
     letterSpacing: 0.3,
   },
   title: {
     fontSize: 23,
-    fontWeight: '800',
+    fontFamily: 'Poppins-SemiBold',
     color: '#1A2332',
     marginBottom: 5,
     letterSpacing: -0.3,
@@ -668,7 +689,7 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 13,
     color: '#6B7A8D',
-    fontWeight: '400',
+    fontFamily: 'Poppins-Regular',
     lineHeight: 19,
   },
 
@@ -680,7 +701,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#E2E8F0',
     shadowColor: '#1A2332',
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.06,
     shadowRadius: 12,
     elevation: 4,
@@ -698,12 +719,12 @@ const styles = StyleSheet.create({
     marginBottom: 18,
     gap: 8,
   },
-  errorIcon: {fontSize: 12, color: '#D93025', marginTop: 1},
+  errorIcon: { fontSize: 12, color: '#D93025', marginTop: 1 },
   errorText: {
     flex: 1,
     color: '#D93025',
     fontSize: 12,
-    fontWeight: '500',
+    fontFamily: 'Poppins-Medium',
     lineHeight: 18,
   },
 
@@ -718,20 +739,20 @@ const styles = StyleSheet.create({
     marginBottom: 18,
     gap: 8,
   },
-  successIcon: {fontSize: 12, color: '#1A7A4A', marginTop: 1},
+  successIcon: { fontSize: 12, color: '#1A7A4A', marginTop: 1 },
   successText: {
     flex: 1,
     color: '#1A7A4A',
     fontSize: 12,
-    fontWeight: '500',
+    fontFamily: 'Poppins-Medium',
     lineHeight: 18,
   },
 
   // Fields
-  fieldGroup: {marginBottom: 18},
+  fieldGroup: { marginBottom: 18 },
   fieldLabel: {
     fontSize: 12,
-    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold',
     color: '#3D4F62',
     marginBottom: 7,
     letterSpacing: 0.2,
@@ -744,6 +765,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
     paddingVertical: 13,
     fontSize: 14,
+    fontFamily: 'Poppins-Regular',
     color: '#1A2332',
   },
   inputFocused: {
@@ -764,14 +786,19 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingVertical: 13,
     fontSize: 14,
+    fontFamily: 'Poppins-Regular',
     color: '#1A2332',
   },
-  toggleBtn: {paddingHorizontal: 10, paddingVertical: 8},
-  toggleText: {fontSize: 12, fontWeight: '600', color: '#7B3FA0'},
+  toggleBtn: { paddingHorizontal: 10, paddingVertical: 8 },
+  toggleText: {
+    fontSize: 12,
+    fontFamily: 'Poppins-SemiBold',
+    color: '#7B3FA0',
+  },
 
   // Forgot
-  forgotRow: {alignSelf: 'flex-end', marginBottom: 22, marginTop: -6},
-  forgotText: {fontSize: 12, color: '#7B3FA0', fontWeight: '500'},
+  forgotRow: { alignSelf: 'flex-end', marginBottom: 22, marginTop: -6 },
+  forgotText: { fontSize: 12, color: '#7B3FA0', fontFamily: 'Poppins-Medium' },
 
   // Login button
   loginBtn: {
@@ -780,7 +807,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     alignItems: 'center',
     shadowColor: '#7B3FA0',
-    shadowOffset: {width: 0, height: 4},
+    shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.25,
     shadowRadius: 10,
     elevation: 6,
@@ -793,7 +820,7 @@ const styles = StyleSheet.create({
   loginBtnText: {
     color: '#FFFFFF',
     fontSize: 14,
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
     letterSpacing: 0.5,
   },
 
@@ -804,11 +831,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: 24,
   },
-  footerHintText: {fontSize: 12, color: '#9AAABB'},
+  footerHintText: {
+    fontSize: 12,
+    fontFamily: 'Poppins-Regular',
+    color: '#9AAABB',
+  },
   footerHintLink: {
     fontSize: 12,
     color: '#7B3FA0',
-    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold',
     textDecorationLine: 'underline',
   },
 
@@ -828,7 +859,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#E2E8F0',
     shadowColor: '#1A2332',
-    shadowOffset: {width: 0, height: 8},
+    shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 0.12,
     shadowRadius: 24,
     elevation: 16,
@@ -841,12 +872,13 @@ const styles = StyleSheet.create({
   },
   modalTitle: {
     fontSize: 16,
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
     color: '#1A2332',
     marginBottom: 4,
   },
   modalSubtitle: {
     fontSize: 12,
+    fontFamily: 'Poppins-Regular',
     color: '#6B7A8D',
     lineHeight: 17,
     maxWidth: '85%',
@@ -857,7 +889,7 @@ const styles = StyleSheet.create({
   modalCloseIcon: {
     fontSize: 15,
     color: '#9AAABB',
-    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold',
   },
   modalDivider: {
     height: 1,
@@ -878,7 +910,7 @@ const styles = StyleSheet.create({
   primaryBtnText: {
     color: '#FFFFFF',
     fontSize: 14,
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
     letterSpacing: 0.4,
   },
   backLinkRow: {
@@ -888,6 +920,6 @@ const styles = StyleSheet.create({
   backLinkText: {
     fontSize: 12,
     color: '#7B3FA0',
-    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold',
   },
 });
