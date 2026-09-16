@@ -186,7 +186,12 @@ const toastStyles = StyleSheet.create({
     shadowRadius: 6,
     zIndex: 999,
   },
-  text: {color: '#fff', fontSize: 13, fontWeight: '600', flex: 1},
+  text: {
+    color: '#fff',
+    fontSize: 13,
+    fontFamily: 'Poppins-SemiBold',
+    flex: 1,
+  },
 });
 
 // ─── Skeleton loading card ─────────────────────────────────────────────────
@@ -323,7 +328,7 @@ const filterStyles = StyleSheet.create({
     shadowOpacity: 0.08,
     shadowRadius: 3,
   },
-  tabText: {fontSize: 12, fontWeight: '600', color: '#64748B'},
+  tabText: {fontSize: 12, fontFamily: 'Poppins-SemiBold', color: '#64748B'},
   tabTextActive: {color: '#0F172A'},
   countBadge: {
     minWidth: 18,
@@ -335,7 +340,7 @@ const filterStyles = StyleSheet.create({
     justifyContent: 'center',
   },
   countBadgeActive: {backgroundColor: '#EEF2FF'},
-  countText: {fontSize: 10, fontWeight: '700', color: '#64748B'},
+  countText: {fontSize: 10, fontFamily: 'Poppins-SemiBold', color: '#64748B'},
   countTextActive: {color: '#6366F1'},
 });
 
@@ -1096,11 +1101,12 @@ const styles = StyleSheet.create({
   },
   screenTitle: {
     fontSize: 20,
-    fontWeight: '800',
+    fontFamily: 'Poppins-SemiBold',
     color: '#0F172A',
   },
   screenSubtitle: {
     fontSize: 12,
+    fontFamily: 'Poppins-Regular',
     color: '#64748B',
     marginTop: 2,
     alignSelf: 'flex-end',
@@ -1143,11 +1149,12 @@ const styles = StyleSheet.create({
   },
   subjectName: {
     fontSize: 14,
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
     color: '#0F172A',
   },
   srLabel: {
     fontSize: 11,
+    fontFamily: 'Poppins-Regular',
     color: '#64748B',
     marginTop: 1,
   },
@@ -1161,7 +1168,7 @@ const styles = StyleSheet.create({
   },
   urgencyText: {
     fontSize: 10,
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
   },
   divider: {
     height: 1,
@@ -1176,7 +1183,7 @@ const styles = StyleSheet.create({
   },
   homeworkLabel: {
     fontSize: 10,
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
     color: '#64748B',
     textTransform: 'uppercase',
     letterSpacing: 0.5,
@@ -1184,6 +1191,7 @@ const styles = StyleSheet.create({
   },
   homeworkText: {
     fontSize: 12,
+    fontFamily: 'Poppins-Regular',
     color: '#334155',
     lineHeight: 18,
   },
@@ -1200,11 +1208,12 @@ const styles = StyleSheet.create({
   },
   dateLabel: {
     fontSize: 11,
+    fontFamily: 'Poppins-Regular',
     color: '#64748B',
   },
   dateValue: {
     fontSize: 11,
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
     color: '#0F172A',
   },
   actionRow: {
@@ -1243,7 +1252,7 @@ const styles = StyleSheet.create({
   },
   actionBtnText: {
     fontSize: 12,
-    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold',
     color: '#6366F1',
   },
   emptyState: {
@@ -1266,11 +1275,12 @@ const styles = StyleSheet.create({
   },
   emptyTitle: {
     fontSize: 15,
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
     color: '#0F172A',
   },
   emptySubtitle: {
     fontSize: 12,
+    fontFamily: 'Poppins-Regular',
     color: '#64748B',
     marginTop: 4,
   },
@@ -1309,11 +1319,12 @@ const modalStyles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: 15,
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
     color: '#0F172A',
   },
   headerSubtitle: {
     fontSize: 11,
+    fontFamily: 'Poppins-Regular',
     color: '#64748B',
   },
   closeBtn: {
@@ -1331,7 +1342,7 @@ const modalStyles = StyleSheet.create({
   },
   formLabel: {
     fontSize: 12,
-    fontWeight: '600',
+    fontFamily: 'Poppins-Medium',
     color: '#334155',
     marginBottom: 6,
   },
@@ -1342,6 +1353,7 @@ const modalStyles = StyleSheet.create({
   },
   labelHint: {
     fontSize: 11,
+    fontFamily: 'Poppins-Regular',
     color: '#94A3B8',
   },
   inputWrapper: {
@@ -1356,6 +1368,7 @@ const modalStyles = StyleSheet.create({
   },
   textInput: {
     fontSize: 13,
+    fontFamily: 'Poppins-Regular',
     color: '#0F172A',
     minHeight: 80,
   },
@@ -1381,7 +1394,7 @@ const modalStyles = StyleSheet.create({
   },
   chipText: {
     fontSize: 12,
-    fontWeight: '600',
+    fontFamily: 'Poppins-Medium',
     color: '#64748B',
   },
   chipTextActive: {
@@ -1408,11 +1421,12 @@ const modalStyles = StyleSheet.create({
   },
   uploadBtnTitle: {
     fontSize: 12,
-    fontWeight: '600',
+    fontFamily: 'Poppins-Medium',
     color: '#0F172A',
   },
   uploadBtnSubtitle: {
     fontSize: 10,
+    fontFamily: 'Poppins-Regular',
     color: '#64748B',
     marginTop: 1,
   },
@@ -1439,11 +1453,12 @@ const modalStyles = StyleSheet.create({
   },
   filePreviewName: {
     fontSize: 12,
-    fontWeight: '600',
+    fontFamily: 'Poppins-Medium',
     color: '#0F172A',
   },
   filePreviewSize: {
     fontSize: 10,
+    fontFamily: 'Poppins-Regular',
     color: '#64748B',
   },
   fileActionBtn: {
@@ -1452,11 +1467,12 @@ const modalStyles = StyleSheet.create({
   },
   fileActionText: {
     fontSize: 11,
-    fontWeight: '600',
+    fontFamily: 'Poppins-Medium',
     color: '#6366F1',
   },
   errorText: {
     fontSize: 11,
+    fontFamily: 'Poppins-Regular',
     color: '#EF4444',
     marginTop: 4,
   },
@@ -1474,6 +1490,7 @@ const modalStyles = StyleSheet.create({
   },
   progressLabel: {
     fontSize: 11,
+    fontFamily: 'Poppins-Regular',
     color: '#64748B',
   },
   footer: {
@@ -1492,7 +1509,7 @@ const modalStyles = StyleSheet.create({
   },
   cancelBtnText: {
     fontSize: 13,
-    fontWeight: '600',
+    fontFamily: 'Poppins-Medium',
     color: '#64748B',
   },
   submitBtn: {
@@ -1510,7 +1527,7 @@ const modalStyles = StyleSheet.create({
   },
   submitBtnText: {
     fontSize: 13,
-    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold',
     color: '#FFFFFF',
   },
 });
@@ -1540,12 +1557,13 @@ const popupStyles = StyleSheet.create({
   },
   title: {
     fontSize: 16,
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
     color: '#0F172A',
     marginTop: 12,
   },
   message: {
     fontSize: 12,
+    fontFamily: 'Poppins-Regular',
     color: '#64748B',
     textAlign: 'center',
     marginTop: 6,
@@ -1562,6 +1580,6 @@ const popupStyles = StyleSheet.create({
   okText: {
     color: '#FFFFFF',
     fontSize: 13,
-    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold',
   },
 });

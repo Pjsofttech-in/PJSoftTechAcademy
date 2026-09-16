@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useCallback, useMemo} from 'react';
+import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import {
   View,
   Text,
@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { Ionicons } from '@react-native-vector-icons/ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {fetchTimetableByClassRoomId} from '../../util/Apicall';
+import { fetchTimetableByClassRoomId } from '../../util/Apicall';
 import StudentHeader from '../../components/StudentComponent/StudentHeader';
 import StudentFooter from '../../components/StudentComponent/StudentFooter';
 
@@ -76,7 +76,7 @@ const formatTime = time => {
 };
 
 // ─── Dense Stacked Period Row ──────────────────────────────────────────────
-const PeriodRow = React.memo(({item}) => {
+const PeriodRow = React.memo(({ item }) => {
   const subject = item.subject?.subjectName || '—';
   const teacher = item.teacher?.teacherName || '—';
   const periodNo = item.period?.periodNo ?? '';
@@ -93,12 +93,14 @@ const PeriodRow = React.memo(({item}) => {
       <View style={styles.infoContainer}>
         <Text
           numberOfLines={1}
-          style={[styles.subjectText, !isOn && styles.textOff]}>
+          style={[styles.subjectText, !isOn && styles.textOff]}
+        >
           {subject}
         </Text>
         <Text
           numberOfLines={1}
-          style={[styles.teacherText, !isOn && styles.textOffSecondary]}>
+          style={[styles.teacherText, !isOn && styles.textOffSecondary]}
+        >
           {teacher}
         </Text>
       </View>
@@ -122,8 +124,8 @@ const PeriodRow = React.memo(({item}) => {
 });
 
 // ─── Main Timetable Screen ──────────────────────────────────────────────────
-const TimeTable = ({route}) => {
-  const {studentData: paramStudentData} = route?.params || {};
+const TimeTable = ({ route }) => {
+  const { studentData: paramStudentData } = route?.params || {};
 
   const [timetable, setTimetable] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -211,7 +213,7 @@ const TimeTable = ({route}) => {
     [selectedDayData],
   );
 
-  const renderItem = useCallback(({item}) => <PeriodRow item={item} />, []);
+  const renderItem = useCallback(({ item }) => <PeriodRow item={item} />, []);
 
   const keyExtractor = useCallback(
     (item, index) =>
@@ -230,7 +232,8 @@ const TimeTable = ({route}) => {
           onPress={loadData}
           disabled={isLoading}
           style={styles.refreshBtn}
-          activeOpacity={0.7}>
+          activeOpacity={0.7}
+        >
           <Ionicons
             name="refresh"
             size={18}
@@ -249,12 +252,14 @@ const TimeTable = ({route}) => {
                 key={day}
                 onPress={() => setSelectedDay(day)}
                 style={[styles.dayTab, isActive && styles.dayTabActive]}
-                activeOpacity={0.8}>
+                activeOpacity={0.8}
+              >
                 <Text
                   style={[
                     styles.dayTabText,
                     isActive && styles.dayTabTextActive,
-                  ]}>
+                  ]}
+                >
                   {DAY_SHORT[day] || day.slice(0, 3).toUpperCase()}
                 </Text>
                 <View
@@ -358,7 +363,7 @@ const styles = StyleSheet.create({
   dayTabText: {
     fontSize: 11,
     color: '#64748B',
-    fontFamily: 'DMSans-Bold',
+    fontFamily: 'Poppins-SemiBold',
   },
   dayTabTextActive: {
     color: '#FFFFFF',
@@ -438,7 +443,7 @@ const styles = StyleSheet.create({
   timeText: {
     fontSize: 10,
     color: '#64748B',
-    fontFamily: 'DMSans-Medium',
+    fontFamily: 'Poppins-Medium',
     lineHeight: 13,
   },
 
@@ -474,13 +479,13 @@ const styles = StyleSheet.create({
   loadingText: {
     fontSize: 13,
     color: '#64748B',
-    fontFamily: 'DMSans-Medium',
+    fontFamily: 'Poppins-Medium',
   },
   errorText: {
     fontSize: 13,
     color: '#DC2626',
     textAlign: 'center',
-    fontFamily: 'DMSans-Medium',
+    fontFamily: 'Poppins-Medium',
   },
   retryBtn: {
     backgroundColor: BRAND_COLOR,

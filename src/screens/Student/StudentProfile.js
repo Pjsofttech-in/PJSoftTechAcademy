@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
@@ -11,12 +11,12 @@ import {
   Clipboard,
   Share,
 } from 'react-native';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons } from '@react-native-vector-icons/ionicons';
-import {getUserById} from '../../util/Apicall';
+import { getUserById } from '../../util/Apicall';
 
-const StudentProfile = ({route, navigation}) => {
+const StudentProfile = ({ route, navigation }) => {
   const [studentData, setStudentData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -97,11 +97,12 @@ const StudentProfile = ({route, navigation}) => {
 
   if (loading) {
     return (
-      <View style={[styles.container, {paddingTop: insets.top}]}>
+      <View style={[styles.container, { paddingTop: insets.top }]}>
         <View style={styles.header}>
           <TouchableOpacity
             onPress={() => navigation.goBack()}
-            style={styles.backBtn}>
+            style={styles.backBtn}
+          >
             <Ionicons name="arrow-back" size={22} color="#1e293b" />
           </TouchableOpacity>
           <Text style={styles.headerTitle}>My Profile</Text>
@@ -116,11 +117,12 @@ const StudentProfile = ({route, navigation}) => {
 
   if (error || !studentData) {
     return (
-      <View style={[styles.container, {paddingTop: insets.top}]}>
+      <View style={[styles.container, { paddingTop: insets.top }]}>
         <View style={styles.header}>
           <TouchableOpacity
             onPress={() => navigation.goBack()}
-            style={styles.backBtn}>
+            style={styles.backBtn}
+          >
             <Ionicons name="arrow-back" size={22} color="#1e293b" />
           </TouchableOpacity>
           <Text style={styles.headerTitle}>My Profile</Text>
@@ -147,12 +149,13 @@ const StudentProfile = ({route, navigation}) => {
   const subjects = classroom?.subjects || [];
 
   return (
-    <View style={[styles.container, {paddingTop: insets.top}]}>
+    <View style={[styles.container, { paddingTop: insets.top }]}>
       {/* Top Navigation Bar */}
       <View style={styles.header}>
         <TouchableOpacity
           onPress={() => navigation.goBack()}
-          style={styles.backBtn}>
+          style={styles.backBtn}
+        >
           <Ionicons name="arrow-back" size={22} color="#1e293b" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>My Profile</Text>
@@ -164,16 +167,17 @@ const StudentProfile = ({route, navigation}) => {
       <ScrollView
         contentContainerStyle={[
           styles.scrollContent,
-          {paddingBottom: insets.bottom + 24},
+          { paddingBottom: insets.bottom + 24 },
         ]}
-        showsVerticalScrollIndicator={false}>
+        showsVerticalScrollIndicator={false}
+      >
         {/* Compact Hero Card */}
         <View style={styles.compactHeroCard}>
           <View style={styles.heroRow}>
             {studentData.studentImage && (
               <View style={styles.avatarWrapper}>
                 <Image
-                  source={{uri: studentData.studentImage}}
+                  source={{ uri: studentData.studentImage }}
                   style={styles.avatar}
                 />
                 <View style={styles.activeDot} />
@@ -203,7 +207,8 @@ const StudentProfile = ({route, navigation}) => {
                         'Registration No',
                       )
                     }
-                    style={styles.copyIconBtn}>
+                    style={styles.copyIconBtn}
+                  >
                     <Ionicons name="copy-outline" size={15} color="#6366F1" />
                   </TouchableOpacity>
                 </View>
@@ -250,7 +255,7 @@ const StudentProfile = ({route, navigation}) => {
             </Text>
 
             <View style={styles.miniTrack}>
-              <View style={[styles.miniFill, {width: `${feePercentage}%`}]} />
+              <View style={[styles.miniFill, { width: `${feePercentage}%` }]} />
             </View>
 
             {studentData.paymentMethod && (
@@ -593,7 +598,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: 16,
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
     color: '#0f172a',
   },
   shareBtn: {
@@ -610,12 +615,14 @@ const styles = StyleSheet.create({
   loadingText: {
     marginTop: 10,
     fontSize: 13,
+    fontFamily: 'Poppins-Regular',
     color: '#64748b',
   },
   errorText: {
     marginTop: 10,
     marginBottom: 12,
     fontSize: 14,
+    fontFamily: 'Poppins-Medium',
     color: '#ef4444',
   },
   retryBtn: {
@@ -627,7 +634,7 @@ const styles = StyleSheet.create({
   retryBtnText: {
     color: '#fff',
     fontSize: 13,
-    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold',
   },
 
   /* Compact Hero Card */
@@ -638,7 +645,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     elevation: 2,
     shadowColor: '#000',
-    shadowOffset: {width: 0, height: 1},
+    shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.05,
     shadowRadius: 4,
   },
@@ -673,7 +680,7 @@ const styles = StyleSheet.create({
   },
   studentName: {
     fontSize: 16,
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
     color: '#0f172a',
   },
   regRow: {
@@ -684,11 +691,11 @@ const styles = StyleSheet.create({
   regSubText: {
     fontSize: 12,
     color: '#64748b',
-    fontWeight: '500',
+    fontFamily: 'Poppins-Medium',
   },
   regValue: {
     color: '#1e293b',
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
   },
   copyIconBtn: {
     marginLeft: 6,
@@ -697,6 +704,7 @@ const styles = StyleSheet.create({
   rollText: {
     fontSize: 11,
     color: '#64748b',
+    fontFamily: 'Poppins-Regular',
     marginTop: 1,
     marginBottom: 6,
   },
@@ -713,7 +721,7 @@ const styles = StyleSheet.create({
   tagPillText: {
     fontSize: 10,
     color: '#6366F1',
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
   },
   mediumPill: {
     backgroundColor: '#e0f2fe',
@@ -721,7 +729,7 @@ const styles = StyleSheet.create({
   mediumPillText: {
     fontSize: 10,
     color: '#0369a1',
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
   },
 
   /* Metric Grid */
@@ -742,17 +750,18 @@ const styles = StyleSheet.create({
   },
   gridTitle: {
     fontSize: 11,
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
     color: '#64748b',
     textTransform: 'uppercase',
   },
   feeHighlight: {
     fontSize: 16,
-    fontWeight: '800',
+    fontFamily: 'Poppins-SemiBold',
     color: '#10b981',
   },
   feeSubText: {
     fontSize: 10,
+    fontFamily: 'Poppins-Regular',
     color: '#64748b',
     marginBottom: 6,
   },
@@ -776,16 +785,17 @@ const styles = StyleSheet.create({
   },
   statusBadgeText: {
     fontSize: 9,
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
     color: '#15803d',
   },
   timeText: {
     fontSize: 13,
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
     color: '#0f172a',
   },
   batchSubText: {
     fontSize: 10,
+    fontFamily: 'Poppins-Regular',
     color: '#64748b',
     marginBottom: 6,
   },
@@ -803,7 +813,7 @@ const styles = StyleSheet.create({
   miniChipText: {
     fontSize: 9,
     color: '#4338ca',
-    fontWeight: '600',
+    fontFamily: 'Poppins-Medium',
   },
 
   /* Standard Card */
@@ -814,13 +824,13 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     elevation: 1,
     shadowColor: '#000',
-    shadowOffset: {width: 0, height: 1},
+    shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.04,
     shadowRadius: 3,
   },
   sectionHeaderTitle: {
     fontSize: 12,
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
     color: '#64748b',
     textTransform: 'uppercase',
     letterSpacing: 0.5,
@@ -836,12 +846,13 @@ const styles = StyleSheet.create({
   },
   infoLabel: {
     fontSize: 12,
+    fontFamily: 'Poppins-Regular',
     color: '#64748b',
     width: 110,
   },
   infoValue: {
     fontSize: 12,
-    fontWeight: '600',
+    fontFamily: 'Poppins-Medium',
     color: '#0f172a',
     flex: 1,
   },

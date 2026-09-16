@@ -1,5 +1,5 @@
 // SDashboard.js
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
@@ -17,7 +17,7 @@ import StudentHeader from '../../components/StudentComponent/StudentHeader';
 import StudentFooter from '../../components/StudentComponent/StudentFooter';
 import BarChartComponent from '../../components/StudentComponent/BarChartComponent';
 
-const {width: SCREEN_WIDTH} = Dimensions.get('window');
+const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
 /* ── Brand Color Tokens ─────────────────────────────────────────── */
 const BRAND_COLOR = '#6495ED';
@@ -33,8 +33,8 @@ const getGreeting = () => {
 };
 
 /* ── Main Component ─────────────────────────────────────────────── */
-const SDashboard = ({route, navigation}) => {
-  const {studentData: initialStudentData} = route.params || {};
+const SDashboard = ({ route, navigation }) => {
+  const { studentData: initialStudentData } = route.params || {};
   const [studentData, setStudentData] = useState(initialStudentData || null);
   const [isLoadingStudentData, setIsLoadingStudentData] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
@@ -70,7 +70,7 @@ const SDashboard = ({route, navigation}) => {
 
   const navigateTo = screenName => {
     try {
-      navigation.navigate(screenName, {studentData});
+      navigation.navigate(screenName, { studentData });
     } catch (e) {
       console.warn('Navigation failed:', e);
     }
@@ -107,8 +107,9 @@ const SDashboard = ({route, navigation}) => {
             style={styles.retryButton}
             activeOpacity={0.7}
             onPress={() =>
-              navigation.reset({index: 0, routes: [{name: 'Role'}]})
-            }>
+              navigation.reset({ index: 0, routes: [{ name: 'Role' }] })
+            }
+          >
             <Text style={styles.retryButtonText}>Go to Login</Text>
           </TouchableOpacity>
         </View>
@@ -135,7 +136,8 @@ const SDashboard = ({route, navigation}) => {
             colors={[BRAND_COLOR]}
             tintColor={BRAND_COLOR}
           />
-        }>
+        }
+      >
         {/* ── Compact Profile Card ─────────────────────────────────────── */}
         <View style={styles.profileCard}>
           <View style={styles.profileHeader}>
@@ -262,12 +264,12 @@ const styles = StyleSheet.create({
   greetingText: {
     fontSize: 11,
     color: '#64748B',
-    fontFamily: 'DMSans-Regular',
+    fontFamily: 'Poppins-Regular',
   },
   studentName: {
     fontSize: 15,
     color: '#0F172A',
-    fontFamily: 'DMSans-Bold',
+    fontFamily: 'Poppins-SemiBold',
     letterSpacing: -0.2,
   },
   avatarWrapper: {
@@ -286,7 +288,7 @@ const styles = StyleSheet.create({
   avatarLetter: {
     color: BRAND_COLOR,
     fontSize: 15,
-    fontFamily: 'DMSans-Bold',
+    fontFamily: 'Poppins-SemiBold',
   },
 
   /* Metadata Container */
@@ -304,14 +306,14 @@ const styles = StyleSheet.create({
   metaText: {
     fontSize: 11,
     color: '#334155',
-    fontFamily: 'DMSans-Medium',
+    fontFamily: 'Poppins-Medium',
     flex: 1,
   },
 
   /* Section Header */
   sectionTitle: {
     fontSize: 10,
-    fontFamily: 'DMSans-Bold',
+    fontFamily: 'Poppins-SemiBold',
     color: '#64748B',
     letterSpacing: 0.8,
     marginTop: 4,
@@ -347,13 +349,13 @@ const styles = StyleSheet.create({
   },
   stateTitle: {
     fontSize: 13,
-    fontFamily: 'DMSans-Bold',
+    fontFamily: 'Poppins-SemiBold',
     color: '#0F172A',
     marginBottom: 4,
   },
   stateSub: {
     fontSize: 11,
-    fontFamily: 'DMSans-Regular',
+    fontFamily: 'Poppins-Regular',
     color: '#64748B',
     textAlign: 'center',
   },
@@ -367,6 +369,6 @@ const styles = StyleSheet.create({
   retryButtonText: {
     color: '#FFFFFF',
     fontSize: 12,
-    fontFamily: 'DMSans-Bold',
+    fontFamily: 'Poppins-SemiBold',
   },
 });

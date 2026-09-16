@@ -1,5 +1,5 @@
 // BarChartComponent.js
-import React, {useState, useEffect, useRef} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   StyleSheet,
   Text,
@@ -11,18 +11,19 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import {fetchAttendanceCountByFormId} from '../../util/Apicall';
+import { fetchAttendanceCountByFormId } from '../../util/Apicall';
 import LinearGradient from 'react-native-linear-gradient';
 import { Ionicons } from '@react-native-vector-icons/ionicons';
 
-const {width: SCREEN_WIDTH} = Dimensions.get('window');
+const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
 /* ─── Pill Filter Button ─────────────────────────────────────────────────── */
-const FilterPill = ({label, active, onPress}) => (
+const FilterPill = ({ label, active, onPress }) => (
   <TouchableOpacity
     onPress={onPress}
     activeOpacity={0.75}
-    style={[pillStyles.pill, active && pillStyles.pillActive]}>
+    style={[pillStyles.pill, active && pillStyles.pillActive]}
+  >
     <Text style={[pillStyles.label, active && pillStyles.labelActive]}>
       {label}
     </Text>
@@ -30,7 +31,7 @@ const FilterPill = ({label, active, onPress}) => (
 );
 
 /* ─── Single Animated Bar ────────────────────────────────────────────────── */
-const AnimatedBar = ({barHeight, colors, delay, count, maxBarHeight}) => {
+const AnimatedBar = ({ barHeight, colors, delay, count, maxBarHeight }) => {
   // Drives height (layout prop) — MUST use useNativeDriver: false
   const progress = useRef(new Animated.Value(0)).current;
   // Drive opacity + translateY — safe for useNativeDriver: true
@@ -82,13 +83,15 @@ const AnimatedBar = ({barHeight, colors, delay, count, maxBarHeight}) => {
         height: maxBarHeight,
         justifyContent: 'flex-end',
         alignItems: 'center',
-      }}>
+      }}
+    >
       {/* Label fades + slides down — native driver safe */}
       <Animated.Text
         style={[
           barStyles.floatLabel,
-          {opacity: fadeIn, transform: [{translateY: labelY}]},
-        ]}>
+          { opacity: fadeIn, transform: [{ translateY: labelY }] },
+        ]}
+      >
         {count}
       </Animated.Text>
 
@@ -98,11 +101,12 @@ const AnimatedBar = ({barHeight, colors, delay, count, maxBarHeight}) => {
           borderTopLeftRadius: 14,
           borderTopRightRadius: 14,
           shadowColor: colors[1],
-          shadowOffset: {width: 0, height: 6},
+          shadowOffset: { width: 0, height: 6 },
           shadowOpacity: 0.35,
           shadowRadius: 8,
           elevation: 6,
-        }}>
+        }}
+      >
         {/* Animated.View only controls height — no opacity, no shadow, no transform */}
         <Animated.View
           style={{
@@ -111,12 +115,14 @@ const AnimatedBar = ({barHeight, colors, delay, count, maxBarHeight}) => {
             borderTopLeftRadius: 14,
             borderTopRightRadius: 14,
             overflow: 'hidden',
-          }}>
+          }}
+        >
           <LinearGradient
             colors={colors}
-            style={{flex: 1}}
-            start={{x: 0, y: 0}}
-            end={{x: 0, y: 1}}>
+            style={{ flex: 1 }}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 0, y: 1 }}
+          >
             <View style={barStyles.shine} />
           </LinearGradient>
         </Animated.View>
@@ -126,10 +132,10 @@ const AnimatedBar = ({barHeight, colors, delay, count, maxBarHeight}) => {
 };
 
 /* ─── Chart Body ─────────────────────────────────────────────────────────── */
-const ChartBody = ({data}) => {
+const ChartBody = ({ data }) => {
   if (!data) return null;
 
-  const {presentCount = 0, absentCount = 0, dateRange} = data;
+  const { presentCount = 0, absentCount = 0, dateRange } = data;
   const total = presentCount + absentCount;
   const maxValue = Math.max(presentCount, absentCount, 1);
 
@@ -164,7 +170,7 @@ const ChartBody = ({data}) => {
             <Ionicons name="checkmark-circle" size={16} color="#10b981" />
           </View>
           <View>
-            <Text style={[chartBodyStyles.statBig, {color: '#10b981'}]}>
+            <Text style={[chartBodyStyles.statBig, { color: '#10b981' }]}>
               {presentCount}
             </Text>
             <Text style={chartBodyStyles.statSub}>Present · {presentPct}%</Text>
@@ -180,7 +186,7 @@ const ChartBody = ({data}) => {
             <Ionicons name="close-circle" size={16} color="#ef4444" />
           </View>
           <View>
-            <Text style={[chartBodyStyles.statBig, {color: '#ef4444'}]}>
+            <Text style={[chartBodyStyles.statBig, { color: '#ef4444' }]}>
               {absentCount}
             </Text>
             <Text style={chartBodyStyles.statSub}>Absent · {absentPct}%</Text>
@@ -200,7 +206,7 @@ const ChartBody = ({data}) => {
         </View>
 
         {/* Grid + Bars */}
-        <View style={{flex: 1}}>
+        <View style={{ flex: 1 }}>
           {/* Grid lines */}
           <View style={[StyleSheet.absoluteFill, chartBodyStyles.gridWrap]}>
             {ticks.map((_, i) => (
@@ -221,14 +227,14 @@ const ChartBody = ({data}) => {
               />
               <View style={chartBodyStyles.xLabel}>
                 <View
-                  style={[chartBodyStyles.xDot, {backgroundColor: '#10b981'}]}
+                  style={[chartBodyStyles.xDot, { backgroundColor: '#10b981' }]}
                 />
                 <Text style={chartBodyStyles.xLabelText}>Present</Text>
               </View>
             </View>
 
             {/* Gap bar (visual spacing) */}
-            <View style={{width: 36}} />
+            <View style={{ width: 36 }} />
 
             {/* Absent */}
             <View style={chartBodyStyles.barCol}>
@@ -241,7 +247,7 @@ const ChartBody = ({data}) => {
               />
               <View style={chartBodyStyles.xLabel}>
                 <View
-                  style={[chartBodyStyles.xDot, {backgroundColor: '#d50000'}]}
+                  style={[chartBodyStyles.xDot, { backgroundColor: '#d50000' }]}
                 />
                 <Text style={chartBodyStyles.xLabelText}>Absent</Text>
               </View>
@@ -285,7 +291,7 @@ const ChartBody = ({data}) => {
 };
 
 /* ─── Main Export ────────────────────────────────────────────────────────── */
-const BarChartComponent = ({studentData}) => {
+const BarChartComponent = ({ studentData }) => {
   const [loading, setLoading] = useState(false);
   const [filter, setFilter] = useState('Today');
   const [attendanceData, setAttendanceData] = useState(null);
@@ -367,8 +373,9 @@ const BarChartComponent = ({studentData}) => {
           <LinearGradient
             colors={['#818cf8', '#6366f1']}
             style={compStyles.headerIcon}
-            start={{x: 0, y: 0}}
-            end={{x: 1, y: 1}}>
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+          >
             <Ionicons name="stats-chart" size={14} color="#fff" />
           </LinearGradient>
           <View>
@@ -465,12 +472,12 @@ const pillStyles = StyleSheet.create({
   },
   label: {
     fontSize: 11,
-    fontFamily: 'DMSans-Medium',
+    fontFamily: 'Poppins-Medium',
     color: '#6366f1',
   },
   labelActive: {
     color: '#fff',
-    fontFamily: 'DMSans-Bold',
+    fontFamily: 'Poppins-SemiBold',
   },
 });
 
@@ -478,7 +485,7 @@ const pillStyles = StyleSheet.create({
 const barStyles = StyleSheet.create({
   floatLabel: {
     fontSize: 13,
-    fontFamily: 'DMSans-Bold',
+    fontFamily: 'Poppins-SemiBold',
     color: '#1A2332',
     marginBottom: 4,
   },
@@ -534,12 +541,12 @@ const chartBodyStyles = StyleSheet.create({
   },
   statBig: {
     fontSize: 20,
-    fontFamily: 'DMSans-Bold',
+    fontFamily: 'Poppins-SemiBold',
     letterSpacing: -0.5,
   },
   statSub: {
     fontSize: 10,
-    fontFamily: 'DMSans-Regular',
+    fontFamily: 'Poppins-Regular',
     color: '#9AAABB',
     marginTop: 1,
   },
@@ -565,7 +572,7 @@ const chartBodyStyles = StyleSheet.create({
   },
   yTick: {
     fontSize: 10,
-    fontFamily: 'DMSans-Regular',
+    fontFamily: 'Poppins-Regular',
     color: '#B0BEC5',
   },
   gridWrap: {
@@ -610,7 +617,7 @@ const chartBodyStyles = StyleSheet.create({
   },
   xLabelText: {
     fontSize: 11,
-    fontFamily: 'DMSans-Medium',
+    fontFamily: 'Poppins-Medium',
     color: '#6B7A8D',
   },
 
@@ -631,7 +638,7 @@ const chartBodyStyles = StyleSheet.create({
   },
   ratioHint: {
     fontSize: 10,
-    fontFamily: 'DMSans-Regular',
+    fontFamily: 'Poppins-Regular',
     color: '#9AAABB',
     textAlign: 'right',
   },
@@ -648,7 +655,7 @@ const chartBodyStyles = StyleSheet.create({
   },
   dateText: {
     fontSize: 11,
-    fontFamily: 'DMSans-Medium',
+    fontFamily: 'Poppins-Medium',
     color: '#818cf8',
   },
 });
@@ -661,7 +668,7 @@ const compStyles = StyleSheet.create({
     padding: 20,
     marginBottom: 20,
     shadowColor: '#6366f1',
-    shadowOffset: {width: 0, height: 8},
+    shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 0.12,
     shadowRadius: 20,
     elevation: 6,
@@ -688,13 +695,13 @@ const compStyles = StyleSheet.create({
   },
   cardTitle: {
     fontSize: 14,
-    fontFamily: 'DMSans-Bold',
+    fontFamily: 'Poppins-SemiBold',
     color: '#1A2332',
     letterSpacing: -0.2,
   },
   cardSub: {
     fontSize: 10,
-    fontFamily: 'DMSans-Regular',
+    fontFamily: 'Poppins-Regular',
     color: '#9AAABB',
     marginTop: 1,
   },
@@ -708,7 +715,7 @@ const compStyles = StyleSheet.create({
   },
   totalText: {
     fontSize: 11,
-    fontFamily: 'DMSans-Bold',
+    fontFamily: 'Poppins-SemiBold',
     color: '#6366f1',
   },
   pillRow: {
@@ -730,7 +737,7 @@ const compStyles = StyleSheet.create({
   },
   centerText: {
     fontSize: 12,
-    fontFamily: 'DMSans-Regular',
+    fontFamily: 'Poppins-Regular',
     color: '#9AAABB',
     textAlign: 'center',
   },
@@ -745,7 +752,7 @@ const compStyles = StyleSheet.create({
   },
   emptyTitle: {
     fontSize: 14,
-    fontFamily: 'DMSans-Bold',
+    fontFamily: 'Poppins-SemiBold',
     color: '#3D4F62',
   },
 });

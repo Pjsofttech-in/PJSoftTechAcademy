@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   View,
   Text,
@@ -11,13 +11,13 @@ import {
   Animated,
   Dimensions,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { Ionicons } from '@react-native-vector-icons/ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {fetchUserResultByStudentId} from '../../util/Apicall';
+import { fetchUserResultByStudentId } from '../../util/Apicall';
 import StudentHeader from '../../components/StudentComponent/StudentHeader';
 import StudentFooter from '../../components/StudentComponent/StudentFooter';
 
-const {width: SCREEN_WIDTH} = Dimensions.get('window');
+const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const BRAND_COLOR = '#6495ED';
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -42,10 +42,10 @@ const formatPercent = val => {
 
 // ─── Single Detail Row ────────────────────────────────────────────────────────
 
-const DetailRow = ({iconName, label, value}) => (
+const DetailRow = ({ iconName, label, value }) => (
   <View style={styles.detailRow}>
     <View style={styles.detailLeft}>
-      <Icon name={iconName} size={15} color="#64748B" />
+      <Ionicons name={iconName} size={16} color="#64748B" />
       <Text style={styles.detailRowLabel}>{label}</Text>
     </View>
     <Text style={styles.detailRowValue} numberOfLines={1} ellipsizeMode="tail">
@@ -56,7 +56,7 @@ const DetailRow = ({iconName, label, value}) => (
 
 // ─── Subject Card ─────────────────────────────────────────────────────────────
 
-const SubjectCard = ({subject, index}) => {
+const SubjectCard = ({ subject, index }) => {
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(15)).current;
 
@@ -92,18 +92,20 @@ const SubjectCard = ({subject, index}) => {
         styles.subjectCard,
         {
           opacity: fadeAnim,
-          transform: [{translateY: slideAnim}],
+          transform: [{ translateY: slideAnim }],
         },
-      ]}>
+      ]}
+    >
       <View style={styles.scRow}>
         <Text
           style={styles.scSubjectName}
           numberOfLines={1}
-          ellipsizeMode="tail">
+          ellipsizeMode="tail"
+        >
           {subject.subjectName || 'N/A'}
         </Text>
-        <View style={[styles.scBadge, {backgroundColor: statusBg}]}>
-          <Text style={[styles.scBadgeText, {color: statusColor}]}>
+        <View style={[styles.scBadge, { backgroundColor: statusBg }]}>
+          <Text style={[styles.scBadgeText, { color: statusColor }]}>
             {isPass ? 'PASS' : 'FAIL'}
           </Text>
         </View>
@@ -205,15 +207,17 @@ const Result = () => {
               onRefresh={() => fetchStudentResult(true)}
               colors={[BRAND_COLOR]}
             />
-          }>
+          }
+        >
           <View style={styles.stateCard}>
-            <Icon name="error-outline" size={32} color="#DC2626" />
+            <Ionicons name="alert-circle-outline" size={36} color="#DC2626" />
             <Text style={styles.stateTitle}>Unable to Load Results</Text>
             <Text style={styles.stateMsg}>{error}</Text>
             <TouchableOpacity
               style={styles.stateBtn}
               onPress={() => fetchStudentResult()}
-              activeOpacity={0.85}>
+              activeOpacity={0.85}
+            >
               <Text style={styles.stateBtnText}>Retry</Text>
             </TouchableOpacity>
           </View>
@@ -235,9 +239,10 @@ const Result = () => {
               onRefresh={() => fetchStudentResult(true)}
               colors={[BRAND_COLOR]}
             />
-          }>
+          }
+        >
           <View style={styles.stateCard}>
-            <Icon name="assignment" size={32} color="#64748B" />
+            <Ionicons name="document-text-outline" size={36} color="#64748B" />
             <Text style={styles.stateTitle}>No Record Found</Text>
             <Text style={styles.stateMsg}>
               Your official examination record has not been published yet.
@@ -245,7 +250,8 @@ const Result = () => {
             <TouchableOpacity
               style={styles.stateBtn}
               onPress={() => fetchStudentResult()}
-              activeOpacity={0.85}>
+              activeOpacity={0.85}
+            >
               <Text style={styles.stateBtnText}>Refresh</Text>
             </TouchableOpacity>
           </View>
@@ -274,7 +280,8 @@ const Result = () => {
             onRefresh={() => fetchStudentResult(true)}
             colors={[BRAND_COLOR]}
           />
-        }>
+        }
+      >
         {/* Header Title Section */}
         <View style={styles.headerSection}>
           <View>
@@ -283,8 +290,8 @@ const Result = () => {
               Academic Session {resultData.academicYear || 'N/A'}
             </Text>
           </View>
-          <View style={[styles.statusBadge, {backgroundColor: statusBg}]}>
-            <Text style={[styles.statusBadgeText, {color: statusColor}]}>
+          <View style={[styles.statusBadge, { backgroundColor: statusBg }]}>
+            <Text style={[styles.statusBadgeText, { color: statusColor }]}>
               {resultData.status?.toUpperCase() || 'N/A'}
             </Text>
           </View>
@@ -298,9 +305,9 @@ const Result = () => {
               <Text style={styles.heroPercentage}>{pctDisplay}</Text>
             </View>
             <View style={styles.heroIconBox}>
-              <Icon
-                name={isPass ? 'verified' : 'highlight-off'}
-                size={36}
+              <Ionicons
+                name={isPass ? 'checkmark-circle' : 'close-circle'}
+                size={38}
                 color={isPass ? BRAND_COLOR : '#EF4444'}
               />
             </View>
@@ -340,29 +347,29 @@ const Result = () => {
               value={resultData.studentName}
             />
             <DetailRow
-              iconName="numbers"
+              iconName="id-card-outline"
               label="Roll Number"
               value={
                 resultData.rollno != null ? String(resultData.rollno) : 'N/A'
               }
             />
             <DetailRow
-              iconName="school"
+              iconName="school-outline"
               label="Course"
               value={resultData.coursename}
             />
             <DetailRow
-              iconName="groups"
+              iconName="people-outline"
               label="Batch"
               value={resultData.batchName}
             />
             <DetailRow
-              iconName="language"
+              iconName="globe-outline"
               label="Medium"
               value={resultData.mediumName}
             />
             <DetailRow
-              iconName="event"
+              iconName="calendar-outline"
               label="Result Date"
               value={formatDate(resultData.resultDate)}
             />
@@ -411,7 +418,7 @@ const styles = StyleSheet.create({
   loaderText: {
     fontSize: 13,
     color: '#64748B',
-    fontWeight: '500',
+    fontFamily: 'Poppins-Medium',
   },
   stateWrap: {
     flexGrow: 1,
@@ -430,13 +437,14 @@ const styles = StyleSheet.create({
   },
   stateTitle: {
     fontSize: 16,
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
     color: '#0F172A',
     marginTop: 12,
     marginBottom: 6,
   },
   stateMsg: {
     fontSize: 13,
+    fontFamily: 'Poppins-Regular',
     color: '#64748B',
     textAlign: 'center',
     marginBottom: 16,
@@ -451,7 +459,7 @@ const styles = StyleSheet.create({
   stateBtnText: {
     color: '#FFFFFF',
     fontSize: 13,
-    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold',
   },
   scroll: {
     paddingHorizontal: 16,
@@ -466,12 +474,13 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: 18,
-    fontWeight: '800',
+    fontFamily: 'Poppins-SemiBold',
     color: '#0F172A',
     letterSpacing: -0.3,
   },
   headerSub: {
     fontSize: 12,
+    fontFamily: 'Poppins-Regular',
     color: '#64748B',
     marginTop: 2,
   },
@@ -482,7 +491,7 @@ const styles = StyleSheet.create({
   },
   statusBadgeText: {
     fontSize: 11,
-    fontWeight: '800',
+    fontFamily: 'Poppins-SemiBold',
     letterSpacing: 0.5,
   },
   heroCard: {
@@ -499,15 +508,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   heroLabel: {
-    fontSize: 12,
-    fontWeight: '600',
+    fontSize: 11,
+    fontFamily: 'Poppins-SemiBold',
     color: '#64748B',
     textTransform: 'uppercase',
     letterSpacing: 0.5,
   },
   heroPercentage: {
-    fontSize: 32,
-    fontWeight: '800',
+    fontSize: 30,
+    fontFamily: 'Poppins-SemiBold',
     color: '#0F172A',
     marginTop: 2,
   },
@@ -530,11 +539,12 @@ const styles = StyleSheet.create({
   },
   metricValue: {
     fontSize: 15,
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
     color: '#0F172A',
   },
   metricLabel: {
     fontSize: 11,
+    fontFamily: 'Poppins-Regular',
     color: '#64748B',
     marginTop: 2,
   },
@@ -552,8 +562,8 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   cardSectionTitle: {
-    fontSize: 13,
-    fontWeight: '700',
+    fontSize: 12,
+    fontFamily: 'Poppins-SemiBold',
     color: '#0F172A',
     marginBottom: 12,
     textTransform: 'uppercase',
@@ -575,11 +585,12 @@ const styles = StyleSheet.create({
   },
   detailRowLabel: {
     fontSize: 13,
+    fontFamily: 'Poppins-Regular',
     color: '#64748B',
   },
   detailRowValue: {
     fontSize: 13,
-    fontWeight: '600',
+    fontFamily: 'Poppins-Medium',
     color: '#0F172A',
   },
   sectionHeaderRow: {
@@ -590,11 +601,12 @@ const styles = StyleSheet.create({
   },
   sectionHeaderTitle: {
     fontSize: 15,
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
     color: '#0F172A',
   },
   sectionHeaderSub: {
     fontSize: 12,
+    fontFamily: 'Poppins-Regular',
     color: '#64748B',
   },
   subjectCard: {
@@ -613,7 +625,7 @@ const styles = StyleSheet.create({
   },
   scSubjectName: {
     fontSize: 14,
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
     color: '#0F172A',
     flex: 1,
     marginRight: 8,
@@ -625,7 +637,7 @@ const styles = StyleSheet.create({
   },
   scBadgeText: {
     fontSize: 10,
-    fontWeight: '800',
+    fontFamily: 'Poppins-SemiBold',
   },
   scChipsRow: {
     flexDirection: 'row',
@@ -641,7 +653,7 @@ const styles = StyleSheet.create({
   scChipText: {
     fontSize: 10,
     color: '#475569',
-    fontWeight: '500',
+    fontFamily: 'Poppins-Medium',
   },
   scScoreRow: {
     flexDirection: 'row',
@@ -651,18 +663,20 @@ const styles = StyleSheet.create({
   },
   scScoreText: {
     fontSize: 12,
+    fontFamily: 'Poppins-Regular',
   },
   scScoreObtained: {
     fontSize: 15,
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
     color: '#0F172A',
   },
   scScoreTotal: {
     color: '#64748B',
+    fontFamily: 'Poppins-Regular',
   },
   scPct: {
     fontSize: 12,
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
     color: '#0F172A',
   },
   progressTrack: {
@@ -681,6 +695,7 @@ const styles = StyleSheet.create({
   },
   emptySubjectsText: {
     fontSize: 13,
-    color: '#94A3B8',
+    fontFamily: 'Poppins-Regular',
+    color: '#9AAABB',
   },
 });

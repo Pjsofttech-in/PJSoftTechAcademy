@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useCallback, useMemo} from 'react';
+import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import {
   View,
   Text,
@@ -12,9 +12,9 @@ import {
 } from 'react-native';
 import { Ionicons } from '@react-native-vector-icons/ionicons';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import {useRoute} from '@react-navigation/native';
+import { useRoute } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {fetchAttendanceCountByFormId} from '../../util/Apicall';
+import { fetchAttendanceCountByFormId } from '../../util/Apicall';
 import StudentHeader from '../../components/StudentComponent/StudentHeader';
 import StudentFooter from '../../components/StudentComponent/StudentFooter';
 
@@ -22,12 +22,12 @@ import StudentFooter from '../../components/StudentComponent/StudentFooter';
 const BRAND_COLOR = '#6495ED';
 
 const formatDateObj = dateString => {
-  if (!dateString) return {day: '--', month: '---'};
+  if (!dateString) return { day: '--', month: '---' };
   const date = new Date(dateString);
-  if (isNaN(date)) return {day: '--', month: '---'};
+  if (isNaN(date)) return { day: '--', month: '---' };
   const day = String(date.getDate()).padStart(2, '0');
-  const month = date.toLocaleString('en-US', {month: 'short'}).toUpperCase();
-  return {day, month};
+  const month = date.toLocaleString('en-US', { month: 'short' }).toUpperCase();
+  return { day, month };
 };
 
 const formatTime12h = timeStr => {
@@ -43,10 +43,10 @@ const formatTime12h = timeStr => {
 };
 
 // ─── Dense Attendance Row Component ─────────────────────────────────────────
-const AttendanceRow = React.memo(({item}) => {
+const AttendanceRow = React.memo(({ item }) => {
   const statusLower = (item.loginStatus || '').toLowerCase();
   const isPresent = statusLower === 'present' || statusLower === 'on time';
-  const {day, month} = formatDateObj(item.date);
+  const { day, month } = formatDateObj(item.date);
   const login = formatTime12h(item.loginTime);
   const logout = formatTime12h(item.logoutTime);
 
@@ -77,12 +77,14 @@ const AttendanceRow = React.memo(({item}) => {
       <View style={styles.infoContainer}>
         <Text
           numberOfLines={1}
-          style={[styles.studentName, !isPresent && styles.textMuted]}>
+          style={[styles.studentName, !isPresent && styles.textMuted]}
+        >
           {item.studentName || 'N/A'}
         </Text>
         <Text
           numberOfLines={1}
-          style={[styles.rollText, !isPresent && styles.textSubtle]}>
+          style={[styles.rollText, !isPresent && styles.textSubtle]}
+        >
           RN: {item.rollno || 'N/A'} • {item.loginStatus || 'N/A'}
         </Text>
       </View>
@@ -113,18 +115,18 @@ const Attendance = () => {
 
   const timeOptions = useMemo(
     () => [
-      {label: 'Today', value: 'today'},
-      {label: '7 Days', value: '7days'},
-      {label: 'Custom', value: 'custom'},
+      { label: 'Today', value: 'today' },
+      { label: '7 Days', value: '7days' },
+      { label: 'Custom', value: 'custom' },
     ],
     [],
   );
 
   const statusOptions = useMemo(
     () => [
-      {label: 'All', value: 'all'},
-      {label: 'Present', value: 'present'},
-      {label: 'Absent', value: 'absent'},
+      { label: 'All', value: 'all' },
+      { label: 'Present', value: 'present' },
+      { label: 'Absent', value: 'absent' },
     ],
     [],
   );
@@ -234,7 +236,10 @@ const Attendance = () => {
   const absentCount = attendanceData?.absentCount ?? 0;
   const total = presentCount + absentCount;
 
-  const renderItem = useCallback(({item}) => <AttendanceRow item={item} />, []);
+  const renderItem = useCallback(
+    ({ item }) => <AttendanceRow item={item} />,
+    [],
+  );
   const keyExtractor = useCallback(
     (item, index) => item.id?.toString() || index.toString(),
     [],
@@ -252,7 +257,8 @@ const Attendance = () => {
             onPress={onRefresh}
             disabled={isLoading}
             style={styles.refreshBtn}
-            activeOpacity={0.7}>
+            activeOpacity={0.7}
+          >
             <Ionicons
               name="refresh-outline"
               size={18}
@@ -308,9 +314,11 @@ const Attendance = () => {
                     if (opt.value === 'custom') setShowFromPicker(true);
                   }}
                   style={[styles.filterChip, active && styles.filterChipActive]}
-                  activeOpacity={0.7}>
+                  activeOpacity={0.7}
+                >
                   <Text
-                    style={[styles.chipText, active && styles.chipTextActive]}>
+                    style={[styles.chipText, active && styles.chipTextActive]}
+                  >
                     {opt.label}
                   </Text>
                 </TouchableOpacity>
@@ -326,9 +334,11 @@ const Attendance = () => {
                   key={opt.value}
                   onPress={() => setStatusFilter(opt)}
                   style={[styles.filterChip, active && styles.filterChipActive]}
-                  activeOpacity={0.7}>
+                  activeOpacity={0.7}
+                >
                   <Text
-                    style={[styles.chipText, active && styles.chipTextActive]}>
+                    style={[styles.chipText, active && styles.chipTextActive]}
+                  >
                     {opt.label}
                   </Text>
                 </TouchableOpacity>
@@ -525,7 +535,7 @@ const styles = StyleSheet.create({
   dateDay: {
     fontSize: 13,
     color: '#0F172A',
-    fontFamily: 'Poppins-Bold',
+    fontFamily: 'Poppins-SemiBold',
     lineHeight: 16,
   },
   dateMonth: {
