@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef, useCallback} from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import {
   View,
   StyleSheet,
@@ -19,8 +19,8 @@ import DocumentPicker from 'react-native-document-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import TeacherHeader from '../../components/TeacherComponent/TeacherHeader';
 import TeacherFooter from '../../components/TeacherComponent/TeacherFooter';
-import {useAuth} from '../../auth/AuthContext';
-import {useNavigation, useRoute} from '@react-navigation/native';
+import { useAuth } from '../../auth/AuthContext';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import {
   fetchHomeworkByTeacherAndClass,
   fetchClassroomByTeacher,
@@ -80,7 +80,7 @@ const getReadableFileSize = size => {
 // ─── Assignment Card ───────────────────────────────────────────────────────────
 
 const AssignmentCard = React.memo(
-  ({assignment, index, onViewFile, onSubmissions}) => {
+  ({ assignment, index, onViewFile, onSubmissions }) => {
     const fadeAnim = useRef(new Animated.Value(0)).current;
     const slideAnim = useRef(new Animated.Value(20)).current;
 
@@ -111,9 +111,10 @@ const AssignmentCard = React.memo(
           styles.cardWrapper,
           {
             opacity: fadeAnim,
-            transform: [{translateY: slideAnim}],
+            transform: [{ translateY: slideAnim }],
           },
-        ]}>
+        ]}
+      >
         <View style={styles.card}>
           <View style={styles.cardHeader}>
             <View style={styles.titleSection}>
@@ -167,12 +168,13 @@ const AssignmentCard = React.memo(
             {hasImage && (
               <Pressable
                 onPress={() => onViewFile(fileUrl)}
-                android_ripple={{color: 'rgba(99,102,241,0.1)'}}
-                style={({pressed}) => [
+                android_ripple={{ color: 'rgba(99,102,241,0.1)' }}
+                style={({ pressed }) => [
                   styles.actionBtn,
-                  pressed && {opacity: 0.8},
-                ]}>
-                <Image source={{uri: fileUrl}} style={styles.btnThumbnail} />
+                  pressed && { opacity: 0.8 },
+                ]}
+              >
+                <Image source={{ uri: fileUrl }} style={styles.btnThumbnail} />
                 <Text style={styles.actionBtnText}>Open Image</Text>
                 <Ionicons name="open-outline" size={13} color="#6366F1" />
               </Pressable>
@@ -181,11 +183,12 @@ const AssignmentCard = React.memo(
             {hasFile && (
               <Pressable
                 onPress={() => onViewFile(fileUrl)}
-                android_ripple={{color: 'rgba(99,102,241,0.1)'}}
-                style={({pressed}) => [
+                android_ripple={{ color: 'rgba(99,102,241,0.1)' }}
+                style={({ pressed }) => [
                   styles.actionBtn,
-                  pressed && {opacity: 0.8},
-                ]}>
+                  pressed && { opacity: 0.8 },
+                ]}
+              >
                 <Ionicons
                   name="document-text-outline"
                   size={15}
@@ -199,7 +202,7 @@ const AssignmentCard = React.memo(
             {!fileUrl && (
               <View style={[styles.actionBtn, styles.actionBtnDisabled]}>
                 <Ionicons name="attach-outline" size={15} color="#CBD5E1" />
-                <Text style={[styles.actionBtnText, {color: '#CBD5E1'}]}>
+                <Text style={[styles.actionBtnText, { color: '#CBD5E1' }]}>
                   No File
                 </Text>
               </View>
@@ -207,12 +210,13 @@ const AssignmentCard = React.memo(
 
             <Pressable
               onPress={() => onSubmissions(assignment)}
-              android_ripple={{color: 'rgba(99,102,241,0.1)'}}
-              style={({pressed}) => [
+              android_ripple={{ color: 'rgba(99,102,241,0.1)' }}
+              style={({ pressed }) => [
                 styles.actionBtn,
                 styles.actionBtnPrimary,
-                pressed && {opacity: 0.85},
-              ]}>
+                pressed && { opacity: 0.85 },
+              ]}
+            >
               <Ionicons name="people-outline" size={15} color="#6366F1" />
               <Text style={styles.actionBtnText}>Submissions</Text>
             </Pressable>
@@ -251,10 +255,10 @@ const SubmitAssignment = () => {
   const subjectDropdownOpacity = useRef(new Animated.Value(0)).current;
   const [subjects, setSubjects] = useState([]);
 
-  const {userData} = useAuth();
+  const { userData } = useAuth();
   const navigation = useNavigation();
   const route = useRoute();
-  const {classroomId, branchCode, batchName} = route.params || {};
+  const { classroomId, branchCode, batchName } = route.params || {};
 
   useEffect(() => {
     Animated.timing(headerAnim, {
@@ -280,7 +284,7 @@ const SubmitAssignment = () => {
             if (c.subjects) {
               c.subjects.forEach(s => {
                 if (!allSubjects.find(x => x.id === s.id)) {
-                  allSubjects.push({id: s.id, subjectName: s.subjectName});
+                  allSubjects.push({ id: s.id, subjectName: s.subjectName });
                 }
               });
             }
@@ -551,7 +555,8 @@ const SubmitAssignment = () => {
               },
             ],
           },
-        ]}>
+        ]}
+      >
         <View style={styles.pageHeaderLeft}>
           <Pressable onPress={() => navigation.goBack()} style={styles.backBtn}>
             <Ionicons name="arrow-back" size={22} color="#0F172A" />
@@ -566,11 +571,12 @@ const SubmitAssignment = () => {
 
         <Pressable
           onPress={openModal}
-          android_ripple={{color: 'rgba(99,102,241,0.15)'}}
-          style={({pressed}) => [
+          android_ripple={{ color: 'rgba(99,102,241,0.15)' }}
+          style={({ pressed }) => [
             styles.newAssignmentBtn,
-            pressed && {opacity: 0.85},
-          ]}>
+            pressed && { opacity: 0.85 },
+          ]}
+        >
           <Ionicons name="add" size={18} color="#6366F1" />
           <Text style={styles.newAssignmentBtnText}>New Assignment</Text>
         </Pressable>
@@ -578,7 +584,8 @@ const SubmitAssignment = () => {
 
       <ScrollView
         contentContainerStyle={styles.scrollContent}
-        showsVerticalScrollIndicator={false}>
+        showsVerticalScrollIndicator={false}
+      >
         <Text style={styles.resultCount}>
           {assignments.length} Assignment{assignments.length !== 1 ? 's' : ''}{' '}
           Available
@@ -622,7 +629,7 @@ const SubmitAssignment = () => {
       <TeacherFooter />
 
       <Modal transparent visible={isModalVisible} animationType="none">
-        <Animated.View style={[styles.modalOverlay, {opacity: modalOpacity}]}>
+        <Animated.View style={[styles.modalOverlay, { opacity: modalOpacity }]}>
           <View style={styles.modalContainer}>
             <View style={styles.modalHeader}>
               <View style={styles.modalHeaderLeft}>
@@ -640,7 +647,8 @@ const SubmitAssignment = () => {
 
             <ScrollView
               style={styles.modalContent}
-              showsVerticalScrollIndicator={false}>
+              showsVerticalScrollIndicator={false}
+            >
               <View style={styles.formGroup}>
                 <Text style={styles.formLabel}>Assignment Description *</Text>
                 <View style={styles.inputWrapper}>
@@ -661,7 +669,8 @@ const SubmitAssignment = () => {
                 <Text style={styles.formLabel}>Subject *</Text>
                 <Pressable
                   style={styles.dropdownTrigger}
-                  onPress={toggleSubjectDropdown}>
+                  onPress={toggleSubjectDropdown}
+                >
                   <View style={styles.dropdownTriggerLeft}>
                     <Ionicons name="book-outline" size={16} color="#94A3B8" />
                     <Text
@@ -669,7 +678,8 @@ const SubmitAssignment = () => {
                         styles.dropdownTriggerText,
                         selectedSubject === 'Select Subject' &&
                           styles.placeholderText,
-                      ]}>
+                      ]}
+                    >
                       {selectedSubject}
                     </Text>
                   </View>
@@ -687,7 +697,8 @@ const SubmitAssignment = () => {
                       height: subjectDropdownHeight,
                       opacity: subjectDropdownOpacity,
                     },
-                  ]}>
+                  ]}
+                >
                   <ScrollView nestedScrollEnabled showsVerticalScrollIndicator>
                     {subjects.map((subject, idx) => (
                       <Pressable
@@ -697,7 +708,8 @@ const SubmitAssignment = () => {
                           idx === subjects.length - 1 &&
                             styles.dropdownItemLast,
                         ]}
-                        onPress={() => handleSelectSubject(subject)}>
+                        onPress={() => handleSelectSubject(subject)}
+                      >
                         <Ionicons
                           name="book-outline"
                           size={14}
@@ -717,7 +729,8 @@ const SubmitAssignment = () => {
                   <Text style={styles.formLabel}>Start Date *</Text>
                   <Pressable
                     style={styles.datePicker}
-                    onPress={() => setStartDatePickerOpen(true)}>
+                    onPress={() => setStartDatePickerOpen(true)}
+                  >
                     <Ionicons
                       name="calendar-outline"
                       size={16}
@@ -732,9 +745,10 @@ const SubmitAssignment = () => {
                   <Text style={styles.formLabel}>Due Date *</Text>
                   <Pressable
                     style={styles.datePicker}
-                    onPress={() => setEndDatePickerOpen(true)}>
+                    onPress={() => setEndDatePickerOpen(true)}
+                  >
                     <Ionicons name="alarm-outline" size={16} color="#EF4444" />
-                    <Text style={[styles.datePickerText, {color: '#EF4444'}]}>
+                    <Text style={[styles.datePickerText, { color: '#EF4444' }]}>
                       {formatDisplayDate(endDate)}
                     </Text>
                   </Pressable>
@@ -747,7 +761,8 @@ const SubmitAssignment = () => {
                   <Pressable
                     style={styles.uploadBtn}
                     onPress={handleFileUpload}
-                    disabled={isUploading}>
+                    disabled={isUploading}
+                  >
                     <View style={styles.uploadIconBox}>
                       <Ionicons
                         name="cloud-upload-outline"
@@ -783,7 +798,8 @@ const SubmitAssignment = () => {
                     </View>
                     <Pressable
                       onPress={() => setUploadedFile(null)}
-                      style={styles.fileRemoveBtn}>
+                      style={styles.fileRemoveBtn}
+                    >
                       <Ionicons name="close-circle" size={20} color="#EF4444" />
                     </Pressable>
                   </View>
@@ -801,7 +817,8 @@ const SubmitAssignment = () => {
                   isUploading && styles.submitBtnDisabled,
                 ]}
                 onPress={handleSubmitAssignment}
-                disabled={isUploading}>
+                disabled={isUploading}
+              >
                 {isUploading ? (
                   <ActivityIndicator size="small" color="#fff" />
                 ) : (
@@ -846,15 +863,17 @@ const SubmitAssignment = () => {
 
 export default SubmitAssignment;
 
+// ─── Styles (Strictly using Regular, Medium, SemiBold) ─────────────────────────
+
 const styles = StyleSheet.create({
-  container: {flex: 1, backgroundColor: '#F8FAFC'},
+  container: { flex: 1, backgroundColor: '#F8FAFC' },
   fullScreenState: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     gap: 12,
   },
-  loadingText: {fontSize: 13, color: '#64748B', fontWeight: '600'},
+  loadingText: { fontSize: 13, color: '#64748B', fontFamily: 'Poppins-Medium' },
   pageHeader: {
     backgroundColor: '#FFFFFF',
     flexDirection: 'row',
@@ -871,9 +890,14 @@ const styles = StyleSheet.create({
     gap: 10,
     flex: 1,
   },
-  backBtn: {padding: 4},
-  pageTitle: {fontSize: 20, fontWeight: '800', color: '#0F172A'},
-  pageSubtitle: {fontSize: 12, color: '#64748B', marginTop: 1},
+  backBtn: { padding: 4 },
+  pageTitle: { fontSize: 16, fontFamily: 'Poppins-SemiBold', color: '#0F172A' },
+  pageSubtitle: {
+    fontSize: 12,
+    color: '#64748B',
+    marginTop: 1,
+    fontFamily: 'Poppins-Medium',
+  },
   newAssignmentBtn: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -885,17 +909,21 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#C7D2FE',
   },
-  newAssignmentBtnText: {fontSize: 12, fontWeight: '600', color: '#6366F1'},
-  scrollContent: {paddingHorizontal: 10, paddingTop: 12, paddingBottom: 20},
+  newAssignmentBtnText: {
+    fontSize: 12,
+    fontFamily: 'Poppins-SemiBold',
+    color: '#6366F1',
+  },
+  scrollContent: { paddingHorizontal: 10, paddingTop: 12, paddingBottom: 20 },
   resultCount: {
     fontSize: 11,
     color: '#64748B',
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
     textTransform: 'uppercase',
     marginBottom: 10,
     marginLeft: 4,
   },
-  cardWrapper: {marginBottom: 12},
+  cardWrapper: { marginBottom: 12 },
   card: {
     backgroundColor: '#FFFFFF',
     borderRadius: 14,
@@ -908,7 +936,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  titleSection: {flexDirection: 'row', alignItems: 'center', gap: 10, flex: 1},
+  titleSection: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+    flex: 1,
+  },
   iconBox: {
     width: 36,
     height: 36,
@@ -917,9 +950,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  batchInfo: {flex: 1},
-  subjectName: {fontSize: 14, fontWeight: '700', color: '#0F172A'},
-  divider: {height: 1, backgroundColor: '#F1F5F9', marginVertical: 10},
+  batchInfo: { flex: 1 },
+  subjectName: {
+    fontSize: 14,
+    fontFamily: 'Poppins-SemiBold',
+    color: '#0F172A',
+  },
+  divider: { height: 1, backgroundColor: '#F1F5F9', marginVertical: 10 },
   homeworkBox: {
     backgroundColor: '#F8FAFC',
     borderRadius: 8,
@@ -928,13 +965,18 @@ const styles = StyleSheet.create({
   },
   homeworkLabel: {
     fontSize: 10,
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
     color: '#64748B',
     textTransform: 'uppercase',
     letterSpacing: 0.5,
     marginBottom: 4,
   },
-  homeworkText: {fontSize: 12, color: '#334155', lineHeight: 18},
+  homeworkText: {
+    fontSize: 12,
+    color: '#334155',
+    lineHeight: 18,
+    fontFamily: 'Poppins-Regular',
+  },
   dateRow: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -955,15 +997,15 @@ const styles = StyleSheet.create({
   },
   dateValue: {
     fontSize: 11,
-    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold',
     color: '#475569',
   },
   dueDateValue: {
     fontSize: 11,
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
     color: '#DC2626',
   },
-  actionRow: {flexDirection: 'row', gap: 8},
+  actionRow: { flexDirection: 'row', gap: 8 },
   actionBtn: {
     flex: 1,
     flexDirection: 'row',
@@ -982,9 +1024,13 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     backgroundColor: '#CBD5E1',
   },
-  actionBtnPrimary: {backgroundColor: '#EEF2FF', borderColor: '#C7D2FE'},
-  actionBtnDisabled: {backgroundColor: '#F8FAFC', borderColor: '#E2E8F0'},
-  actionBtnText: {fontSize: 12, fontWeight: '600', color: '#6366F1'},
+  actionBtnPrimary: { backgroundColor: '#EEF2FF', borderColor: '#C7D2FE' },
+  actionBtnDisabled: { backgroundColor: '#F8FAFC', borderColor: '#E2E8F0' },
+  actionBtnText: {
+    fontSize: 12,
+    fontFamily: 'Poppins-SemiBold',
+    color: '#6366F1',
+  },
   emptyState: {
     alignItems: 'center',
     paddingVertical: 40,
@@ -1003,8 +1049,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 12,
   },
-  emptyTitle: {fontSize: 15, fontWeight: '700', color: '#0F172A'},
-  emptySubtitle: {fontSize: 12, color: '#64748B', marginTop: 4},
+  emptyTitle: {
+    fontSize: 15,
+    fontFamily: 'Poppins-SemiBold',
+    color: '#0F172A',
+  },
+  emptySubtitle: {
+    fontSize: 12,
+    color: '#64748B',
+    marginTop: 4,
+    fontFamily: 'Poppins-Regular',
+  },
   modalOverlay: {
     flex: 1,
     backgroundColor: 'rgba(15, 23, 42, 0.5)',
@@ -1022,7 +1077,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 16,
   },
-  modalHeaderLeft: {flexDirection: 'row', alignItems: 'center', gap: 10},
+  modalHeaderLeft: { flexDirection: 'row', alignItems: 'center', gap: 10 },
   modalIconBox: {
     width: 32,
     height: 32,
@@ -1031,14 +1086,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  modalTitle: {fontSize: 15, fontWeight: '700', color: '#0F172A'},
-  modalCloseBtn: {padding: 4},
-  modalDivider: {height: 1, backgroundColor: '#E2E8F0'},
-  modalContent: {padding: 16},
-  formGroup: {marginBottom: 16},
+  modalTitle: {
+    fontSize: 15,
+    fontFamily: 'Poppins-SemiBold',
+    color: '#0F172A',
+  },
+  modalCloseBtn: { padding: 4 },
+  modalDivider: { height: 1, backgroundColor: '#E2E8F0' },
+  modalContent: { padding: 16 },
+  formGroup: { marginBottom: 16 },
   formLabel: {
     fontSize: 12,
-    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold',
     color: '#334155',
     marginBottom: 6,
   },
@@ -1049,7 +1108,12 @@ const styles = StyleSheet.create({
     borderColor: '#E2E8F0',
     padding: 10,
   },
-  textInput: {fontSize: 13, color: '#0F172A', minHeight: 80},
+  textInput: {
+    fontSize: 13,
+    color: '#0F172A',
+    minHeight: 80,
+    fontFamily: 'Poppins-Regular',
+  },
   dropdownTrigger: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -1060,9 +1124,13 @@ const styles = StyleSheet.create({
     borderColor: '#E2E8F0',
     padding: 10,
   },
-  dropdownTriggerLeft: {flexDirection: 'row', alignItems: 'center', gap: 8},
-  dropdownTriggerText: {fontSize: 13, color: '#0F172A'},
-  placeholderText: {color: '#94A3B8'},
+  dropdownTriggerLeft: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+  dropdownTriggerText: {
+    fontSize: 13,
+    color: '#0F172A',
+    fontFamily: 'Poppins-Medium',
+  },
+  placeholderText: { color: '#94A3B8', fontFamily: 'Poppins-Regular' },
   inlineDropdown: {
     marginTop: 6,
     backgroundColor: '#FFFFFF',
@@ -1080,10 +1148,14 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#F1F5F9',
   },
-  dropdownItemLast: {borderBottomWidth: 0},
-  dropdownItemText: {fontSize: 12, fontWeight: '600', color: '#0F172A'},
-  datePickerRow: {flexDirection: 'row', gap: 10, marginBottom: 16},
-  dateInputContainer: {flex: 1},
+  dropdownItemLast: { borderBottomWidth: 0 },
+  dropdownItemText: {
+    fontSize: 12,
+    fontFamily: 'Poppins-SemiBold',
+    color: '#0F172A',
+  },
+  datePickerRow: { flexDirection: 'row', gap: 10, marginBottom: 16 },
+  dateInputContainer: { flex: 1 },
   datePicker: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -1094,7 +1166,11 @@ const styles = StyleSheet.create({
     borderColor: '#E2E8F0',
     padding: 10,
   },
-  datePickerText: {fontSize: 12, fontWeight: '600', color: '#0F172A'},
+  datePickerText: {
+    fontSize: 12,
+    fontFamily: 'Poppins-SemiBold',
+    color: '#0F172A',
+  },
   uploadBtn: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -1114,8 +1190,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  uploadBtnTitle: {fontSize: 12, fontWeight: '600', color: '#0F172A'},
-  uploadBtnSubtitle: {fontSize: 10, color: '#64748B', marginTop: 1},
+  uploadBtnTitle: {
+    fontSize: 12,
+    fontFamily: 'Poppins-SemiBold',
+    color: '#0F172A',
+  },
+  uploadBtnSubtitle: {
+    fontSize: 10,
+    color: '#64748B',
+    marginTop: 1,
+    fontFamily: 'Poppins-Regular',
+  },
   filePreview: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -1134,11 +1219,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  filePreviewInfo: {flex: 1},
-  filePreviewName: {fontSize: 12, fontWeight: '600', color: '#0F172A'},
-  filePreviewSize: {fontSize: 10, color: '#64748B'},
-  fileRemoveBtn: {padding: 4},
-  modalFooter: {flexDirection: 'row', gap: 10, padding: 16},
+  filePreviewInfo: { flex: 1 },
+  filePreviewName: {
+    fontSize: 12,
+    fontFamily: 'Poppins-SemiBold',
+    color: '#0F172A',
+  },
+  filePreviewSize: {
+    fontSize: 10,
+    color: '#64748B',
+    fontFamily: 'Poppins-Regular',
+  },
+  fileRemoveBtn: { padding: 4 },
+  modalFooter: { flexDirection: 'row', gap: 10, padding: 16 },
   cancelBtn: {
     flex: 1,
     alignItems: 'center',
@@ -1148,7 +1241,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#E2E8F0',
   },
-  cancelBtnText: {fontSize: 13, fontWeight: '600', color: '#64748B'},
+  cancelBtnText: {
+    fontSize: 13,
+    fontFamily: 'Poppins-SemiBold',
+    color: '#64748B',
+  },
   submitBtn: {
     flex: 1,
     flexDirection: 'row',
@@ -1159,6 +1256,10 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     backgroundColor: '#6366F1',
   },
-  submitBtnDisabled: {backgroundColor: '#A5B4FC'},
-  submitBtnText: {fontSize: 13, fontWeight: '600', color: '#FFFFFF'},
+  submitBtnDisabled: { backgroundColor: '#A5B4FC' },
+  submitBtnText: {
+    fontSize: 13,
+    fontFamily: 'Poppins-SemiBold',
+    color: '#FFFFFF',
+  },
 });

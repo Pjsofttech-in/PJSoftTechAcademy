@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef} from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {
   View,
   Text,
@@ -9,9 +9,9 @@ import {
   ScrollView,
   Dimensions,
 } from 'react-native';
-import {fetchExamTypes, fetchPaperTypes} from '../util/Apicall';
+import { fetchExamTypes, fetchPaperTypes } from '../util/Apicall';
 import { Ionicons } from '@react-native-vector-icons/ionicons';
-import {useAuth} from '../auth/AuthContext';
+import { useAuth } from '../auth/AuthContext';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 
@@ -20,7 +20,7 @@ const ExamPaperTypeSelector = ({
   onPaperTypeChange,
   customTextStyle = {},
 }) => {
-  const {userData} = useAuth();
+  const { userData } = useAuth();
   const [examTypes, setExamTypes] = useState([]);
   const [paperTypes, setPaperTypes] = useState([]);
   const [selectedExamType, setSelectedExamType] = useState(null);
@@ -87,7 +87,7 @@ const ExamPaperTypeSelector = ({
         targetY = pageY - finalHeight - 6;
       }
 
-      setDropdownPosition({x: pageX, y: targetY, width: width});
+      setDropdownPosition({ x: pageX, y: targetY, width: width });
       dropdownHeight.setValue(0);
       dropdownOpacity.setValue(0);
       setDropdownVisible(true);
@@ -152,23 +152,29 @@ const ExamPaperTypeSelector = ({
       <Pressable
         ref={ref}
         style={[styles.pill, isSelected && styles.pillSelected]}
-        onPress={() => openDropdown(type, ref)}>
+        onPress={() => openDropdown(type, ref)}
+      >
         <Ionicons
           name={type === 'exam' ? 'school-outline' : 'document-text-outline'}
           size={13}
           color={isSelected ? '#fff' : '#5B6B8A'}
-          style={{marginRight: 5}}
+          style={{ marginRight: 5 }}
         />
         <Text
-          style={[styles.pillText, isSelected && styles.pillTextSelected]}
-          numberOfLines={1}>
+          style={[
+            styles.pillText,
+            customTextStyle,
+            isSelected && styles.pillTextSelected,
+          ]}
+          numberOfLines={1}
+        >
           {value || label}
         </Text>
         <Ionicons
           name="chevron-down"
           size={12}
           color={isSelected ? '#fff' : '#5B6B8A'}
-          style={{marginLeft: 4}}
+          style={{ marginLeft: 4 }}
         />
       </Pressable>
     );
@@ -193,15 +199,18 @@ const ExamPaperTypeSelector = ({
                   height: dropdownHeight,
                   opacity: dropdownOpacity,
                 },
-              ]}>
+              ]}
+            >
               <ScrollView
                 nestedScrollEnabled
                 keyboardShouldPersistTaps="handled"
                 showsVerticalScrollIndicator={true}
-                style={{flex: 1}}>
+                style={{ flex: 1 }}
+              >
                 <Pressable
                   style={styles.dropdownItem}
-                  onPress={() => handleSelect('ALL')}>
+                  onPress={() => handleSelect('ALL')}
+                >
                   <Text style={styles.dropdownItemText}>All</Text>
                 </Pressable>
                 {dropdownData.map((item, index) => {
@@ -218,12 +227,14 @@ const ExamPaperTypeSelector = ({
                         styles.dropdownItem,
                         isSelected && styles.selectedDropdownItem,
                       ]}
-                      onPress={() => handleSelect(item)}>
+                      onPress={() => handleSelect(item)}
+                    >
                       <Text
                         style={[
                           styles.dropdownItemText,
                           isSelected && styles.selectedDropdownItemText,
-                        ]}>
+                        ]}
+                      >
                         {label}
                       </Text>
                     </Pressable>
@@ -260,7 +271,7 @@ const styles = StyleSheet.create({
   pillText: {
     fontSize: 12,
     color: '#5B6B8A',
-    fontFamily: 'DMSans-Medium',
+    fontFamily: 'Poppins-Medium',
     maxWidth: 90,
   },
   pillTextSelected: {
@@ -278,7 +289,7 @@ const styles = StyleSheet.create({
     borderColor: '#E5E9F2',
     overflow: 'hidden',
     shadowColor: '#000',
-    shadowOffset: {width: 0, height: 4},
+    shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.12,
     shadowRadius: 8,
   },
@@ -296,11 +307,11 @@ const styles = StyleSheet.create({
   dropdownItemText: {
     fontSize: 13,
     color: '#374151',
-    fontFamily: 'DMSans-Medium',
+    fontFamily: 'Poppins-Medium',
   },
   selectedDropdownItemText: {
     color: 'rgba(112, 172, 246, 1)',
-    fontFamily: 'DMSans-Bold',
+    fontFamily: 'Poppins-Bold',
   },
 });
 

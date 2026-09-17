@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   StyleSheet,
   Text,
@@ -16,11 +16,11 @@ import {
 import { Ionicons } from '@react-native-vector-icons/ionicons';
 import TeacherHeader from '../../components/TeacherComponent/TeacherHeader';
 import TeacherFooter from '../../components/TeacherComponent/TeacherFooter';
-import {useAuth} from '../../auth/AuthContext';
-import {fetchClassroomByTeacher} from '../../util/Apicall';
-import {useNavigation} from '@react-navigation/native';
+import { useAuth } from '../../auth/AuthContext';
+import { fetchClassroomByTeacher } from '../../util/Apicall';
+import { useNavigation } from '@react-navigation/native';
 
-const {width: SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
+const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 
 // ─────────────────────────────────────────────────────────────
 // CONSTANTS & HELPERS
@@ -51,7 +51,7 @@ const ACTION_BUTTONS = [
     color: '#6366F1',
     bg: '#EEF2FF',
     navigate: (navigation, item) =>
-      navigation.navigate('Student', {classroom: item}),
+      navigation.navigate('Student', { classroom: item }),
   },
   {
     key: 'attendance',
@@ -68,7 +68,7 @@ const ACTION_BUTTONS = [
     color: '#8B5CF6',
     bg: '#F5F3FF',
     navigate: (navigation, item) =>
-      navigation.navigate('Timetable', {classroom: item}),
+      navigation.navigate('Timetable', { classroom: item }),
   },
   {
     key: 'assignment',
@@ -105,10 +105,10 @@ const SkeletonCard = () => {
   }, [pulseAnim]);
 
   return (
-    <Animated.View style={[styles.skeletonCard, {opacity: pulseAnim}]}>
+    <Animated.View style={[styles.skeletonCard, { opacity: pulseAnim }]}>
       <View style={styles.skeletonHeader}>
         <View style={styles.skeletonAvatar} />
-        <View style={{flex: 1, gap: 6}}>
+        <View style={{ flex: 1, gap: 6 }}>
           <View style={styles.skeletonLineLong} />
           <View style={styles.skeletonLineShort} />
         </View>
@@ -125,7 +125,7 @@ const SkeletonCard = () => {
 // ULTRA-COMPACT CLASSROOM CARD
 // ─────────────────────────────────────────────────────────────
 
-const ClassroomCard = ({item, index, onAssignMarks, navigation}) => {
+const ClassroomCard = ({ item, index, onAssignMarks, navigation }) => {
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const translateY = useRef(new Animated.Value(15)).current;
 
@@ -159,9 +159,10 @@ const ClassroomCard = ({item, index, onAssignMarks, navigation}) => {
         styles.cardContainer,
         {
           opacity: fadeAnim,
-          transform: [{translateY}],
+          transform: [{ translateY }],
         },
-      ]}>
+      ]}
+    >
       {/* HEADER ROW */}
       <View style={styles.cardHeader}>
         <View style={styles.headerLeft}>
@@ -204,7 +205,8 @@ const ClassroomCard = ({item, index, onAssignMarks, navigation}) => {
         <TouchableOpacity
           activeOpacity={0.75}
           style={styles.inlineAssignBtn}
-          onPress={() => onAssignMarks(item)}>
+          onPress={() => onAssignMarks(item)}
+        >
           <Ionicons name="create-outline" size={13} color="#4F46E5" />
           <Text style={styles.inlineAssignText}>Assign Marks</Text>
           <Ionicons name="chevron-forward" size={12} color="#4F46E5" />
@@ -223,7 +225,8 @@ const ClassroomCard = ({item, index, onAssignMarks, navigation}) => {
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.subjectScroll}>
+            contentContainerStyle={styles.subjectScroll}
+          >
             {subjectList.map((sub, i) => (
               <View key={i} style={styles.compactSubjectChip}>
                 <Text style={styles.compactSubjectText}>{sub}</Text>
@@ -240,11 +243,12 @@ const ClassroomCard = ({item, index, onAssignMarks, navigation}) => {
             key={btn.key}
             activeOpacity={0.75}
             style={styles.quickActionChip}
-            onPress={() => btn.navigate(navigation, item)}>
-            <View style={[styles.quickActionIcon, {backgroundColor: btn.bg}]}>
+            onPress={() => btn.navigate(navigation, item)}
+          >
+            <View style={[styles.quickActionIcon, { backgroundColor: btn.bg }]}>
               <Ionicons name={btn.icon} size={14} color={btn.color} />
             </View>
-            <Text style={[styles.quickActionLabel, {color: btn.color}]}>
+            <Text style={[styles.quickActionLabel, { color: btn.color }]}>
               {btn.label}
             </Text>
           </TouchableOpacity>
@@ -259,7 +263,7 @@ const ClassroomCard = ({item, index, onAssignMarks, navigation}) => {
 // ─────────────────────────────────────────────────────────────
 
 const Classroom = () => {
-  const {userData} = useAuth();
+  const { userData } = useAuth();
   const [classrooms, setClassrooms] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
@@ -392,13 +396,13 @@ const Classroom = () => {
       <FlatList
         data={filteredClassrooms}
         keyExtractor={(item, index) => item?.id?.toString() || index.toString()}
-        renderItem={({item, index}) => (
+        renderItem={({ item, index }) => (
           <ClassroomCard
             item={item}
             index={index}
             navigation={navigation}
             onAssignMarks={classroom => {
-              navigation.navigate('AssignMarks', {classroom});
+              navigation.navigate('AssignMarks', { classroom });
             }}
           />
         )}
@@ -428,7 +432,7 @@ const Classroom = () => {
               name="school"
               size={17}
               color="#6366F1"
-              style={{marginRight: 6}}
+              style={{ marginRight: 6 }}
             />
             <Text style={styles.screenTitle}>CLASSROOMS</Text>
           </View>
@@ -436,12 +440,13 @@ const Classroom = () => {
           <Pressable
             ref={dropdownRef}
             style={styles.yearFilter}
-            onPress={openDropdown}>
+            onPress={openDropdown}
+          >
             <Ionicons
               name="funnel-outline"
               size={11}
               color="#6366F1"
-              style={{marginRight: 5}}
+              style={{ marginRight: 5 }}
             />
             <Text style={styles.yearFilterText} numberOfLines={1}>
               {selectedAcademicYear === 'All Academic Years'
@@ -465,10 +470,12 @@ const Classroom = () => {
                       height: dropdownHeight,
                       opacity: dropdownOpacity,
                     },
-                  ]}>
+                  ]}
+                >
                   <ScrollView
                     nestedScrollEnabled
-                    showsVerticalScrollIndicator={false}>
+                    showsVerticalScrollIndicator={false}
+                  >
                     {academicYearsList.map(year => (
                       <Pressable
                         key={year}
@@ -477,13 +484,14 @@ const Classroom = () => {
                           selectedAcademicYear === year &&
                             styles.dropdownItemActive,
                         ]}
-                        onPress={() => handleSelectYear(year)}>
+                        onPress={() => handleSelectYear(year)}
+                      >
                         {selectedAcademicYear === year && (
                           <Ionicons
                             name="checkmark"
                             size={13}
                             color="#6366F1"
-                            style={{marginRight: 6}}
+                            style={{ marginRight: 6 }}
                           />
                         )}
                         <Text
@@ -491,7 +499,8 @@ const Classroom = () => {
                             styles.dropdownItemText,
                             selectedAcademicYear === year &&
                               styles.dropdownItemTextActive,
-                          ]}>
+                          ]}
+                        >
                           {year}
                         </Text>
                       </Pressable>
@@ -552,7 +561,7 @@ const styles = StyleSheet.create({
   },
   screenTitle: {
     fontSize: 14,
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
     color: '#0F172A',
     letterSpacing: 0.5,
   },
@@ -569,7 +578,7 @@ const styles = StyleSheet.create({
   yearFilterText: {
     fontSize: SCREEN_WIDTH < 360 ? 10 : 11,
     color: '#4338CA',
-    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold',
     marginRight: 4,
     flexShrink: 1,
   },
@@ -603,10 +612,11 @@ const styles = StyleSheet.create({
   dropdownItemText: {
     fontSize: SCREEN_WIDTH < 360 ? 11 : 12,
     color: '#475569',
+    fontFamily: 'Poppins-Regular',
   },
   dropdownItemTextActive: {
     color: '#6366F1',
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
   },
 
   // Count Header
@@ -618,7 +628,7 @@ const styles = StyleSheet.create({
   countText: {
     fontSize: 10,
     color: '#64748B',
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
     textTransform: 'uppercase',
     letterSpacing: 0.5,
   },
@@ -639,7 +649,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#E2E8F0',
     shadowColor: '#0F172A',
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.04,
     shadowRadius: 5,
     elevation: 2,
@@ -676,7 +686,7 @@ const styles = StyleSheet.create({
   },
   batchName: {
     fontSize: 14,
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
     color: '#0F172A',
     flex: 1,
   },
@@ -689,13 +699,13 @@ const styles = StyleSheet.create({
   },
   indexPillText: {
     fontSize: 9,
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
     color: '#64748B',
   },
   courseNameText: {
     fontSize: 11,
     color: '#64748B',
-    fontWeight: '500',
+    fontFamily: 'Poppins-Medium',
   },
 
   // Inline Metadata + Action Row
@@ -724,7 +734,7 @@ const styles = StyleSheet.create({
   metaValue: {
     fontSize: 10,
     color: '#0F172A',
-    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold',
   },
   inlineAssignBtn: {
     flexDirection: 'row',
@@ -739,7 +749,7 @@ const styles = StyleSheet.create({
   },
   inlineAssignText: {
     fontSize: 10,
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
     color: '#4F46E5',
   },
 
@@ -766,7 +776,7 @@ const styles = StyleSheet.create({
   compactSubjectText: {
     fontSize: 10,
     color: '#4338CA',
-    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold',
   },
 
   // Floating Quick Action Chips
@@ -794,7 +804,7 @@ const styles = StyleSheet.create({
   },
   quickActionLabel: {
     fontSize: 9,
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
     textAlign: 'center',
   },
 
@@ -809,12 +819,13 @@ const styles = StyleSheet.create({
   },
   emptyTitle: {
     fontSize: 15,
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
     color: '#0F172A',
   },
   emptySubtext: {
     fontSize: 12,
     color: '#64748B',
+    fontFamily: 'Poppins-Regular',
     textAlign: 'center',
   },
   skeletonCard: {

@@ -1,4 +1,4 @@
-import React, {useRef, useState, useEffect} from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -8,7 +8,7 @@ import {
   Easing,
 } from 'react-native';
 
-const ResultNavComponent = ({tabs = [], activeTab, onTabChange}) => {
+const ResultNavComponent = ({ tabs = [], activeTab, onTabChange }) => {
   const scrollViewRef = useRef(null);
   const scrollX = useRef(new Animated.Value(0)).current;
   const indicatorX = useRef(new Animated.Value(0)).current;
@@ -29,8 +29,8 @@ const ResultNavComponent = ({tabs = [], activeTab, onTabChange}) => {
   };
 
   const onButtonLayout = (id, e) => {
-    const {x, width} = e.nativeEvent.layout;
-    buttonRefs.current[id] = {x, width};
+    const { x, width } = e.nativeEvent.layout;
+    buttonRefs.current[id] = { x, width };
     if (id === activeTab) indicatorX.setValue(x);
   };
 
@@ -60,8 +60,8 @@ const ResultNavComponent = ({tabs = [], activeTab, onTabChange}) => {
       return;
     }
 
-    const listenerId = scrollAnim.addListener(({value}) => {
-      scrollViewRef.current?.scrollTo({x: value, animated: false});
+    const listenerId = scrollAnim.addListener(({ value }) => {
+      scrollViewRef.current?.scrollTo({ x: value, animated: false });
     });
 
     const anim = Animated.sequence([
@@ -112,9 +112,9 @@ const ResultNavComponent = ({tabs = [], activeTab, onTabChange}) => {
     stopAutoScroll();
 
     let last = null;
-    const lid = scrollAnim.addListener(({value}) => {
+    const lid = scrollAnim.addListener(({ value }) => {
       if (value !== last) {
-        scrollViewRef.current?.scrollTo({x: value, animated: false});
+        scrollViewRef.current?.scrollTo({ x: value, animated: false });
         last = value;
       }
     });
@@ -145,7 +145,7 @@ const ResultNavComponent = ({tabs = [], activeTab, onTabChange}) => {
               {
                 width: btnWidth,
                 transform: [
-                  {translateX: Animated.subtract(indicatorX, scrollX)},
+                  { translateX: Animated.subtract(indicatorX, scrollX) },
                 ],
               },
             ]}
@@ -159,22 +159,25 @@ const ResultNavComponent = ({tabs = [], activeTab, onTabChange}) => {
           contentContainerStyle={styles.scrollContent}
           scrollEventThrottle={16}
           onScroll={Animated.event(
-            [{nativeEvent: {contentOffset: {x: scrollX}}}],
-            {useNativeDriver: true},
+            [{ nativeEvent: { contentOffset: { x: scrollX } } }],
+            { useNativeDriver: true },
           )}
-          onScrollBeginDrag={stopAutoScroll}>
+          onScrollBeginDrag={stopAutoScroll}
+        >
           {tabs.map(tab => {
             const active = tab.id === activeTab;
             return (
               <TouchableOpacity
                 key={tab.id}
-                style={[styles.btn, {width: btnWidth}]}
+                style={[styles.btn, { width: btnWidth }]}
                 onPress={() => handlePress(tab.id)}
                 onLayout={e => onButtonLayout(tab.id, e)}
-                activeOpacity={0.75}>
+                activeOpacity={0.75}
+              >
                 <Text
                   style={[styles.label, active && styles.labelActive]}
-                  numberOfLines={1}>
+                  numberOfLines={1}
+                >
                   {tab.label}
                 </Text>
               </TouchableOpacity>
@@ -191,8 +194,7 @@ const ResultNavComponent = ({tabs = [], activeTab, onTabChange}) => {
 
 /* ── Styles ────────────────────────────────────────────────── */
 
-const BLUE = '#6366f1'; // matches TeacherHeader / activeTab in ResultContainer
-const BLUE_LIGHT = 'rgba(99,102,241,0.08)';
+const BLUE = '#6366f1';
 const PILL_RADIUS = 50;
 
 const styles = StyleSheet.create({
@@ -201,9 +203,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 1,
     paddingTop: 8,
     paddingBottom: 0,
-    // subtle card shadow
     shadowColor: '#6366f1',
-    shadowOffset: {width: 0, height: 3},
+    shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.1,
     shadowRadius: 6,
     elevation: 4,
@@ -215,7 +216,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     marginBottom: 8,
     shadowColor: '#212123',
-    shadowOffset: {width: 0, height: 3},
+    shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.1,
     shadowRadius: 6,
     elevation: 4,
@@ -228,9 +229,8 @@ const styles = StyleSheet.create({
     backgroundColor: BLUE,
     borderRadius: PILL_RADIUS,
     zIndex: 0,
-    // glow
     shadowColor: BLUE,
-    shadowOffset: {width: 0, height: 4},
+    shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.35,
     shadowRadius: 8,
     elevation: 6,

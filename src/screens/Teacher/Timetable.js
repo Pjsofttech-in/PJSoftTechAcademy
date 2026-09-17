@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -11,8 +11,8 @@ import {
 import { Ionicons } from '@react-native-vector-icons/ionicons';
 import { MaterialDesignIcons as Icon } from '@react-native-vector-icons/material-design-icons';
 
-import {useAuth} from '../../auth/AuthContext';
-import {fetchTimetableByClassRoomId} from '../../util/Apicall';
+import { useAuth } from '../../auth/AuthContext';
+import { fetchTimetableByClassRoomId } from '../../util/Apicall';
 
 // ─── Color palette for period cards ───────────────────────────────────────────
 const COLORS = [
@@ -27,7 +27,7 @@ const COLORS = [
 const getPeriodColor = index => COLORS[index % COLORS.length];
 
 // ─── Single Period Card ────────────────────────────────────────────────────────
-const PeriodCard = ({assignment, color}) => {
+const PeriodCard = ({ assignment, color }) => {
   const subject = assignment?.subject?.subjectName || '--';
   const teacher = assignment?.teacher?.teacherName || '--';
   const startTime = assignment?.period?.startTime || '';
@@ -37,13 +37,14 @@ const PeriodCard = ({assignment, color}) => {
   const isOn = status === 'ON';
 
   return (
-    <View style={[styles.periodCard, {backgroundColor: color}]}>
+    <View style={[styles.periodCard, { backgroundColor: color }]}>
       {/* ON / OFF badge — always visible */}
       <View
         style={[
           styles.statusBadge,
-          {backgroundColor: isOn ? '#007b2d' : '#cf0000'},
-        ]}>
+          { backgroundColor: isOn ? '#007b2d' : '#cf0000' },
+        ]}
+      >
         <Text style={styles.statusBadgeText}>{isOn ? 'ON' : 'OFF'}</Text>
       </View>
 
@@ -82,7 +83,7 @@ const LunchBreakCard = () => (
 );
 
 // ─── Day Column ────────────────────────────────────────────────────────────────
-const DayColumn = ({day}) => {
+const DayColumn = ({ day }) => {
   const rawAssignments = day?.assignments || [];
 
   // Deduplicate by period.id
@@ -100,7 +101,7 @@ const DayColumn = ({day}) => {
   sorted.forEach(a => {
     withLunch.push(a);
     if (a.period?.periodNo === 4) {
-      withLunch.push({isLunchBreak: true});
+      withLunch.push({ isLunchBreak: true });
     }
   });
 
@@ -142,9 +143,9 @@ const DayColumn = ({day}) => {
 };
 
 // ─── Main Screen ───────────────────────────────────────────────────────────────
-const Timetable = ({route}) => {
-  const {classroom} = route.params;
-  const {userData, token} = useAuth();
+const Timetable = ({ route }) => {
+  const { classroom } = route.params;
+  const { userData, token } = useAuth();
 
   const [loading, setLoading] = useState(true);
   const [timeTable, setTimeTable] = useState([]);
@@ -208,7 +209,8 @@ const Timetable = ({route}) => {
         <TouchableOpacity
           onPress={fetchTimeTable}
           disabled={loading}
-          style={styles.refreshBtn}>
+          style={styles.refreshBtn}
+        >
           <Ionicons
             name="refresh"
             size={20}
@@ -242,11 +244,12 @@ const Timetable = ({route}) => {
         /* ── Timetable content ────────────────────────────────────── */
         <ScrollView
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{paddingBottom: 32}}>
+          contentContainerStyle={{ paddingBottom: 32 }}
+        >
           {/* Status Banner */}
           <View style={styles.statusBanner}>
             <Icon name="check-circle" size={20} color="#10B981" />
-            <View style={{flex: 1}}>
+            <View style={{ flex: 1 }}>
               <Text style={styles.statusText}>Schedule Active</Text>
               <Text style={styles.statusSub}>
                 {totalOnPeriods} period{totalOnPeriods !== 1 ? 's' : ''}{' '}
@@ -255,12 +258,13 @@ const Timetable = ({route}) => {
             </View>
           </View>
 
-          {/* ── Horizontal period grid — ONLY this, no day details below ── */}
+          {/* ── Horizontal period grid ── */}
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
             style={styles.weekScroll}
-            contentContainerStyle={styles.weekScrollContent}>
+            contentContainerStyle={styles.weekScrollContent}
+          >
             {sortedTable.map((day, index) => (
               <DayColumn
                 key={`${day.weekday || day.day || index}-${index}`}
@@ -294,11 +298,11 @@ const styles = StyleSheet.create({
     borderBottomColor: '#E5E7EB',
     elevation: 2,
     shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.05,
     shadowRadius: 3,
   },
-  headerContent: {flex: 1},
+  headerContent: { flex: 1 },
   headerTitle: {
     fontSize: 18,
     color: '#1F2937',
@@ -308,7 +312,7 @@ const styles = StyleSheet.create({
   headerSubtitle: {
     fontSize: 12,
     color: '#9CA3AF',
-    fontFamily: 'DMSans-Medium',
+    fontFamily: 'Poppins-Medium',
   },
   refreshBtn: {
     padding: 8,
@@ -326,7 +330,7 @@ const styles = StyleSheet.create({
   loadingText: {
     fontSize: 14,
     color: '#9CA3AF',
-    fontFamily: 'DMSans-Medium',
+    fontFamily: 'Poppins-Medium',
   },
 
   // ── Error / Empty centred box
@@ -341,13 +345,13 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#EF4444',
     textAlign: 'center',
-    fontFamily: 'DMSans-Medium',
+    fontFamily: 'Poppins-Medium',
   },
   emptyText: {
     fontSize: 14,
     color: '#9CA3AF',
     textAlign: 'center',
-    fontFamily: 'DMSans-Medium',
+    fontFamily: 'Poppins-Medium',
   },
   retryBtn: {
     backgroundColor: '#6366F1',
@@ -382,7 +386,7 @@ const styles = StyleSheet.create({
   statusSub: {
     fontSize: 12,
     color: '#10B981',
-    fontFamily: 'DMSans-Medium',
+    fontFamily: 'Poppins-Medium',
   },
 
   // ── Week horizontal scroll
@@ -432,7 +436,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     elevation: 3,
     shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.12,
     shadowRadius: 3,
   },
@@ -454,13 +458,13 @@ const styles = StyleSheet.create({
     letterSpacing: 0.3,
   },
 
-  cardContent: {gap: 5, marginTop: 4},
-  timeRow: {flexDirection: 'row', alignItems: 'center', gap: 4},
+  cardContent: { gap: 5, marginTop: 4 },
+  timeRow: { flexDirection: 'row', alignItems: 'center', gap: 4 },
   timeText: {
     fontSize: 9,
     color: '#F3F4F6',
     letterSpacing: 0.2,
-    fontFamily: 'DMSans-Medium',
+    fontFamily: 'Poppins-Medium',
   },
   cardSubject: {
     fontSize: 12,
@@ -472,7 +476,7 @@ const styles = StyleSheet.create({
     fontSize: 10,
     color: '#F3F4F6',
     opacity: 0.9,
-    fontFamily: 'DMSans-Medium',
+    fontFamily: 'Poppins-Medium',
   },
 
   // ── Lunch Break Card
@@ -484,7 +488,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#E9E9E9',
     elevation: 2,
     shadowColor: '#000',
-    shadowOffset: {width: 0, height: 1},
+    shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.08,
     shadowRadius: 2,
     gap: 4,
@@ -499,10 +503,14 @@ const styles = StyleSheet.create({
     fontSize: 10,
     color: '#282828',
     opacity: 0.7,
-    fontFamily: 'DMSans-Medium',
+    fontFamily: 'Poppins-Medium',
   },
 
   // ── Empty day placeholder
-  emptyDayCell: {alignItems: 'center', paddingVertical: 20},
-  emptyDayText: {fontSize: 16, color: '#D1D5DB', fontFamily: 'DMSans-Medium'},
+  emptyDayCell: { alignItems: 'center', paddingVertical: 20 },
+  emptyDayText: {
+    fontSize: 16,
+    color: '#D1D5DB',
+    fontFamily: 'Poppins-Medium',
+  },
 });

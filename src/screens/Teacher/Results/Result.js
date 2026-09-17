@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useMemo, useCallback} from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import {
   StyleSheet,
   Text,
@@ -18,9 +18,9 @@ import {
   fetchTopicNamesByTeacher,
 } from '../../../util/Apicall';
 import AnimatedDropdownField from '../../../components/AnimatedDropdownField';
-import {useAuth} from '../../../auth/AuthContext';
+import { useAuth } from '../../../auth/AuthContext';
 import ExamPaperTypeSelector from '../../../components/ExamPaperTypeSelector';
-import {useRoute, useNavigation} from '@react-navigation/native';
+import { useRoute, useNavigation } from '@react-navigation/native';
 import debounce from 'lodash.debounce';
 import {
   Search,
@@ -38,17 +38,17 @@ import {
 const getStatusStyle = status => {
   const s = (status || '').toLowerCase();
   if (s === 'pass') {
-    return {bg: '#E6F4EA', color: '#1E7F43', border: '#A7F3D0'};
+    return { bg: '#E6F4EA', color: '#1E7F43', border: '#A7F3D0' };
   }
   if (s === 'fail') {
-    return {bg: '#FDECEC', color: '#B42318', border: '#FECACA'};
+    return { bg: '#FDECEC', color: '#B42318', border: '#FECACA' };
   }
-  return {bg: '#F1F5F9', color: '#64748B', border: '#E2E8F0'};
+  return { bg: '#F1F5F9', color: '#64748B', border: '#E2E8F0' };
 };
 
 // ─── Student Card Component ───────────────────────────────────────────────────
 
-const StudentCard = React.memo(({item, onPress}) => {
+const StudentCard = React.memo(({ item, onPress }) => {
   const statusStyle = getStatusStyle(item.status);
 
   return (
@@ -61,7 +61,8 @@ const StudentCard = React.memo(({item, onPress}) => {
 
         <TouchableOpacity
           style={styles.studentNameWrap}
-          onPress={() => onPress(item.studentId)}>
+          onPress={() => onPress(item.studentId)}
+        >
           <Text style={styles.studentName} numberOfLines={1}>
             {item.studentName || 'N/A'}
           </Text>
@@ -75,8 +76,9 @@ const StudentCard = React.memo(({item, onPress}) => {
               backgroundColor: statusStyle.bg,
               borderColor: statusStyle.border,
             },
-          ]}>
-          <Text style={[styles.statusText, {color: statusStyle.color}]}>
+          ]}
+        >
+          <Text style={[styles.statusText, { color: statusStyle.color }]}>
             {item.status || 'N/A'}
           </Text>
         </View>
@@ -121,7 +123,7 @@ const StudentCard = React.memo(({item, onPress}) => {
             <Percent size={11} color="#F59E0B" strokeWidth={2} />
             <Text style={styles.infoCellLabel}>Percentage</Text>
           </View>
-          <Text style={[styles.infoCellValue, {color: '#6366F1'}]}>
+          <Text style={[styles.infoCellValue, { color: '#6366F1' }]}>
             {item.percentage != null
               ? `${Number(item.percentage).toFixed(2)}%`
               : '--'}
@@ -136,7 +138,7 @@ const StudentCard = React.memo(({item, onPress}) => {
 
 const Result = () => {
   const navigation = useNavigation();
-  const {userData} = useAuth();
+  const { userData } = useAuth();
   const route = useRoute();
 
   const [searchText, setSearchText] = useState('');
@@ -181,7 +183,7 @@ const Result = () => {
 
   const handleStudentPress = useCallback(
     studentId => {
-      navigation.navigate('StudentMarksheet', {studentId});
+      navigation.navigate('StudentMarksheet', { studentId });
     },
     [navigation],
   );
@@ -326,7 +328,7 @@ const Result = () => {
   ]);
 
   const renderItem = useCallback(
-    ({item}) => <StudentCard item={item} onPress={handleStudentPress} />,
+    ({ item }) => <StudentCard item={item} onPress={handleStudentPress} />,
     [handleStudentPress],
   );
 
@@ -359,7 +361,8 @@ const Result = () => {
 
         <TouchableOpacity
           style={styles.filterButton}
-          onPress={() => setFilterVisible(true)}>
+          onPress={() => setFilterVisible(true)}
+        >
           <SlidersHorizontal size={18} color="#FFFFFF" strokeWidth={2} />
         </TouchableOpacity>
       </View>
@@ -369,10 +372,12 @@ const Result = () => {
         visible={filterVisible}
         transparent
         animationType="fade"
-        onRequestClose={() => setFilterVisible(false)}>
+        onRequestClose={() => setFilterVisible(false)}
+      >
         <Pressable
           style={styles.modalOverlay}
-          onPress={() => setFilterVisible(false)}>
+          onPress={() => setFilterVisible(false)}
+        >
           <Pressable style={styles.popupContainer} onPress={() => {}}>
             <Text style={styles.popupTitle}>Filter Results</Text>
 
@@ -401,13 +406,19 @@ const Result = () => {
                 selected: selectedBatch,
                 setter: setSelectedBatch,
               },
-            ].map(({label, list, selected, setter}, idx) => (
+            ].map(({ label, list, selected, setter }, idx) => (
               <AnimatedDropdownField
                 key={idx}
                 label={label}
                 options={list}
                 selected={selected}
                 onSelect={setter}
+                fontFamily="Poppins-Medium"
+                labelStyle={{ fontFamily: 'Poppins-Medium' }}
+                labelTextStyle={{ fontFamily: 'Poppins-Medium' }}
+                textStyle={{ fontFamily: 'Poppins-Regular' }}
+                inputStyle={{ fontFamily: 'Poppins-Regular' }}
+                dropdownTextStyle={{ fontFamily: 'Poppins-Regular' }}
               />
             ))}
 
@@ -416,6 +427,9 @@ const Result = () => {
                 userData={userData}
                 onExamTypeChange={setSelectedExamType}
                 onPaperTypeChange={setSelectedPaperType}
+                fontFamily="Poppins-Medium"
+                labelStyle={{ fontFamily: 'Poppins-Medium' }}
+                textStyle={{ fontFamily: 'Poppins-Regular' }}
               />
             ) : (
               <ActivityIndicator size="small" color="#6366F1" />
@@ -424,12 +438,14 @@ const Result = () => {
             <View style={styles.buttonRow}>
               <TouchableOpacity
                 style={[styles.modalBtn, styles.modalBtnReset]}
-                onPress={handleResetFilter}>
+                onPress={handleResetFilter}
+              >
                 <Text style={styles.modalBtnTextReset}>Reset</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={[styles.modalBtn, styles.modalBtnApply]}
-                onPress={handleApplyFilter}>
+                onPress={handleApplyFilter}
+              >
                 <Text style={styles.modalBtnTextApply}>Apply</Text>
               </TouchableOpacity>
             </View>
@@ -502,7 +518,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 13,
     color: '#0F172A',
-    fontWeight: '500',
+    fontFamily: 'Poppins-Medium',
     padding: 0,
   },
   filterButton: {
@@ -537,7 +553,7 @@ const styles = StyleSheet.create({
     height: 36,
     borderRadius: 10,
     backgroundColor: '#EEF2FF',
-    justifycontent: 'center',
+    justifyContent: 'center',
     alignItems: 'center',
   },
   studentNameWrap: {
@@ -545,14 +561,14 @@ const styles = StyleSheet.create({
   },
   studentName: {
     fontSize: 13,
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
     color: '#6366F1',
     textDecorationLine: 'underline',
   },
   studentIdText: {
     fontSize: 11,
     color: '#64748B',
-    fontWeight: '500',
+    fontFamily: 'Poppins-Medium',
     marginTop: 1,
   },
   statusBadge: {
@@ -563,7 +579,7 @@ const styles = StyleSheet.create({
   },
   statusText: {
     fontSize: 10,
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
     textTransform: 'capitalize',
   },
   cardDivider: {
@@ -589,13 +605,13 @@ const styles = StyleSheet.create({
   },
   infoCellLabel: {
     fontSize: 10,
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
     color: '#64748B',
     textTransform: 'uppercase',
   },
   infoCellValue: {
     fontSize: 12,
-    fontWeight: '600',
+    fontFamily: 'Poppins-Medium',
     color: '#0F172A',
   },
   loadingContainer: {
@@ -607,7 +623,7 @@ const styles = StyleSheet.create({
   loadingText: {
     fontSize: 13,
     color: '#64748B',
-    fontWeight: '600',
+    fontFamily: 'Poppins-Medium',
   },
   emptyContainer: {
     alignItems: 'center',
@@ -621,7 +637,7 @@ const styles = StyleSheet.create({
   },
   emptyText: {
     fontSize: 13,
-    fontWeight: '600',
+    fontFamily: 'Poppins-Medium',
     color: '#64748B',
   },
   modalOverlay: {
@@ -640,13 +656,13 @@ const styles = StyleSheet.create({
     gap: 10,
     elevation: 5,
     shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.15,
     shadowRadius: 6,
   },
   popupTitle: {
     fontSize: 15,
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
     color: '#0F172A',
     marginBottom: 4,
     textAlign: 'center',
@@ -672,11 +688,11 @@ const styles = StyleSheet.create({
   modalBtnTextReset: {
     color: '#475569',
     fontSize: 13,
-    fontWeight: '600',
+    fontFamily: 'Poppins-Medium',
   },
   modalBtnTextApply: {
     color: '#FFFFFF',
     fontSize: 13,
-    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold',
   },
 });

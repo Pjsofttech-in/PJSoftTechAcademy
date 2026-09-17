@@ -1,5 +1,5 @@
 // src/screens/Teacher/AssignMarksScreen.js
-import React, {useState, useEffect, useCallback, useRef} from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import {
   StyleSheet,
   Text,
@@ -16,10 +16,10 @@ import {
   ActivityIndicator,
   Dimensions,
 } from 'react-native';
-import {Picker} from '@react-native-picker/picker';
+import { Picker } from '@react-native-picker/picker';
 import { Ionicons } from '@react-native-vector-icons/ionicons';
-import {useNavigation} from '@react-navigation/native';
-import {useAuth} from '../../auth/AuthContext';
+import { useNavigation } from '@react-navigation/native';
+import { useAuth } from '../../auth/AuthContext';
 import {
   createClassroomSubjectDetails,
   fetchAllClassRoomSubjectDetails,
@@ -29,7 +29,7 @@ import ExamPaperTypeSelector from '../../components/ExamPaperTypeSelector';
 import TeacherHeader from '../../components/TeacherComponent/TeacherHeader';
 import TeacherFooter from '../../components/TeacherComponent/TeacherFooter';
 
-const {width: SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
+const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 
 // ─────────────────────────────────────────────────────────────
 // SKELETON LOADER COMPONENT
@@ -56,10 +56,10 @@ const SkeletonCard = () => {
   }, [pulseAnim]);
 
   return (
-    <Animated.View style={[styles.skeletonCard, {opacity: pulseAnim}]}>
+    <Animated.View style={[styles.skeletonCard, { opacity: pulseAnim }]}>
       <View style={styles.skeletonHeader}>
         <View style={styles.skeletonAvatar} />
-        <View style={{flex: 1, gap: 6}}>
+        <View style={{ flex: 1, gap: 6 }}>
           <View style={styles.skeletonLineLong} />
           <View style={styles.skeletonLineShort} />
         </View>
@@ -76,7 +76,7 @@ const SkeletonCard = () => {
 // MARKS CARD WITH DUAL METADATA GRIDS
 // ─────────────────────────────────────────────────────────────
 
-const MarkCard = ({item, index, onEdit}) => {
+const MarkCard = ({ item, index, onEdit }) => {
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const translateY = useRef(new Animated.Value(15)).current;
 
@@ -112,9 +112,10 @@ const MarkCard = ({item, index, onEdit}) => {
         styles.cardContainer,
         {
           opacity: fadeAnim,
-          transform: [{translateY}],
+          transform: [{ translateY }],
         },
-      ]}>
+      ]}
+    >
       {/* CARD TOP HEADER ROW */}
       <View style={styles.cardHeader}>
         <View style={styles.headerLeft}>
@@ -135,7 +136,8 @@ const MarkCard = ({item, index, onEdit}) => {
         <TouchableOpacity
           activeOpacity={0.75}
           style={styles.inlineAssignBtn}
-          onPress={() => onEdit(item)}>
+          onPress={() => onEdit(item)}
+        >
           <Ionicons name="pencil-outline" size={12} color="#4F46E5" />
           <Text style={styles.inlineAssignText}>Edit</Text>
         </TouchableOpacity>
@@ -170,8 +172,9 @@ const MarkCard = ({item, index, onEdit}) => {
             <Ionicons name="ribbon-outline" size={12} color="#D97706" />
             <Text style={styles.configLabel}>EXAM:</Text>
             <Text
-              style={[styles.configValue, {color: '#B45309'}]}
-              numberOfLines={1}>
+              style={[styles.configValue, { color: '#B45309' }]}
+              numberOfLines={1}
+            >
               {examTypeName}
             </Text>
           </View>
@@ -182,8 +185,9 @@ const MarkCard = ({item, index, onEdit}) => {
             <Ionicons name="document-text-outline" size={12} color="#7C3AED" />
             <Text style={styles.configLabel}>PAPER:</Text>
             <Text
-              style={[styles.configValue, {color: '#6D28D9'}]}
-              numberOfLines={1}>
+              style={[styles.configValue, { color: '#6D28D9' }]}
+              numberOfLines={1}
+            >
               {paperTypeName}
             </Text>
           </View>
@@ -194,7 +198,7 @@ const MarkCard = ({item, index, onEdit}) => {
       <View style={styles.marksStatsContainer}>
         <View style={styles.markStatBox}>
           <Text style={styles.markStatLabel}>TOTAL MARKS</Text>
-          <Text style={[styles.markStatValue, {color: '#4F46E5'}]}>
+          <Text style={[styles.markStatValue, { color: '#4F46E5' }]}>
             {item.totalMarks ?? '-'}
           </Text>
         </View>
@@ -203,7 +207,7 @@ const MarkCard = ({item, index, onEdit}) => {
 
         <View style={styles.markStatBox}>
           <Text style={styles.markStatLabel}>PASS MARKS</Text>
-          <Text style={[styles.markStatValue, {color: '#059669'}]}>
+          <Text style={[styles.markStatValue, { color: '#059669' }]}>
             {item.passingMarks ?? '-'}
           </Text>
         </View>
@@ -212,7 +216,7 @@ const MarkCard = ({item, index, onEdit}) => {
 
         <View style={styles.markStatBox}>
           <Text style={styles.markStatLabel}>SUBJECT MARKS</Text>
-          <Text style={[styles.markStatValue, {color: '#7C3AED'}]}>
+          <Text style={[styles.markStatValue, { color: '#7C3AED' }]}>
             {item.totalSubjectMarks ?? 0}
           </Text>
         </View>
@@ -225,9 +229,9 @@ const MarkCard = ({item, index, onEdit}) => {
 // MAIN SCREEN
 // ─────────────────────────────────────────────────────────────
 
-const AssignMarksScreen = ({route}) => {
+const AssignMarksScreen = ({ route }) => {
   const navigation = useNavigation();
-  const {userData} = useAuth();
+  const { userData } = useAuth();
   const classroom = route?.params?.classroom;
 
   // Data states
@@ -288,11 +292,11 @@ const AssignMarksScreen = ({route}) => {
   // Create Form Handler
   const handleAssignMarksSubmit = async () => {
     const missing = [
-      {value: selectedSubject, name: 'Subject'},
-      {value: selectedExamType, name: 'Exam Type'},
-      {value: selectedPaperType, name: 'Paper Type'},
-      {value: totalMarks, name: 'Total Marks'},
-      {value: passingMarks, name: 'Passing Marks'},
+      { value: selectedSubject, name: 'Subject' },
+      { value: selectedExamType, name: 'Exam Type' },
+      { value: selectedPaperType, name: 'Paper Type' },
+      { value: totalMarks, name: 'Total Marks' },
+      { value: passingMarks, name: 'Passing Marks' },
     ].filter(f => !f.value);
 
     if (missing.length > 0) {
@@ -321,10 +325,10 @@ const AssignMarksScreen = ({route}) => {
     try {
       setIsSubmitting(true);
       const payload = {
-        classroom: {id: classroom?.id},
-        subject: {id: selectedSubject},
-        examType: {id: selectedExamType.id},
-        paperType: {id: selectedPaperType.id},
+        classroom: { id: classroom?.id },
+        subject: { id: selectedSubject },
+        examType: { id: selectedExamType.id },
+        paperType: { id: selectedPaperType.id },
         totalMarks: totalNum,
         passingMarks: passNum,
         topicName: topicName.trim() || 'General Topic',
@@ -379,11 +383,11 @@ const AssignMarksScreen = ({route}) => {
     if (!editingItem) return;
 
     const missing = [
-      {value: editSubject, name: 'Subject'},
-      {value: editExamType, name: 'Exam Type'},
-      {value: editPaperType, name: 'Paper Type'},
-      {value: editTotalMarks, name: 'Total Marks'},
-      {value: editPassingMarks, name: 'Passing Marks'},
+      { value: editSubject, name: 'Subject' },
+      { value: editExamType, name: 'Exam Type' },
+      { value: editPaperType, name: 'Paper Type' },
+      { value: editTotalMarks, name: 'Total Marks' },
+      { value: editPassingMarks, name: 'Passing Marks' },
     ].filter(f => !f.value);
 
     if (missing.length > 0) {
@@ -413,10 +417,10 @@ const AssignMarksScreen = ({route}) => {
       setIsUpdating(true);
 
       const payload = {
-        classroom: {id: editingItem.classroom?.id ?? classroom?.id},
-        subject: {id: editSubject},
-        examType: {id: editExamType.id},
-        paperType: {id: editPaperType.id},
+        classroom: { id: editingItem.classroom?.id ?? classroom?.id },
+        subject: { id: editSubject },
+        examType: { id: editExamType.id },
+        paperType: { id: editPaperType.id },
         totalMarks: totalNum,
         passingMarks: passNum,
         topicName: editTopicName.trim() || 'General Topic',
@@ -467,7 +471,7 @@ const AssignMarksScreen = ({route}) => {
       <FlatList
         data={assignedMarksList}
         keyExtractor={(item, index) => item?.id?.toString() || index.toString()}
-        renderItem={({item, index}) => (
+        renderItem={({ item, index }) => (
           <MarkCard item={item} index={index} onEdit={handleOpenEdit} />
         )}
         contentContainerStyle={styles.listContainer}
@@ -495,7 +499,8 @@ const AssignMarksScreen = ({route}) => {
             <TouchableOpacity
               style={styles.backBtn}
               onPress={() => navigation.goBack()}
-              activeOpacity={0.75}>
+              activeOpacity={0.75}
+            >
               <Ionicons name="chevron-back" size={16} color="#4338CA" />
             </TouchableOpacity>
             <View>
@@ -509,7 +514,8 @@ const AssignMarksScreen = ({route}) => {
           <TouchableOpacity
             style={styles.assignActionBtn}
             activeOpacity={0.75}
-            onPress={() => setCreateModalVisible(true)}>
+            onPress={() => setCreateModalVisible(true)}
+          >
             <Ionicons name="add" size={14} color="#FFFFFF" />
             <Text style={styles.assignActionBtnText}>Assign Marks</Text>
           </TouchableOpacity>
@@ -536,7 +542,8 @@ const AssignMarksScreen = ({route}) => {
         onRequestClose={() => {
           setCreateModalVisible(false);
           resetCreateForm();
-        }}>
+        }}
+      >
         <View style={styles.dropdownOverlay}>
           <View style={styles.popupCard}>
             <View style={styles.popupHeader}>
@@ -556,7 +563,8 @@ const AssignMarksScreen = ({route}) => {
                 onPress={() => {
                   setCreateModalVisible(false);
                   resetCreateForm();
-                }}>
+                }}
+              >
                 <Ionicons name="close" size={16} color="#64748B" />
               </TouchableOpacity>
             </View>
@@ -564,8 +572,8 @@ const AssignMarksScreen = ({route}) => {
             <ScrollView
               contentContainerStyle={styles.popupScroll}
               showsVerticalScrollIndicator={false}
-              keyboardShouldPersistTaps="handled">
-              
+              keyboardShouldPersistTaps="handled"
+            >
               {/* SUBJECT SELECTOR */}
               <View style={styles.inputGroup}>
                 <Text style={styles.inputLabel}>
@@ -576,7 +584,8 @@ const AssignMarksScreen = ({route}) => {
                     selectedValue={selectedSubject}
                     onValueChange={setSelectedSubject}
                     dropdownIconColor="#64748B"
-                    style={styles.picker}>
+                    style={styles.picker}
+                  >
                     <Picker.Item
                       label="Choose a subject"
                       value={null}
@@ -608,7 +617,7 @@ const AssignMarksScreen = ({route}) => {
 
               {/* MARKS ROW */}
               <View style={styles.marksRow}>
-                <View style={[styles.inputGroup, {flex: 1, marginRight: 6}]}>
+                <View style={[styles.inputGroup, { flex: 1, marginRight: 6 }]}>
                   <Text style={styles.inputLabel}>
                     Total Marks <Text style={styles.required}>*</Text>
                   </Text>
@@ -621,7 +630,7 @@ const AssignMarksScreen = ({route}) => {
                     placeholderTextColor="#94A3B8"
                   />
                 </View>
-                <View style={[styles.inputGroup, {flex: 1, marginLeft: 6}]}>
+                <View style={[styles.inputGroup, { flex: 1, marginLeft: 6 }]}>
                   <Text style={styles.inputLabel}>
                     Pass Marks <Text style={styles.required}>*</Text>
                   </Text>
@@ -652,14 +661,16 @@ const AssignMarksScreen = ({route}) => {
                   onPress={() => {
                     setCreateModalVisible(false);
                     resetCreateForm();
-                  }}>
+                  }}
+                >
                   <Text style={styles.cancelBtnText}>Cancel</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  style={[styles.submitBtn, isSubmitting && {opacity: 0.6}]}
+                  style={[styles.submitBtn, isSubmitting && { opacity: 0.6 }]}
                   activeOpacity={0.8}
                   disabled={isSubmitting}
-                  onPress={handleAssignMarksSubmit}>
+                  onPress={handleAssignMarksSubmit}
+                >
                   {isSubmitting ? (
                     <ActivityIndicator size="small" color="#FFFFFF" />
                   ) : (
@@ -677,7 +688,8 @@ const AssignMarksScreen = ({route}) => {
         visible={editModalVisible}
         transparent
         animationType="fade"
-        onRequestClose={() => setEditModalVisible(false)}>
+        onRequestClose={() => setEditModalVisible(false)}
+      >
         <View style={styles.dropdownOverlay}>
           <View style={styles.popupCard}>
             <View style={styles.popupHeader}>
@@ -697,7 +709,8 @@ const AssignMarksScreen = ({route}) => {
                 onPress={() => {
                   setEditModalVisible(false);
                   setEditingItem(null);
-                }}>
+                }}
+              >
                 <Ionicons name="close" size={16} color="#64748B" />
               </TouchableOpacity>
             </View>
@@ -705,8 +718,8 @@ const AssignMarksScreen = ({route}) => {
             <ScrollView
               contentContainerStyle={styles.popupScroll}
               showsVerticalScrollIndicator={false}
-              keyboardShouldPersistTaps="handled">
-              
+              keyboardShouldPersistTaps="handled"
+            >
               {/* SUBJECT SELECTOR */}
               <View style={styles.inputGroup}>
                 <Text style={styles.inputLabel}>
@@ -717,7 +730,8 @@ const AssignMarksScreen = ({route}) => {
                     selectedValue={editSubject}
                     onValueChange={setEditSubject}
                     dropdownIconColor="#64748B"
-                    style={styles.picker}>
+                    style={styles.picker}
+                  >
                     <Picker.Item
                       label="Choose a subject"
                       value={null}
@@ -753,7 +767,7 @@ const AssignMarksScreen = ({route}) => {
 
               {/* MARKS ROW */}
               <View style={styles.marksRow}>
-                <View style={[styles.inputGroup, {flex: 1, marginRight: 6}]}>
+                <View style={[styles.inputGroup, { flex: 1, marginRight: 6 }]}>
                   <Text style={styles.inputLabel}>
                     Total Marks <Text style={styles.required}>*</Text>
                   </Text>
@@ -766,7 +780,7 @@ const AssignMarksScreen = ({route}) => {
                     placeholderTextColor="#94A3B8"
                   />
                 </View>
-                <View style={[styles.inputGroup, {flex: 1, marginLeft: 6}]}>
+                <View style={[styles.inputGroup, { flex: 1, marginLeft: 6 }]}>
                   <Text style={styles.inputLabel}>
                     Pass Marks <Text style={styles.required}>*</Text>
                   </Text>
@@ -799,14 +813,16 @@ const AssignMarksScreen = ({route}) => {
                   onPress={() => {
                     setEditModalVisible(false);
                     setEditingItem(null);
-                  }}>
+                  }}
+                >
                   <Text style={styles.cancelBtnText}>Cancel</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  style={[styles.submitBtn, isUpdating && {opacity: 0.6}]}
+                  style={[styles.submitBtn, isUpdating && { opacity: 0.6 }]}
                   activeOpacity={0.8}
                   disabled={isUpdating}
-                  onPress={handleUpdateSubmit}>
+                  onPress={handleUpdateSubmit}
+                >
                   {isUpdating ? (
                     <ActivityIndicator size="small" color="#FFFFFF" />
                   ) : (
@@ -867,14 +883,14 @@ const styles = StyleSheet.create({
   },
   screenTitle: {
     fontSize: 14,
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
     color: '#0F172A',
     letterSpacing: 0.5,
   },
   screenSubtitle: {
     fontSize: 10,
     color: '#64748B',
-    fontWeight: '500',
+    fontFamily: 'Poppins-Medium',
   },
   assignActionBtn: {
     flexDirection: 'row',
@@ -888,7 +904,7 @@ const styles = StyleSheet.create({
   assignActionBtnText: {
     fontSize: SCREEN_WIDTH < 360 ? 10 : 11,
     color: '#FFFFFF',
-    fontWeight: '600',
+    fontFamily: 'Poppins-Medium',
   },
 
   // Count Header
@@ -900,7 +916,7 @@ const styles = StyleSheet.create({
   countText: {
     fontSize: 10,
     color: '#64748B',
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
     textTransform: 'uppercase',
     letterSpacing: 0.5,
   },
@@ -921,7 +937,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#E2E8F0',
     shadowColor: '#0F172A',
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.04,
     shadowRadius: 5,
     elevation: 2,
@@ -953,13 +969,13 @@ const styles = StyleSheet.create({
   },
   batchName: {
     fontSize: 14,
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
     color: '#0F172A',
   },
   courseNameText: {
     fontSize: 11,
     color: '#64748B',
-    fontWeight: '500',
+    fontFamily: 'Poppins-Medium',
   },
   inlineAssignBtn: {
     flexDirection: 'row',
@@ -974,7 +990,7 @@ const styles = StyleSheet.create({
   },
   inlineAssignText: {
     fontSize: 10,
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
     color: '#4F46E5',
   },
 
@@ -1011,13 +1027,13 @@ const styles = StyleSheet.create({
   },
   configLabel: {
     fontSize: 9,
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
     color: '#64748B',
     letterSpacing: 0.3,
   },
   configValue: {
     fontSize: 10,
-    fontWeight: '600',
+    fontFamily: 'Poppins-Medium',
     color: '#0F172A',
     flex: 1,
   },
@@ -1045,13 +1061,13 @@ const styles = StyleSheet.create({
   },
   markStatLabel: {
     fontSize: 8,
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
     color: '#64748B',
     letterSpacing: 0.3,
   },
   markStatValue: {
     fontSize: 13,
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
   },
 
   // Modals & Overlays
@@ -1088,13 +1104,13 @@ const styles = StyleSheet.create({
   },
   popupTitle: {
     fontSize: 14,
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
     color: '#0F172A',
   },
   popupSubtitle: {
     fontSize: 10,
     color: '#64748B',
-    fontWeight: '500',
+    fontFamily: 'Poppins-Medium',
   },
   popupCloseBtn: {
     width: 28,
@@ -1115,7 +1131,7 @@ const styles = StyleSheet.create({
   },
   inputLabel: {
     fontSize: 10,
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
     color: '#475569',
     marginBottom: 4,
     textTransform: 'uppercase',
@@ -1139,6 +1155,7 @@ const styles = StyleSheet.create({
     minHeight: 40,
     width: '100%',
     color: '#0F172A',
+    fontFamily: 'Poppins-Regular',
   },
   textInput: {
     height: 40,
@@ -1150,6 +1167,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     backgroundColor: '#F8FAFC',
     color: '#0F172A',
+    fontFamily: 'Poppins-Regular',
   },
   marksRow: {
     flexDirection: 'row',
@@ -1179,7 +1197,7 @@ const styles = StyleSheet.create({
   cancelBtnText: {
     color: '#475569',
     fontSize: 11,
-    fontWeight: '600',
+    fontFamily: 'Poppins-Medium',
   },
   submitBtn: {
     flex: 2,
@@ -1192,7 +1210,7 @@ const styles = StyleSheet.create({
   submitBtnText: {
     color: '#FFFFFF',
     fontSize: 11,
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
   },
 
   // Skeleton & Centered States
@@ -1206,12 +1224,13 @@ const styles = StyleSheet.create({
   },
   emptyTitle: {
     fontSize: 15,
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
     color: '#0F172A',
   },
   emptySubtext: {
     fontSize: 12,
     color: '#64748B',
+    fontFamily: 'Poppins-Regular',
     textAlign: 'center',
   },
   skeletonCard: {

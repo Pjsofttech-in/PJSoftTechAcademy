@@ -1,4 +1,4 @@
-import React, {useRef, useState, useEffect} from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -20,7 +20,7 @@ const AnimatedDropdownField = ({
 }) => {
   const [labelAnim] = useState(new Animated.Value(selected ? 1 : 0));
   const [isOpen, setIsOpen] = useState(false);
-  const [dropdownPos, setDropdownPos] = useState({x: 0, y: 0, width: 0});
+  const [dropdownPos, setDropdownPos] = useState({ x: 0, y: 0, width: 0 });
   const [dropdownHeight] = useState(new Animated.Value(0));
   const [dropdownOpacity] = useState(new Animated.Value(0));
   const ref = useRef(null);
@@ -54,7 +54,7 @@ const AnimatedDropdownField = ({
         maxItems * itemHeight,
       );
 
-      setDropdownPos({x: pageX, y: pageY + height + 6, width});
+      setDropdownPos({ x: pageX, y: pageY + height + 6, width });
       dropdownHeight.setValue(0);
       dropdownOpacity.setValue(0);
       setIsOpen(true);
@@ -117,10 +117,11 @@ const AnimatedDropdownField = ({
           style={[
             styles.floatingLabel,
             {
-              transform: [{translateY: labelTranslateY}],
+              transform: [{ translateY: labelTranslateY }],
               opacity: labelOpacity,
             },
-          ]}>
+          ]}
+        >
           <Text style={styles.floatingLabelText}>{label}</Text>
         </Animated.View>
 
@@ -128,8 +129,11 @@ const AnimatedDropdownField = ({
         <Pressable
           ref={ref}
           style={styles.dropdownButton}
-          onPress={openDropdown}>
-          <Text style={[styles.selectedValue, !selected && {color: '#9CA3AF'}]}>
+          onPress={openDropdown}
+        >
+          <Text
+            style={[styles.selectedValue, !selected && { color: '#9CA3AF' }]}
+          >
             {selected === 'ALL' ? 'All' : selected || label}
           </Text>
 
@@ -152,14 +156,17 @@ const AnimatedDropdownField = ({
                   height: dropdownHeight,
                   opacity: dropdownOpacity,
                 },
-              ]}>
+              ]}
+            >
               <ScrollView
                 nestedScrollEnabled
-                showsVerticalScrollIndicator={false}>
+                showsVerticalScrollIndicator={false}
+              >
                 {showAllOption && (
                   <Pressable
                     style={styles.dropdownItem}
-                    onPress={() => handleSelect('ALL')}>
+                    onPress={() => handleSelect('ALL')}
+                  >
                     <Text style={styles.dropdownItemText}>All</Text>
                   </Pressable>
                 )}
@@ -170,7 +177,8 @@ const AnimatedDropdownField = ({
                       styles.dropdownItem,
                       index === options.length - 1 && styles.lastDropdownItem,
                     ]}
-                    onPress={() => handleSelect(item)}>
+                    onPress={() => handleSelect(item)}
+                  >
                     <Text style={styles.dropdownItemText}>{item}</Text>
                   </Pressable>
                 ))}
@@ -184,8 +192,8 @@ const AnimatedDropdownField = ({
 };
 
 const styles = StyleSheet.create({
-  container: {marginBottom: 8},
-  dropdownWrapper: {position: 'relative'},
+  container: { marginBottom: 8 },
+  dropdownWrapper: { position: 'relative' },
   floatingLabel: {
     position: 'absolute',
     left: 16,
@@ -198,7 +206,7 @@ const styles = StyleSheet.create({
   floatingLabelText: {
     fontSize: 12,
     color: '#fff',
-    fontFamily: 'DMSans-Medium',
+    fontFamily: 'Poppins-Medium',
   },
   dropdownButton: {
     flexDirection: 'row',
@@ -215,7 +223,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#374151',
     flex: 1,
-    fontFamily: 'DMSans-Medium',
+    fontFamily: 'Poppins-Medium',
   },
   modalOverlay: {
     flex: 1,
@@ -242,7 +250,7 @@ const styles = StyleSheet.create({
   dropdownItemText: {
     fontSize: 14,
     color: '#374151',
-    fontFamily: 'DMSans-Medium',
+    fontFamily: 'Poppins-Regular',
   },
 });
 

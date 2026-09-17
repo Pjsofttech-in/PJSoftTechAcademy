@@ -12,18 +12,18 @@ import {
   FlatList,
   RefreshControl,
 } from 'react-native';
-import {Users, Clock, AlertCircle} from 'lucide-react-native';
+import { Users, Clock, AlertCircle } from 'lucide-react-native';
 import { Ionicons } from '@react-native-vector-icons/ionicons';
 import TeacherHeader from '../../components/TeacherComponent/TeacherHeader';
 import TeacherFooter from '../../components/TeacherComponent/TeacherFooter';
-import {useAuth} from '../../auth/AuthContext';
+import { useAuth } from '../../auth/AuthContext';
 import {
   fetchClassroomByTeacher,
   fetchAttendanceDataByTeacher,
 } from '../../util/Apicall';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
-const {width: screenWidth} = Dimensions.get('window');
+const { width: screenWidth } = Dimensions.get('window');
 
 // ─── Format time helper ────────────────────────────────────────────────────────
 const formatTime = timeStr => {
@@ -36,7 +36,7 @@ const formatTime = timeStr => {
 };
 
 // ─── Attendance Card ──────────────────────────────────────────────────────────
-const AttendanceCard = React.memo(({classroom, stats, index, onPress}) => {
+const AttendanceCard = React.memo(({ classroom, stats, index, onPress }) => {
   const scaleAnim = useRef(new Animated.Value(1)).current;
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(20)).current;
@@ -84,15 +84,17 @@ const AttendanceCard = React.memo(({classroom, stats, index, onPress}) => {
         styles.cardWrapper,
         {
           opacity: fadeAnim,
-          transform: [{translateY: slideAnim}, {scale: scaleAnim}],
+          transform: [{ translateY: slideAnim }, { scale: scaleAnim }],
         },
-      ]}>
+      ]}
+    >
       <Pressable
         onPressIn={handlePressIn}
         onPressOut={handlePressOut}
         onPress={() => onPress(classroom)}
-        android_ripple={{color: 'rgba(99, 102, 241, 0.08)'}}
-        style={styles.cardPressable}>
+        android_ripple={{ color: 'rgba(99, 102, 241, 0.08)' }}
+        style={styles.cardPressable}
+      >
         <View style={styles.card}>
           {/* ── Card Header (Batch Name + Time Row below it) ── */}
           <View style={styles.cardHeader}>
@@ -148,14 +150,14 @@ const AttendanceCard = React.memo(({classroom, stats, index, onPress}) => {
             <View style={styles.statDivider} />
             <View style={styles.statItem}>
               <Text style={styles.statLabel}>Present</Text>
-              <Text style={[styles.statValue, {color: '#10B981'}]}>
+              <Text style={[styles.statValue, { color: '#10B981' }]}>
                 {presentStudents}
               </Text>
             </View>
             <View style={styles.statDivider} />
             <View style={styles.statItem}>
               <Text style={styles.statLabel}>Absent</Text>
-              <Text style={[styles.statValue, {color: '#EF4444'}]}>
+              <Text style={[styles.statValue, { color: '#EF4444' }]}>
                 {absentStudents}
               </Text>
             </View>
@@ -189,7 +191,7 @@ const Attendance = () => {
 
   const headerAnim = useRef(new Animated.Value(0)).current;
 
-  const {userData} = useAuth();
+  const { userData } = useAuth();
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -326,7 +328,7 @@ const Attendance = () => {
 
   // ── FlatList Handlers ──
   const renderItem = useCallback(
-    ({item, index}) => (
+    ({ item, index }) => (
       <AttendanceCard
         classroom={item}
         stats={attendanceMap[item.id]}
@@ -358,7 +360,8 @@ const Attendance = () => {
                 openDropdown();
                 setDropdownOpen(true);
               }
-            }}>
+            }}
+          >
             <Text style={styles.selectedValue}>{selectedYear}</Text>
             <Ionicons
               name={isDropdownOpen ? 'chevron-up' : 'chevron-down'}
@@ -374,7 +377,8 @@ const Attendance = () => {
                 onPress={() => {
                   closeDropdown();
                   setDropdownOpen(false);
-                }}>
+                }}
+              >
                 <Animated.View
                   style={[
                     styles.modalContent,
@@ -386,20 +390,23 @@ const Attendance = () => {
                       height: dropdownHeight,
                       opacity: dropdownOpacity,
                     },
-                  ]}>
+                  ]}
+                >
                   <FlatList
                     data={academicYears}
                     keyExtractor={item => item}
-                    renderItem={({item}) => (
+                    renderItem={({ item }) => (
                       <Pressable
                         style={styles.dropdownItem}
-                        onPress={() => handleSelectYear(item)}>
+                        onPress={() => handleSelectYear(item)}
+                      >
                         <Text
                           style={[
                             styles.dropdownItemText,
                             selectedYear === item &&
                               styles.dropdownItemTextActive,
-                          ]}>
+                          ]}
+                        >
                           {item}
                         </Text>
                       </Pressable>
@@ -493,7 +500,8 @@ const Attendance = () => {
               },
             ],
           },
-        ]}>
+        ]}
+      >
         <Text style={styles.pageTitle}>Attendance</Text>
         <Text style={styles.pageSubtitle}>
           Track student attendance records across active batches
@@ -542,12 +550,12 @@ const styles = StyleSheet.create({
   loadingText: {
     fontSize: 13,
     color: '#64748B',
-    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold',
   },
   errorText: {
     color: '#EF4444',
     fontSize: 14,
-    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold',
     textAlign: 'center',
   },
   retryBtn: {
@@ -559,7 +567,7 @@ const styles = StyleSheet.create({
   },
   retryBtnText: {
     color: '#FFFFFF',
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
     fontSize: 13,
   },
 
@@ -573,12 +581,13 @@ const styles = StyleSheet.create({
   },
   pageTitle: {
     fontSize: 20,
-    fontWeight: '800',
+    fontFamily: 'Poppins-SemiBold',
     color: '#0F172A',
   },
   pageSubtitle: {
     fontSize: 12,
     color: '#64748B',
+    fontFamily: 'Poppins-Regular',
     marginTop: 1,
   },
 
@@ -591,7 +600,7 @@ const styles = StyleSheet.create({
   resultCount: {
     fontSize: 11,
     color: '#64748B',
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
     textTransform: 'uppercase',
     marginBottom: 10,
     marginLeft: 4,
@@ -615,7 +624,7 @@ const styles = StyleSheet.create({
   selectedValue: {
     fontSize: 13,
     color: '#0F172A',
-    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold',
   },
   modalOverlay: {
     position: 'absolute',
@@ -633,7 +642,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     elevation: 4,
     shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
   },
@@ -646,11 +655,11 @@ const styles = StyleSheet.create({
   dropdownItemText: {
     fontSize: 13,
     color: '#334155',
-    fontWeight: '500',
+    fontFamily: 'Poppins-Medium',
   },
   dropdownItemTextActive: {
     color: '#6366F1',
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
   },
 
   // ── Card Design
@@ -692,7 +701,7 @@ const styles = StyleSheet.create({
   },
   batchName: {
     fontSize: 14,
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
     color: '#0F172A',
   },
 
@@ -706,7 +715,7 @@ const styles = StyleSheet.create({
   timeText: {
     fontSize: 11,
     color: '#64748B',
-    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold',
   },
 
   yearBadge: {
@@ -719,7 +728,7 @@ const styles = StyleSheet.create({
   },
   yearText: {
     fontSize: 11,
-    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold',
     color: '#64748B',
   },
 
@@ -741,7 +750,7 @@ const styles = StyleSheet.create({
   courseLabel: {
     fontSize: 10,
     color: '#64748B',
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
     textTransform: 'uppercase',
     letterSpacing: 0.5,
     marginBottom: 2,
@@ -749,7 +758,7 @@ const styles = StyleSheet.create({
   courseValue: {
     fontSize: 12,
     color: '#334155',
-    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold',
   },
 
   // ── Stats Row
@@ -767,13 +776,13 @@ const styles = StyleSheet.create({
   },
   statLabel: {
     fontSize: 10,
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
     color: '#64748B',
     textTransform: 'uppercase',
   },
   statValue: {
     fontSize: 14,
-    fontWeight: '800',
+    fontFamily: 'Poppins-SemiBold',
     color: '#0F172A',
     marginTop: 2,
   },
@@ -804,12 +813,13 @@ const styles = StyleSheet.create({
   },
   emptyTitle: {
     fontSize: 15,
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
     color: '#0F172A',
   },
   emptySubtitle: {
     fontSize: 12,
     color: '#64748B',
+    fontFamily: 'Poppins-Regular',
     marginTop: 4,
     textAlign: 'center',
     paddingHorizontal: 20,

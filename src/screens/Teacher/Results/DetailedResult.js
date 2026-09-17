@@ -14,12 +14,12 @@ import {
   Image,
   ActivityIndicator,
 } from 'react-native';
-import React, {useState, useEffect, useRef} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ExamPaperTypeSelector from '../../../components/ExamPaperTypeSelector';
 import Icon from 'react-native-vector-icons/Feather';
 import { Ionicons } from '@react-native-vector-icons/ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useAuth} from '../../../auth/AuthContext';
+import { useAuth } from '../../../auth/AuthContext';
 import {
   fetchAdmissionListByTeacher,
   fetchTopicNamesByTeacher,
@@ -95,11 +95,11 @@ const CustomAlert = ({
   }, [visible]);
 
   const MAP = {
-    success: {icon: 'check-circle', color: '#10B981', bg: '#D1FAE5'},
-    error: {icon: 'x-circle', color: '#EF4444', bg: '#FEE2E2'},
-    warning: {icon: 'alert-triangle', color: '#F59E0B', bg: '#FEF3C7'},
+    success: { icon: 'check-circle', color: '#10B981', bg: '#D1FAE5' },
+    error: { icon: 'x-circle', color: '#EF4444', bg: '#FEE2E2' },
+    warning: { icon: 'alert-triangle', color: '#F59E0B', bg: '#FEF3C7' },
   };
-  const {icon, color, bg} = MAP[type] || {
+  const { icon, color, bg } = MAP[type] || {
     icon: 'info',
     color: P.brand,
     bg: P.brandLight,
@@ -111,10 +111,13 @@ const CustomAlert = ({
       transparent
       visible={visible}
       animationType="none"
-      statusBarTranslucent>
-      <Animated.View style={[S.alertOverlay, {opacity: fadeAnim}]}>
-        <Animated.View style={[S.alertBox, {transform: [{scale: scaleAnim}]}]}>
-          <View style={[S.alertIcon, {backgroundColor: bg}]}>
+      statusBarTranslucent
+    >
+      <Animated.View style={[S.alertOverlay, { opacity: fadeAnim }]}>
+        <Animated.View
+          style={[S.alertBox, { transform: [{ scale: scaleAnim }] }]}
+        >
+          <View style={[S.alertIcon, { backgroundColor: bg }]}>
             <Icon name={icon} size={32} color={color} />
           </View>
           <View style={S.alertBody}>
@@ -125,7 +128,8 @@ const CustomAlert = ({
             {showCancel && (
               <TouchableOpacity
                 style={[S.alertBtn, S.cancelBtn]}
-                onPress={onCancel}>
+                onPress={onCancel}
+              >
                 <Text style={S.cancelTxt}>{cancelText}</Text>
               </TouchableOpacity>
             )}
@@ -139,7 +143,8 @@ const CustomAlert = ({
                   marginLeft: showCancel ? 10 : 0,
                 },
               ]}
-              onPress={onConfirm}>
+              onPress={onConfirm}
+            >
               <Text style={S.confirmTxt}>{confirmText}</Text>
             </TouchableOpacity>
           </View>
@@ -150,7 +155,7 @@ const CustomAlert = ({
 };
 
 // ── Loading Modal ────────────────────────────────────────────────────────────
-const LoadingModal = ({visible, message = 'Processing...'}) => {
+const LoadingModal = ({ visible, message = 'Processing...' }) => {
   const rot = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -177,7 +182,7 @@ const LoadingModal = ({visible, message = 'Processing...'}) => {
     <Modal transparent visible={visible} animationType="fade">
       <View style={S.loadOverlay}>
         <View style={S.loadBox}>
-          <Animated.View style={{transform: [{rotate}]}}>
+          <Animated.View style={{ transform: [{ rotate }] }}>
             <Icon name="loader" size={32} color={P.brand} />
           </Animated.View>
           <Text style={S.loadTxt}>{message}</Text>
@@ -199,7 +204,7 @@ const PillDropdown = ({
 }) => {
   const ref = useRef(null);
   const [vis, setVis] = useState(false);
-  const [pos, setPos] = useState({x: 0, y: 0, width: 0});
+  const [pos, setPos] = useState({ x: 0, y: 0, width: 0 });
   const hAnim = useRef(new Animated.Value(0)).current;
   const oAnim = useRef(new Animated.Value(0)).current;
 
@@ -208,7 +213,7 @@ const PillDropdown = ({
     ref.current?.measure((x, y, w, h, px, py) => {
       const ih = 44;
       const max = Math.min((items.length + 1) * ih, 5 * ih);
-      setPos({x: px, y: py + h + 4, width: Math.max(w, 160)});
+      setPos({ x: px, y: py + h + 4, width: Math.max(w, 160) });
       hAnim.setValue(0);
       oAnim.setValue(0);
       setVis(true);
@@ -248,31 +253,34 @@ const PillDropdown = ({
       <Pressable
         ref={ref}
         style={[S.pill, sel && S.pillOn, disabled && S.pillOff]}
-        onPress={open}>
+        onPress={open}
+      >
         <Ionicons
           name={icon}
           size={13}
           color={sel ? '#fff' : disabled ? '#94A3B8' : P.sub}
-          style={{marginRight: 4}}
+          style={{ marginRight: 4 }}
         />
         <Text
           style={[S.pillTxt, sel && S.pillTxtOn, disabled && S.pillTxtOff]}
-          numberOfLines={1}>
+          numberOfLines={1}
+        >
           {displayLabel || label}
         </Text>
         <Ionicons
           name="chevron-down"
           size={12}
           color={sel ? '#fff' : disabled ? '#94A3B8' : P.sub}
-          style={{marginLeft: 4}}
+          style={{ marginLeft: 4 }}
         />
       </Pressable>
 
       {vis && (
         <Modal transparent visible onRequestClose={close}>
           <Pressable
-            style={{flex: 1, backgroundColor: 'rgba(15,23,42,0.08)'}}
-            onPress={close}>
+            style={{ flex: 1, backgroundColor: 'rgba(15,23,42,0.08)' }}
+            onPress={close}
+          >
             <Animated.View
               style={[
                 S.dropList,
@@ -283,17 +291,20 @@ const PillDropdown = ({
                   height: hAnim,
                   opacity: oAnim,
                 },
-              ]}>
+              ]}
+            >
               <ScrollView
                 nestedScrollEnabled
                 showsVerticalScrollIndicator
-                style={{flex: 1}}>
+                style={{ flex: 1 }}
+              >
                 <Pressable
                   style={S.dropItem}
                   onPress={() => {
                     onSelect(null);
                     close();
-                  }}>
+                  }}
+                >
                   <Text style={S.dropTxt}>All</Text>
                 </Pressable>
                 {items.map((item, idx) => {
@@ -308,7 +319,8 @@ const PillDropdown = ({
                       onPress={() => {
                         onSelect(val, item);
                         close();
-                      }}>
+                      }}
+                    >
                       <Text style={[S.dropTxt, isSel && S.dropTxtOn]}>
                         {lbl}
                       </Text>
@@ -381,22 +393,25 @@ const AddMarksSheet = ({
       visible={visible}
       animationType="none"
       onRequestClose={onClose}
-      statusBarTranslucent>
+      statusBarTranslucent
+    >
       <KeyboardAvoidingView
-        style={{flex: 1}}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-        <Animated.View style={[S.sheetOverlay, {opacity: fadeAnim}]}>
-          <Pressable style={{flex: 1}} onPress={onClose} />
+        style={{ flex: 1 }}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      >
+        <Animated.View style={[S.sheetOverlay, { opacity: fadeAnim }]}>
+          <Pressable style={{ flex: 1 }} onPress={onClose} />
           <Animated.View
-            style={[S.sheetBox, {transform: [{translateY: slideAnim}]}]}>
+            style={[S.sheetBox, { transform: [{ translateY: slideAnim }] }]}
+          >
             <View style={S.sheetHandle} />
 
             {/* Student details */}
             <View style={S.sheetHead}>
               {student.studentImage ? (
                 <Image
-                  source={{uri: student.studentImage}}
-                  style={[S.sheetAvatar, {borderRadius: 22}]}
+                  source={{ uri: student.studentImage }}
+                  style={[S.sheetAvatar, { borderRadius: 22 }]}
                 />
               ) : (
                 <View
@@ -408,11 +423,12 @@ const AddMarksSheet = ({
                       justifyContent: 'center',
                       alignItems: 'center',
                     },
-                  ]}>
+                  ]}
+                >
                   <Text style={S.sheetAvatarTxt}>{initial}</Text>
                 </View>
               )}
-              <View style={{flex: 1}}>
+              <View style={{ flex: 1 }}>
                 <Text style={S.sheetName} numberOfLines={1}>
                   {student.name}
                 </Text>
@@ -423,7 +439,8 @@ const AddMarksSheet = ({
               <TouchableOpacity
                 onPress={onClose}
                 style={S.sheetClose}
-                activeOpacity={0.7}>
+                activeOpacity={0.7}
+              >
                 <Icon name="x" size={18} color={P.sub} />
               </TouchableOpacity>
             </View>
@@ -440,12 +457,14 @@ const AddMarksSheet = ({
                 <View
                   style={[
                     S.sheetChip,
-                    {borderColor: P.brandMid, backgroundColor: P.brandLight},
-                  ]}>
+                    { borderColor: P.brandMid, backgroundColor: P.brandLight },
+                  ]}
+                >
                   <Icon name="tag" size={11} color={P.brandBold} />
                   <Text
-                    style={[S.sheetChipTxt, {color: P.brandBold}]}
-                    numberOfLines={1}>
+                    style={[S.sheetChipTxt, { color: P.brandBold }]}
+                    numberOfLines={1}
+                  >
                     {selectedTopic}
                   </Text>
                 </View>
@@ -474,10 +493,11 @@ const AddMarksSheet = ({
 
             {/* Submit Button */}
             <TouchableOpacity
-              style={[S.sheetSubmit, isSubmitting && {opacity: 0.6}]}
+              style={[S.sheetSubmit, isSubmitting && { opacity: 0.6 }]}
               onPress={() => onSubmit(student)}
               disabled={isSubmitting}
-              activeOpacity={0.85}>
+              activeOpacity={0.85}
+            >
               <Icon
                 name={isSubmitting ? 'clock' : 'check-circle'}
                 size={18}
@@ -495,7 +515,7 @@ const AddMarksSheet = ({
 };
 
 // ── Student Card (ERP Matrix Style) ─────────────────────────────────────────
-const StudentCard = ({admission, result, onAddMarks}) => {
+const StudentCard = ({ admission, result, onAddMarks }) => {
   const bg = AVATAR_COLORS[(admission.id || 0) % AVATAR_COLORS.length];
   const initial = (admission.name || 'S').charAt(0).toUpperCase();
 
@@ -512,13 +532,13 @@ const StudentCard = ({admission, result, onAddMarks}) => {
       {/* ── Header ── */}
       <View style={S.cardHead}>
         {admission.studentImage ? (
-          <Image source={{uri: admission.studentImage}} style={S.avatar} />
+          <Image source={{ uri: admission.studentImage }} style={S.avatar} />
         ) : (
-          <View style={[S.avatar, {backgroundColor: bg}]}>
+          <View style={[S.avatar, { backgroundColor: bg }]}>
             <Text style={S.avatarTxt}>{initial}</Text>
           </View>
         )}
-        <View style={{flex: 1}}>
+        <View style={{ flex: 1 }}>
           <Text style={S.cardName} numberOfLines={1}>
             {admission.name}
           </Text>
@@ -532,7 +552,7 @@ const StudentCard = ({admission, result, onAddMarks}) => {
       {totalObtained != null && totalMarks != null && (
         <View style={S.summaryBar}>
           <Text style={S.summaryLabel}>Aggregated Score:</Text>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Text style={S.summaryVal}>
               {totalObtained}/{totalMarks}
             </Text>
@@ -574,25 +594,29 @@ const StudentCard = ({admission, result, onAddMarks}) => {
                 backgroundColor: isPass ? '#ECFDF5' : '#FFF1F2',
                 borderColor: isPass ? '#A7F3D0' : '#FECDD3',
               },
-            ]}>
+            ]}
+          >
             <View
               style={[
                 S.statusDot,
-                {backgroundColor: isPass ? '#10B981' : '#F43F5E'},
+                { backgroundColor: isPass ? '#10B981' : '#F43F5E' },
               ]}
             />
-            <Text style={[S.badgeTxt, {color: isPass ? '#047857' : '#BE123C'}]}>
+            <Text
+              style={[S.badgeTxt, { color: isPass ? '#047857' : '#BE123C' }]}
+            >
               {status.toUpperCase()}
             </Text>
           </View>
         ) : (
-          <View style={{flex: 1}} />
+          <View style={{ flex: 1 }} />
         )}
 
         <TouchableOpacity
           style={S.addBtn}
           onPress={() => onAddMarks(admission)}
-          activeOpacity={0.8}>
+          activeOpacity={0.8}
+        >
           <Icon name="plus" size={14} color={P.brand} />
           <Text style={S.addBtnTxt}>Enter Marks</Text>
         </TouchableOpacity>
@@ -628,8 +652,8 @@ const InfoBanner = ({
 };
 
 // ── Main Screen ─────────────────────────────────────────────────────────────
-const DetailedResult = ({userData: propUserData, route}) => {
-  const {userData: authUserData} = useAuth();
+const DetailedResult = ({ userData: propUserData, route }) => {
+  const { userData: authUserData } = useAuth();
   const [resolvedUserData, setResolvedUserData] = useState(
     propUserData || route?.params?.userData || authUserData || null,
   );
@@ -856,11 +880,11 @@ const DetailedResult = ({userData: propUserData, route}) => {
       setIsSubmitting(true);
       const payload = [
         {
-          examType: {id: selectedExamType.id},
+          examType: { id: selectedExamType.id },
           obtainedMarks: marksNum,
-          paperType: {id: selectedPaperType.id},
-          student: {id: student.id},
-          subjectDetails: {id: subjectDetailsId},
+          paperType: { id: selectedPaperType.id },
+          student: { id: student.id },
+          subjectDetails: { id: subjectDetailsId },
         },
       ];
       const response = await submitStudentSubjectResult(
@@ -887,7 +911,7 @@ const DetailedResult = ({userData: propUserData, route}) => {
           type: 'success',
           onConfirm: async () => {
             setAlertVisible(false);
-            setMarksInput(p => ({...p, [student.id]: ''}));
+            setMarksInput(p => ({ ...p, [student.id]: '' }));
             await refreshStudentResults();
           },
         });
@@ -948,7 +972,7 @@ const DetailedResult = ({userData: propUserData, route}) => {
           <ExamPaperTypeSelector
             onExamTypeChange={setSelectedExamType}
             onPaperTypeChange={setSelectedPaperType}
-            customTextStyle={{}}
+            customTextStyle={{ fontFamily: 'Poppins-Regular' }}
           />
         </View>
 
@@ -986,7 +1010,7 @@ const DetailedResult = ({userData: propUserData, route}) => {
             icon="layers-outline"
             value={selectedTopic}
             displayLabel={selectedTopic || null}
-            items={topicList.map((t, i) => ({id: i, label: t, value: t}))}
+            items={topicList.map((t, i) => ({ id: i, label: t, value: t }))}
             onSelect={async v => {
               setSelectedTopic(v || '');
               if (v) {
@@ -1037,7 +1061,7 @@ const DetailedResult = ({userData: propUserData, route}) => {
             <Text style={S.emptyTxt}>No students found</Text>
           </View>
         }
-        renderItem={({item: admission}) => {
+        renderItem={({ item: admission }) => {
           const result = studentResults.find(
             r => Number(r.studentId) === Number(admission.id),
           );
@@ -1058,7 +1082,7 @@ const DetailedResult = ({userData: propUserData, route}) => {
         onClose={() => setSheetVisible(false)}
         onSubmit={handleSubmitMarks}
         marksInput={marksInput}
-        onMarksChange={(id, text) => setMarksInput(p => ({...p, [id]: text}))}
+        onMarksChange={(id, text) => setMarksInput(p => ({ ...p, [id]: text }))}
         isSubmitting={isSubmitting}
         selectedTopic={selectedTopic}
         subjectName={subjectName}
@@ -1091,12 +1115,12 @@ export default DetailedResult;
 
 // ── Styles ──────────────────────────────────────────────────────────────────
 const S = StyleSheet.create({
-  container: {flex: 1, backgroundColor: P.bg},
-  centerLoading: {flex: 1, justifyContent: 'center', alignItems: 'center'},
+  container: { flex: 1, backgroundColor: P.bg },
+  centerLoading: { flex: 1, justifyContent: 'center', alignItems: 'center' },
   loadingTxt: {
     marginTop: 12,
     fontSize: 14,
-    fontFamily: 'DMSans-Medium',
+    fontFamily: 'Poppins-Medium',
     color: P.sub,
   },
 
@@ -1110,7 +1134,7 @@ const S = StyleSheet.create({
     borderBottomColor: P.border,
     elevation: 2,
     shadowColor: P.text,
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.04,
     shadowRadius: 4,
   },
@@ -1135,16 +1159,16 @@ const S = StyleSheet.create({
     borderWidth: 1,
     borderColor: P.brandMid,
   },
-  pillOn: {backgroundColor: P.brand, borderColor: P.brand},
-  pillOff: {backgroundColor: '#F1F5F9', borderColor: '#CBD5E1'},
+  pillOn: { backgroundColor: P.brand, borderColor: P.brand },
+  pillOff: { backgroundColor: '#F1F5F9', borderColor: '#CBD5E1' },
   pillTxt: {
     fontSize: 12,
     color: P.sub,
-    fontFamily: 'DMSans-Medium',
+    fontFamily: 'Poppins-Medium',
     maxWidth: 90,
   },
-  pillTxtOn: {color: '#fff'},
-  pillTxtOff: {color: '#94A3B8'},
+  pillTxtOn: { color: '#fff' },
+  pillTxtOff: { color: '#94A3B8' },
 
   // Dropdown List
   dropList: {
@@ -1156,7 +1180,7 @@ const S = StyleSheet.create({
     elevation: 8,
     overflow: 'hidden',
     shadowColor: P.text,
-    shadowOffset: {width: 0, height: 4},
+    shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.1,
     shadowRadius: 8,
   },
@@ -1168,9 +1192,9 @@ const S = StyleSheet.create({
     minHeight: 44,
     justifyContent: 'center',
   },
-  dropItemOn: {backgroundColor: P.brandLight},
-  dropTxt: {fontSize: 13, color: P.text, fontFamily: 'DMSans-Medium'},
-  dropTxtOn: {color: P.brand, fontFamily: 'DMSans-Bold'},
+  dropItemOn: { backgroundColor: P.brandLight },
+  dropTxt: { fontSize: 13, color: P.text, fontFamily: 'Poppins-Medium' },
+  dropTxtOn: { color: P.brand, fontFamily: 'Poppins-Bold' },
 
   // Info Banner
   banner: {
@@ -1190,12 +1214,12 @@ const S = StyleSheet.create({
   bannerTxt: {
     fontSize: 11,
     color: P.brandBold,
-    fontFamily: 'DMSans-Medium',
+    fontFamily: 'Poppins-Medium',
     flex: 1,
   },
 
   // Card List Container
-  cardList: {padding: 16, paddingBottom: 40},
+  cardList: { padding: 16, paddingBottom: 40 },
 
   // Student Card Styling
   card: {
@@ -1204,7 +1228,7 @@ const S = StyleSheet.create({
     overflow: 'hidden',
     elevation: 2,
     shadowColor: P.text,
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.05,
     shadowRadius: 6,
     borderWidth: 1,
@@ -1226,16 +1250,16 @@ const S = StyleSheet.create({
     alignItems: 'center',
     marginRight: 10,
   },
-  avatarTxt: {fontSize: 16, color: '#fff', fontFamily: 'DMSans-Bold'},
+  avatarTxt: { fontSize: 16, color: '#fff', fontFamily: 'Poppins-Bold' },
   cardName: {
     fontSize: 14,
     color: P.text,
-    fontFamily: 'DMSans-Bold',
+    fontFamily: 'Poppins-SemiBold',
   },
   cardMeta: {
     fontSize: 11,
     color: P.sub,
-    fontFamily: 'DMSans-Medium',
+    fontFamily: 'Poppins-Medium',
     marginTop: 1,
   },
 
@@ -1253,9 +1277,13 @@ const S = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#EDF2F7',
   },
-  summaryLabel: {fontSize: 11, color: '#64748B', fontFamily: 'DMSans-Medium'},
-  summaryVal: {fontSize: 12, color: P.text, fontFamily: 'DMSans-Bold'},
-  summaryPct: {fontSize: 11, color: P.brand, fontFamily: 'DMSans-Bold'},
+  summaryLabel: {
+    fontSize: 11,
+    color: '#64748B',
+    fontFamily: 'Poppins-Medium',
+  },
+  summaryVal: { fontSize: 12, color: P.text, fontFamily: 'Poppins-Bold' },
+  summaryPct: { fontSize: 11, color: P.brand, fontFamily: 'Poppins-Bold' },
 
   // Topic Grid (2 Columns)
   gridContainer: {
@@ -1276,7 +1304,7 @@ const S = StyleSheet.create({
   gridTopicName: {
     fontSize: 11,
     color: '#475569',
-    fontFamily: 'DMSans-Medium',
+    fontFamily: 'Poppins-Medium',
     marginBottom: 4,
   },
   gridScoreRow: {
@@ -1286,12 +1314,12 @@ const S = StyleSheet.create({
   gridObtained: {
     fontSize: 13,
     color: P.text,
-    fontFamily: 'DMSans-Bold',
+    fontFamily: 'Poppins-Bold',
   },
   gridTotal: {
     fontSize: 11,
     color: '#94A3B8',
-    fontFamily: 'DMSans-Regular',
+    fontFamily: 'Poppins-Regular',
   },
   emptyGridTile: {
     width: '100%',
@@ -1306,7 +1334,7 @@ const S = StyleSheet.create({
   emptyGridTxt: {
     fontSize: 12,
     color: '#A855F7',
-    fontFamily: 'DMSans-Medium',
+    fontFamily: 'Poppins-Medium',
   },
 
   // Card Footer: Action & Status
@@ -1336,7 +1364,7 @@ const S = StyleSheet.create({
   },
   badgeTxt: {
     fontSize: 10,
-    fontFamily: 'DMSans-Bold',
+    fontFamily: 'Poppins-Bold',
     letterSpacing: 0.4,
   },
   addBtn: {
@@ -1353,12 +1381,12 @@ const S = StyleSheet.create({
   addBtnTxt: {
     fontSize: 11,
     color: P.brand,
-    fontFamily: 'DMSans-Bold',
+    fontFamily: 'Poppins-Bold',
   },
 
   // Empty State
-  empty: {alignItems: 'center', marginTop: 80, gap: 12},
-  emptyTxt: {fontSize: 14, color: '#A5B4FC', fontFamily: 'DMSans-Medium'},
+  empty: { alignItems: 'center', marginTop: 80, gap: 12 },
+  emptyTxt: { fontSize: 14, color: '#A5B4FC', fontFamily: 'Poppins-Medium' },
 
   // Bottom Sheet
   sheetOverlay: {
@@ -1375,7 +1403,7 @@ const S = StyleSheet.create({
     paddingBottom: 28,
     elevation: 16,
     shadowColor: P.text,
-    shadowOffset: {width: 0, height: -6},
+    shadowOffset: { width: 0, height: -6 },
     shadowOpacity: 0.15,
     shadowRadius: 12,
   },
@@ -1387,18 +1415,18 @@ const S = StyleSheet.create({
     alignSelf: 'center',
     marginBottom: 16,
   },
-  sheetHead: {flexDirection: 'row', alignItems: 'center', marginBottom: 14},
-  sheetAvatar: {width: 44, height: 44, marginRight: 12},
-  sheetAvatarTxt: {fontSize: 18, color: '#fff', fontFamily: 'DMSans-Bold'},
-  sheetName: {fontSize: 15, color: P.text, fontFamily: 'DMSans-Bold'},
+  sheetHead: { flexDirection: 'row', alignItems: 'center', marginBottom: 14 },
+  sheetAvatar: { width: 44, height: 44, marginRight: 12 },
+  sheetAvatarTxt: { fontSize: 18, color: '#fff', fontFamily: 'Poppins-Bold' },
+  sheetName: { fontSize: 15, color: P.text, fontFamily: 'Poppins-SemiBold' },
   sheetRoll: {
     fontSize: 12,
     color: P.sub,
-    fontFamily: 'DMSans-Medium',
+    fontFamily: 'Poppins-Medium',
     marginTop: 1,
   },
-  sheetClose: {padding: 6},
-  sheetChips: {flexDirection: 'row', gap: 8, marginBottom: 16},
+  sheetClose: { padding: 6 },
+  sheetChips: { flexDirection: 'row', gap: 8, marginBottom: 16 },
   sheetChip: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -1413,7 +1441,7 @@ const S = StyleSheet.create({
   sheetChipTxt: {
     fontSize: 12,
     color: P.brand,
-    fontFamily: 'DMSans-Medium',
+    fontFamily: 'Poppins-Medium',
     maxWidth: 130,
   },
   totalMarksBox: {
@@ -1430,18 +1458,18 @@ const S = StyleSheet.create({
   },
   totalMarksLabel: {
     fontSize: 13,
-    fontFamily: 'DMSans-Medium',
+    fontFamily: 'Poppins-Medium',
     color: '#4B5563',
   },
   totalMarksVal: {
     fontSize: 16,
-    fontFamily: 'DMSans-Bold',
+    fontFamily: 'Poppins-Bold',
     color: P.brand,
   },
   sheetLabel: {
     fontSize: 13,
     color: P.sub,
-    fontFamily: 'DMSans-Medium',
+    fontFamily: 'Poppins-Medium',
     marginBottom: 8,
   },
   sheetInput: {
@@ -1452,7 +1480,7 @@ const S = StyleSheet.create({
     paddingVertical: 12,
     fontSize: 20,
     color: P.text,
-    fontFamily: 'DMSans-Bold',
+    fontFamily: 'Poppins-Bold',
     textAlign: 'center',
     marginBottom: 16,
     backgroundColor: P.brandLight,
@@ -1466,7 +1494,7 @@ const S = StyleSheet.create({
     borderRadius: 12,
     paddingVertical: 14,
   },
-  sheetSubmitTxt: {fontSize: 15, color: '#fff', fontFamily: 'DMSans-Bold'},
+  sheetSubmitTxt: { fontSize: 15, color: '#fff', fontFamily: 'Poppins-Bold' },
 
   // Alert Dialog
   alertOverlay: {
@@ -1484,7 +1512,7 @@ const S = StyleSheet.create({
     maxWidth: 340,
     elevation: 12,
     shadowColor: '#000',
-    shadowOffset: {width: 0, height: 10},
+    shadowOffset: { width: 0, height: 10 },
     shadowOpacity: 0.25,
     shadowRadius: 20,
   },
@@ -1497,17 +1525,17 @@ const S = StyleSheet.create({
     alignSelf: 'center',
     marginBottom: 16,
   },
-  alertBody: {alignItems: 'center', marginBottom: 20},
+  alertBody: { alignItems: 'center', marginBottom: 20 },
   alertTitle: {
     fontSize: 18,
-    fontFamily: 'DMSans-Bold',
+    fontFamily: 'Poppins-Bold',
     color: P.text,
     textAlign: 'center',
     marginBottom: 6,
   },
   alertMsg: {
     fontSize: 14,
-    fontFamily: 'DMSans-Regular',
+    fontFamily: 'Poppins-Regular',
     color: '#64748B',
     textAlign: 'center',
     lineHeight: 20,
@@ -1525,9 +1553,9 @@ const S = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  cancelBtn: {backgroundColor: '#F1F5F9', marginRight: 10},
-  cancelTxt: {color: '#64748B', fontSize: 14, fontFamily: 'DMSans-Medium'},
-  confirmTxt: {color: '#fff', fontSize: 14, fontFamily: 'DMSans-Bold'},
+  cancelBtn: { backgroundColor: '#F1F5F9', marginRight: 10 },
+  cancelTxt: { color: '#64748B', fontSize: 14, fontFamily: 'Poppins-Medium' },
+  confirmTxt: { color: '#fff', fontSize: 14, fontFamily: 'Poppins-Bold' },
 
   // Overlay Spinner
   loadOverlay: {
@@ -1546,7 +1574,7 @@ const S = StyleSheet.create({
   loadTxt: {
     marginTop: 14,
     fontSize: 14,
-    fontFamily: 'DMSans-Medium',
+    fontFamily: 'Poppins-Medium',
     color: '#64748B',
   },
 });

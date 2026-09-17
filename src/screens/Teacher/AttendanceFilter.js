@@ -35,22 +35,22 @@ import {
   submitManualLogout,
 } from '../../util/Apicall';
 
-const {width: screenWidth} = Dimensions.get('window');
+const { width: screenWidth } = Dimensions.get('window');
 
 // ─── Static Options ─────────────────────────────────────────────────────────
 
 const TIME_OPTIONS = [
-  {label: 'Today', value: 'today'},
-  {label: '7 Days', value: '7days'},
-  {label: '30 Days', value: '30days'},
-  {label: '365 Days', value: '365days'},
-  {label: 'Custom', value: 'custom'},
+  { label: 'Today', value: 'today' },
+  { label: '7 Days', value: '7days' },
+  { label: '30 Days', value: '30days' },
+  { label: '365 Days', value: '365days' },
+  { label: 'Custom', value: 'custom' },
 ];
 
 const STATUS_OPTIONS = [
-  {label: 'All Students', value: 'all'},
-  {label: 'Present', value: 'present'},
-  {label: 'Absent', value: 'absent'},
+  { label: 'All Students', value: 'all' },
+  { label: 'Present', value: 'present' },
+  { label: 'Absent', value: 'absent' },
 ];
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
@@ -58,15 +58,15 @@ const STATUS_OPTIONS = [
 const getLoginStatusStyle = status => {
   const s = (status || '').toLowerCase();
   if (s === 'present' || s === 'login' || s === 'on time') {
-    return {bg: '#E6F4EA', color: '#1E7F43', dot: '#34A853'};
+    return { bg: '#E6F4EA', color: '#1E7F43', dot: '#34A853' };
   }
   if (s === 'absent' || s === 'logout') {
-    return {bg: '#FDECEC', color: '#B42318', dot: '#EF4444'};
+    return { bg: '#FDECEC', color: '#B42318', dot: '#EF4444' };
   }
   if (s === 'late') {
-    return {bg: '#FFF8E1', color: '#B45309', dot: '#FBC02D'};
+    return { bg: '#FFF8E1', color: '#B45309', dot: '#FBC02D' };
   }
-  return {bg: '#F1F5F9', color: '#64748B', dot: '#94A3B8'};
+  return { bg: '#F1F5F9', color: '#64748B', dot: '#94A3B8' };
 };
 
 const formatDate = dateString => {
@@ -81,40 +81,42 @@ const formatDate = dateString => {
 
 // ─── Space-Saving Count Card Component ───────────────────────────────────────
 
-const CountCard = React.memo(({title, count, iconName, bgColor, iconColor}) => {
-  const renderIcon = () => {
-    switch (iconName) {
-      case 'UserCheck':
-        return <UserCheck size={14} color={iconColor} strokeWidth={2.2} />;
-      case 'UserX':
-        return <UserX size={14} color={iconColor} strokeWidth={2.2} />;
-      case 'Users':
-        return <Users size={14} color={iconColor} strokeWidth={2.2} />;
-      case 'Clock':
-        return <Clock size={14} color={iconColor} strokeWidth={2.2} />;
-      default:
-        return null;
-    }
-  };
+const CountCard = React.memo(
+  ({ title, count, iconName, bgColor, iconColor }) => {
+    const renderIcon = () => {
+      switch (iconName) {
+        case 'UserCheck':
+          return <UserCheck size={14} color={iconColor} strokeWidth={2.2} />;
+        case 'UserX':
+          return <UserX size={14} color={iconColor} strokeWidth={2.2} />;
+        case 'Users':
+          return <Users size={14} color={iconColor} strokeWidth={2.2} />;
+        case 'Clock':
+          return <Clock size={14} color={iconColor} strokeWidth={2.2} />;
+        default:
+          return null;
+      }
+    };
 
-  return (
-    <View style={styles.countCard}>
-      <View style={[styles.countIconBox, {backgroundColor: bgColor}]}>
-        {renderIcon()}
+    return (
+      <View style={styles.countCard}>
+        <View style={[styles.countIconBox, { backgroundColor: bgColor }]}>
+          {renderIcon()}
+        </View>
+        <View style={styles.countTextWrap}>
+          <Text style={styles.countTitle} numberOfLines={1}>
+            {title}
+          </Text>
+          <Text style={styles.countNumber}>{count ?? 0}</Text>
+        </View>
       </View>
-      <View style={styles.countTextWrap}>
-        <Text style={styles.countTitle} numberOfLines={1}>
-          {title}
-        </Text>
-        <Text style={styles.countNumber}>{count ?? 0}</Text>
-      </View>
-    </View>
-  );
-});
+    );
+  },
+);
 
 // ─── Student Card Component ───────────────────────────────────────────────────
 
-const StudentCard = React.memo(({item, onLogout}) => {
+const StudentCard = React.memo(({ item, onLogout }) => {
   const statusStyle = getLoginStatusStyle(item.loginStatus);
   const [pressed, setPressed] = useState(false);
   const alreadyLoggedOut = !!item.logoutTime;
@@ -135,11 +137,11 @@ const StudentCard = React.memo(({item, onLogout}) => {
             </Text>
           </View>
         </View>
-        <View style={[styles.statusBadge, {backgroundColor: statusStyle.bg}]}>
+        <View style={[styles.statusBadge, { backgroundColor: statusStyle.bg }]}>
           <View
-            style={[styles.statusDot, {backgroundColor: statusStyle.dot}]}
+            style={[styles.statusDot, { backgroundColor: statusStyle.dot }]}
           />
-          <Text style={[styles.statusText, {color: statusStyle.color}]}>
+          <Text style={[styles.statusText, { color: statusStyle.color }]}>
             {item.loginStatus || 'N/A'}
           </Text>
         </View>
@@ -181,7 +183,7 @@ const StudentCard = React.memo(({item, onLogout}) => {
             <UserCheck size={11} color="#6366F1" strokeWidth={2} />
             <Text style={styles.infoCellLabel}>Status</Text>
           </View>
-          <Text style={[styles.infoCellValue, {color: statusStyle.color}]}>
+          <Text style={[styles.infoCellValue, { color: statusStyle.color }]}>
             {item.loginStatus || '--'}
           </Text>
         </View>
@@ -200,15 +202,14 @@ const StudentCard = React.memo(({item, onLogout}) => {
             onPressIn={() => setPressed(true)}
             onPressOut={() => setPressed(false)}
             onPress={() => onLogout(item.rollno)}
-            style={[
-              styles.logoutButton,
-              pressed && styles.logoutButtonPressed,
-            ]}>
+            style={[styles.logoutButton, pressed && styles.logoutButtonPressed]}
+          >
             <View
               style={[
                 styles.logoutButtonInner,
                 pressed && styles.logoutButtonInnerPressed,
-              ]}>
+              ]}
+            >
               <LogOut
                 size={13}
                 color={pressed ? '#475569' : '#FFFFFF'}
@@ -218,7 +219,8 @@ const StudentCard = React.memo(({item, onLogout}) => {
                 style={[
                   styles.logoutButtonText,
                   pressed && styles.logoutButtonTextPressed,
-                ]}>
+                ]}
+              >
                 Logout
               </Text>
             </View>
@@ -231,8 +233,8 @@ const StudentCard = React.memo(({item, onLogout}) => {
 
 // ─── Main Screen Component ────────────────────────────────────────────────────
 
-const AttendanceFilter = ({route}) => {
-  const {classroomId, branchCode} = route.params || {};
+const AttendanceFilter = ({ route }) => {
+  const { classroomId, branchCode } = route.params || {};
 
   const timeRef = useRef(null);
   const statusRef = useRef(null);
@@ -440,7 +442,7 @@ const AttendanceFilter = ({route}) => {
   }, [attendanceData]);
 
   const renderItem = useCallback(
-    ({item}) => <StudentCard item={item} onLogout={handleManualLogout} />,
+    ({ item }) => <StudentCard item={item} onLogout={handleManualLogout} />,
     [handleManualLogout],
   );
 
@@ -511,7 +513,8 @@ const AttendanceFilter = ({route}) => {
             <Pressable
               ref={timeRef}
               style={styles.customPicker}
-              onPress={() => openDropdown('time')}>
+              onPress={() => openDropdown('time')}
+            >
               <Text style={styles.selectedValue}>{timeRange.label}</Text>
               <ChevronDown size={14} color="#64748B" strokeWidth={2} />
             </Pressable>
@@ -522,7 +525,8 @@ const AttendanceFilter = ({route}) => {
             <Pressable
               ref={statusRef}
               style={styles.customPicker}
-              onPress={() => openDropdown('status')}>
+              onPress={() => openDropdown('status')}
+            >
               <Text style={styles.selectedValue}>{statusFilter.label}</Text>
               <ChevronDown size={14} color="#64748B" strokeWidth={2} />
             </Pressable>
@@ -585,7 +589,8 @@ const AttendanceFilter = ({route}) => {
           transparent
           visible
           animationType="none"
-          onRequestClose={closeDropdown}>
+          onRequestClose={closeDropdown}
+        >
           <Pressable style={styles.modalOverlay} onPress={closeDropdown}>
             <Animated.View
               style={[
@@ -598,16 +603,18 @@ const AttendanceFilter = ({route}) => {
                   left: dropdownPosition.x,
                   width: dropdownPosition.width,
                 },
-              ]}>
+              ]}
+            >
               {(dropdownType === 'time' ? TIME_OPTIONS : STATUS_OPTIONS).map(
                 op => (
                   <Pressable
                     key={op.value}
-                    style={({pressed}) => [
+                    style={({ pressed }) => [
                       styles.dropdownItem,
                       pressed && styles.dropdownItemPressed,
                     ]}
-                    onPress={() => handleSelect(op)}>
+                    onPress={() => handleSelect(op)}
+                  >
                     <Text
                       style={[
                         styles.dropdownItemText,
@@ -615,7 +622,8 @@ const AttendanceFilter = ({route}) => {
                           ? timeRange.value === op.value
                           : statusFilter.value === op.value) &&
                           styles.dropdownItemTextActive,
-                      ]}>
+                      ]}
+                    >
                       {op.label}
                     </Text>
                   </Pressable>
@@ -650,7 +658,7 @@ const styles = StyleSheet.create({
   loadingText: {
     fontSize: 13,
     color: '#64748B',
-    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold',
   },
 
   listContent: {
@@ -678,12 +686,12 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 13,
     color: '#0F172A',
-    fontWeight: '500',
+    fontFamily: 'Poppins-Medium',
     padding: 0,
   },
   clearText: {
     fontSize: 12,
-    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold',
     color: '#6366F1',
   },
 
@@ -713,12 +721,12 @@ const styles = StyleSheet.create({
   },
   countTitle: {
     fontSize: 10,
-    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold',
     color: '#64748B',
   },
   countNumber: {
     fontSize: 15,
-    fontWeight: '700',
+    fontFamily: 'Poppins-Bold',
     color: '#0F172A',
     marginTop: 1,
   },
@@ -742,7 +750,7 @@ const styles = StyleSheet.create({
   },
   dropdownTitle: {
     fontSize: 11,
-    fontWeight: '700',
+    fontFamily: 'Poppins-Bold',
     color: '#64748B',
     marginBottom: 4,
     marginLeft: 2,
@@ -761,13 +769,13 @@ const styles = StyleSheet.create({
   },
   selectedValue: {
     fontSize: 12,
-    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold',
     color: '#0F172A',
   },
 
   listLabel: {
     fontSize: 11,
-    fontWeight: '700',
+    fontFamily: 'Poppins-Bold',
     color: '#64748B',
     textTransform: 'uppercase',
     paddingHorizontal: 14,
@@ -804,7 +812,7 @@ const styles = StyleSheet.create({
   },
   studentName: {
     fontSize: 13,
-    fontWeight: '700',
+    fontFamily: 'Poppins-Bold',
     color: '#0F172A',
   },
   rollNoRow: {
@@ -815,7 +823,7 @@ const styles = StyleSheet.create({
   rollNoText: {
     fontSize: 11,
     color: '#64748B',
-    fontWeight: '500',
+    fontFamily: 'Poppins-Medium',
   },
   statusBadge: {
     flexDirection: 'row',
@@ -832,7 +840,7 @@ const styles = StyleSheet.create({
   },
   statusText: {
     fontSize: 10,
-    fontWeight: '700',
+    fontFamily: 'Poppins-Bold',
     textTransform: 'capitalize',
   },
   cardDivider: {
@@ -859,13 +867,13 @@ const styles = StyleSheet.create({
   },
   infoCellLabel: {
     fontSize: 10,
-    fontWeight: '700',
+    fontFamily: 'Poppins-Bold',
     color: '#64748B',
     textTransform: 'uppercase',
   },
   infoCellValue: {
     fontSize: 12,
-    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold',
     color: '#0F172A',
   },
 
@@ -896,7 +904,7 @@ const styles = StyleSheet.create({
   logoutButtonText: {
     color: '#FFFFFF',
     fontSize: 12,
-    fontWeight: '700',
+    fontFamily: 'Poppins-Bold',
   },
   logoutButtonTextPressed: {
     color: '#475569',
@@ -912,7 +920,7 @@ const styles = StyleSheet.create({
   },
   loggedOutChipText: {
     fontSize: 11,
-    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold',
     color: '#1E7F43',
   },
 
@@ -928,7 +936,7 @@ const styles = StyleSheet.create({
   },
   emptyText: {
     fontSize: 13,
-    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold',
     color: '#64748B',
   },
 
@@ -944,7 +952,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     elevation: 4,
     shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
   },
@@ -960,10 +968,10 @@ const styles = StyleSheet.create({
   dropdownItemText: {
     fontSize: 13,
     color: '#334155',
-    fontWeight: '500',
+    fontFamily: 'Poppins-Medium',
   },
   dropdownItemTextActive: {
     color: '#6366F1',
-    fontWeight: '700',
+    fontFamily: 'Poppins-Bold',
   },
 });

@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef, useCallback} from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import {
   View,
   StyleSheet,
@@ -15,11 +15,11 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import TeacherHeader from '../../components/TeacherComponent/TeacherHeader';
 import TeacherFooter from '../../components/TeacherComponent/TeacherFooter';
-import {useAuth} from '../../auth/AuthContext';
-import {useNavigation} from '@react-navigation/native';
-import {fetchClassroomByTeacher} from '../../util/Apicall';
+import { useAuth } from '../../auth/AuthContext';
+import { useNavigation } from '@react-navigation/native';
+import { fetchClassroomByTeacher } from '../../util/Apicall';
 
-const {width: screenWidth} = Dimensions.get('window');
+const { width: screenWidth } = Dimensions.get('window');
 
 // ── Helpers ──
 const formatTime = timeStr => {
@@ -32,7 +32,7 @@ const formatTime = timeStr => {
 };
 
 // ── Compact Assignment Card ──
-const AssignmentCard = ({classroom, index, onManagePress}) => {
+const AssignmentCard = ({ classroom, index, onManagePress }) => {
   const scaleAnim = useRef(new Animated.Value(1)).current;
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(20)).current;
@@ -67,9 +67,10 @@ const AssignmentCard = ({classroom, index, onManagePress}) => {
         styles.cardContainer,
         {
           opacity: fadeAnim,
-          transform: [{translateY: slideAnim}, {scale: scaleAnim}],
+          transform: [{ translateY: slideAnim }, { scale: scaleAnim }],
         },
-      ]}>
+      ]}
+    >
       {/* ── Header Row ── */}
       <View style={styles.cardHeader}>
         <View style={styles.headerLeft}>
@@ -140,7 +141,8 @@ const AssignmentCard = ({classroom, index, onManagePress}) => {
       <TouchableOpacity
         style={styles.manageBtn}
         activeOpacity={0.7}
-        onPress={() => onManagePress(classroom)}>
+        onPress={() => onManagePress(classroom)}
+      >
         <Text style={styles.manageBtnText}>Manage Assignments</Text>
         <Icon name="arrow-forward" size={16} color="#4f46e5" />
       </TouchableOpacity>
@@ -169,7 +171,7 @@ const Assignment = () => {
   });
 
   const dropdownRef = useRef(null);
-  const {userData} = useAuth();
+  const { userData } = useAuth();
   const navigation = useNavigation();
 
   // Dynamic Year List Generation
@@ -312,12 +314,13 @@ const Assignment = () => {
               openDropdown();
               setDropdownOpen(true);
             }
-          }}>
+          }}
+        >
           <Icon
             name="filter-list"
             size={18}
             color="#475569"
-            style={{marginRight: 6}}
+            style={{ marginRight: 6 }}
           />
           <Text style={styles.pickerText}>{selectedYear}</Text>
           <Icon
@@ -337,7 +340,8 @@ const Assignment = () => {
             onPress={() => {
               closeDropdown();
               setDropdownOpen(false);
-            }}>
+            }}
+          >
             <Animated.View
               style={[
                 styles.modalDropdown,
@@ -348,19 +352,22 @@ const Assignment = () => {
                   height: dropdownHeight,
                   opacity: dropdownOpacity,
                 },
-              ]}>
+              ]}
+            >
               <FlatList
                 data={academicYears}
                 keyExtractor={item => item}
-                renderItem={({item}) => (
+                renderItem={({ item }) => (
                   <TouchableOpacity
                     style={styles.dropdownItem}
-                    onPress={() => handleSelectYear(item)}>
+                    onPress={() => handleSelectYear(item)}
+                  >
                     <Text
                       style={[
                         styles.dropdownItemText,
                         item === selectedYear && styles.selectedDropdownText,
-                      ]}>
+                      ]}
+                    >
                       {item}
                     </Text>
                     {item === selectedYear && (
@@ -386,7 +393,8 @@ const Assignment = () => {
           <Text style={styles.errorText}>{error}</Text>
           <TouchableOpacity
             style={styles.retryBtn}
-            onPress={() => loadClassrooms()}>
+            onPress={() => loadClassrooms()}
+          >
             <Text style={styles.retryBtnText}>Retry</Text>
           </TouchableOpacity>
         </View>
@@ -401,7 +409,7 @@ const Assignment = () => {
         <FlatList
           data={filteredClassrooms}
           keyExtractor={item => item.id?.toString()}
-          renderItem={({item, index}) => (
+          renderItem={({ item, index }) => (
             <AssignmentCard
               classroom={item}
               index={index}
@@ -428,7 +436,7 @@ const Assignment = () => {
 
 export default Assignment;
 
-// ── Styles ──
+// ── Styles (Poppins Font Integrated) ──
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -446,14 +454,14 @@ const styles = StyleSheet.create({
   },
   screenTitle: {
     fontSize: 18,
-    fontWeight: '800',
+    fontFamily: 'Poppins-SemiBold',
     color: '#0f172a',
   },
   screenSubtitle: {
     fontSize: 11,
     color: '#64748b',
     marginTop: 2,
-    fontWeight: '500',
+    fontFamily: 'Poppins-Medium',
   },
   countBadge: {
     backgroundColor: '#e0e7ff',
@@ -464,7 +472,7 @@ const styles = StyleSheet.create({
   countText: {
     color: '#4338ca',
     fontSize: 11,
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
   },
   filterBar: {
     paddingHorizontal: 14,
@@ -484,7 +492,7 @@ const styles = StyleSheet.create({
   pickerText: {
     flex: 1,
     fontSize: 12,
-    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold',
     color: '#334155',
   },
   listContent: {
@@ -500,7 +508,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#e2e8f0',
     shadowColor: '#0f172a',
-    shadowOffset: {width: 0, height: 1},
+    shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.04,
     shadowRadius: 3,
     elevation: 2,
@@ -534,7 +542,7 @@ const styles = StyleSheet.create({
   },
   batchName: {
     fontSize: 14,
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
     color: '#0f172a',
     maxWidth: '70%',
   },
@@ -546,7 +554,7 @@ const styles = StyleSheet.create({
   },
   yearBadgeText: {
     fontSize: 10,
-    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold',
     color: '#475569',
   },
   compactGrid: {
@@ -562,13 +570,13 @@ const styles = StyleSheet.create({
   },
   gridLabel: {
     fontSize: 9,
-    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold',
     color: '#94a3b8',
     textTransform: 'uppercase',
   },
   gridValue: {
     fontSize: 11,
-    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold',
     color: '#334155',
     marginTop: 1,
   },
@@ -587,7 +595,7 @@ const styles = StyleSheet.create({
   },
   subjectChipText: {
     fontSize: 9,
-    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold',
     color: '#4338ca',
   },
   moreChip: {
@@ -595,14 +603,14 @@ const styles = StyleSheet.create({
   },
   moreChipText: {
     fontSize: 9,
-    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold',
     color: '#334155',
   },
   manageBtn: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#ee2e8f0' === '' ? '' : '#f8fafc',
+    backgroundColor: '#f8fafc',
     borderRadius: 8,
     paddingVertical: 7,
     marginTop: 10,
@@ -612,7 +620,7 @@ const styles = StyleSheet.create({
   },
   manageBtnText: {
     fontSize: 11,
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
     color: '#4f46e5',
   },
   modalOverlay: {
@@ -627,7 +635,7 @@ const styles = StyleSheet.create({
     borderColor: '#e2e8f0',
     elevation: 6,
     shadowColor: '#000',
-    shadowOffset: {width: 0, height: 3},
+    shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
   },
@@ -643,11 +651,11 @@ const styles = StyleSheet.create({
   dropdownItemText: {
     fontSize: 12,
     color: '#334155',
-    fontWeight: '500',
+    fontFamily: 'Poppins-Medium',
   },
   selectedDropdownText: {
     color: '#4f46e5',
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
   },
   centeredState: {
     flex: 1,
@@ -659,17 +667,19 @@ const styles = StyleSheet.create({
   loadingText: {
     fontSize: 13,
     color: '#64748b',
-    fontWeight: '500',
+    fontFamily: 'Poppins-Medium',
   },
   emptyText: {
     fontSize: 13,
     color: '#94a3b8',
     textAlign: 'center',
+    fontFamily: 'Poppins-Medium',
   },
   errorText: {
     fontSize: 13,
     color: '#ef4444',
     textAlign: 'center',
+    fontFamily: 'Poppins-Medium',
   },
   retryBtn: {
     backgroundColor: '#4f46e5',
@@ -679,7 +689,7 @@ const styles = StyleSheet.create({
   },
   retryBtnText: {
     color: '#ffffff',
-    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold',
     fontSize: 12,
   },
 });

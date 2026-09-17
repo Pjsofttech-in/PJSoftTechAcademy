@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -7,8 +7,8 @@ import {
   Dimensions,
   Keyboard,
 } from 'react-native';
-import {useNavigation, useRoute} from '@react-navigation/native';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@react-native-vector-icons/ionicons';
 
 const TeacherFooter = () => {
@@ -23,7 +23,7 @@ const TeacherFooter = () => {
   const currentRoute = route.name;
 
   useEffect(() => {
-    const onChange = ({window}) => {
+    const onChange = ({ window }) => {
       setScreenWidth(window.width);
     };
 
@@ -85,7 +85,8 @@ const TeacherFooter = () => {
         key={index}
         style={styles.tabButton}
         onPress={tab.onPress}
-        activeOpacity={0.7}>
+        activeOpacity={0.7}
+      >
         {/* Icon */}
         <Ionicons
           name={isActive ? tab.activeIcon : tab.icon}
@@ -105,8 +106,9 @@ const TeacherFooter = () => {
     <View
       style={[
         styles.container,
-        {width: screenWidth, paddingBottom: insets.bottom},
-      ]}>
+        { width: screenWidth, paddingBottom: insets.bottom },
+      ]}
+    >
       {/* Top border accent */}
       <View style={styles.topBorder} />
       <View style={styles.footer}>
@@ -122,7 +124,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#FFFFFF',
     shadowColor: '#1A2332',
-    shadowOffset: {width: 0, height: -2},
+    shadowOffset: { width: 0, height: -2 },
     shadowOpacity: 0.05,
     shadowRadius: 8,
     elevation: 8,
@@ -143,7 +145,7 @@ const styles = StyleSheet.create({
   },
   tabButton: {
     flex: 1,
-    justifycontent: 'center',
+    justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: 8,
     paddingHorizontal: 4,
@@ -151,14 +153,14 @@ const styles = StyleSheet.create({
   tabLabel: {
     color: '#6B7A8D',
     fontSize: 10,
-    fontWeight: '500',
+    fontFamily: 'Poppins-Medium',
     textAlign: 'center',
     marginTop: 3,
     letterSpacing: 0.1,
   },
   activeTabLabel: {
     color: '#6366f1',
-    fontWeight: '700',
+    fontFamily: 'Poppins-Bold',
   },
 });
 

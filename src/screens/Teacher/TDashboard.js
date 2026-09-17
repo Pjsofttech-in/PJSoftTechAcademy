@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   SafeAreaView,
@@ -10,8 +10,8 @@ import {
   Image,
 } from 'react-native';
 import { Ionicons } from '@react-native-vector-icons/ionicons';
-import {useAuth} from '../../auth/AuthContext';
-import {useNavigation} from '@react-navigation/native';
+import { useAuth } from '../../auth/AuthContext';
+import { useNavigation } from '@react-navigation/native';
 import TeacherHeader from '../../components/TeacherComponent/TeacherHeader';
 import TeacherFooter from '../../components/TeacherComponent/TeacherFooter';
 import {
@@ -25,19 +25,19 @@ const BRAND_BG_LIGHT = '#F0F5FE';
 const BRAND_BORDER = '#D6E4FF';
 
 const QUICK_ACTIONS = [
-  {id: 'Attendance', label: 'Attendance', icon: 'calendar-outline'},
-  {id: 'Results', label: 'Results', icon: 'stats-chart-outline'},
+  { id: 'Attendance', label: 'Attendance', icon: 'calendar-outline' },
+  { id: 'Results', label: 'Results', icon: 'stats-chart-outline' },
   {
     id: 'DetailedResult',
     label: 'Detailed Result',
     icon: 'document-text-outline',
   },
-  {id: 'Classroom', label: 'Classroom', icon: 'people-outline'},
+  { id: 'Classroom', label: 'Classroom', icon: 'people-outline' },
 ];
 
 const TDashboard = () => {
   const navigation = useNavigation();
-  const {userData} = useAuth();
+  const { userData } = useAuth();
 
   const [loading, setLoading] = useState(true);
   const [classrooms, setClassrooms] = useState([]);
@@ -80,13 +80,13 @@ const TDashboard = () => {
         screenName === 'DetailedResult'
           ? {
               screen: 'Results',
-              params: {initialTab: 'DetailedResult', ...params},
+              params: { initialTab: 'DetailedResult', ...params },
             }
-          : {screen: screenName, params};
+          : { screen: screenName, params };
 
       const parent = navigation.getParent?.();
       if (parent?.dispatch) {
-        const {CommonActions} = require('@react-navigation/native');
+        const { CommonActions } = require('@react-navigation/native');
         parent.dispatch(
           CommonActions.navigate({
             name: 'TeacherDashboard',
@@ -128,14 +128,15 @@ const TDashboard = () => {
             colors={[BRAND_COLOR]}
             tintColor={BRAND_COLOR}
           />
-        }>
+        }
+      >
         {/* ── Compact Profile Header Card ──────────────────────────────── */}
         <View style={styles.profileCard}>
           <View style={styles.profileHeader}>
             <View style={styles.profileLeft}>
               {instituteInfo?.instituteImage ? (
                 <Image
-                  source={{uri: instituteInfo.instituteImage}}
+                  source={{ uri: instituteInfo.instituteImage }}
                   style={styles.instituteLogo}
                   resizeMode="contain"
                 />
@@ -203,7 +204,8 @@ const TDashboard = () => {
               key={action.id}
               style={styles.quickCard}
               activeOpacity={0.7}
-              onPress={() => navigateTo(action.id)}>
+              onPress={() => navigateTo(action.id)}
+            >
               <View style={styles.quickIconWrapper}>
                 <Ionicons name={action.icon} size={18} color={BRAND_COLOR} />
               </View>
@@ -228,7 +230,8 @@ const TDashboard = () => {
               key={classroom.id}
               style={styles.batchCard}
               activeOpacity={0.7}
-              onPress={() => navigateTo('Classroom', {classId: classroom.id})}>
+              onPress={() => navigateTo('Classroom', { classId: classroom.id })}
+            >
               <View style={styles.batchTop}>
                 <View style={styles.batchTitleRow}>
                   <Ionicons
@@ -344,17 +347,17 @@ const styles = StyleSheet.create({
   instituteLogoLetter: {
     color: '#FFFFFF',
     fontSize: 16,
-    fontFamily: 'DMSans-Bold',
+    fontFamily: 'Poppins-SemiBold',
   },
   greetingText: {
     fontSize: 11,
     color: '#64748B',
-    fontFamily: 'DMSans-Regular',
+    fontFamily: 'Poppins-Regular',
   },
   teacherName: {
     fontSize: 15,
     color: '#0F172A',
-    fontFamily: 'DMSans-Bold',
+    fontFamily: 'Poppins-SemiBold',
     letterSpacing: -0.2,
   },
   avatarWrapper: {
@@ -373,7 +376,7 @@ const styles = StyleSheet.create({
   avatarLetter: {
     color: BRAND_COLOR,
     fontSize: 15,
-    fontFamily: 'DMSans-Bold',
+    fontFamily: 'Poppins-SemiBold',
   },
   metaRow: {
     flexDirection: 'row',
@@ -386,7 +389,7 @@ const styles = StyleSheet.create({
   metaText: {
     fontSize: 11,
     color: '#64748B',
-    fontFamily: 'DMSans-Medium',
+    fontFamily: 'Poppins-Medium',
     flex: 1,
   },
 
@@ -412,13 +415,13 @@ const styles = StyleSheet.create({
   },
   statValue: {
     fontSize: 16,
-    fontFamily: 'DMSans-Bold',
+    fontFamily: 'Poppins-SemiBold',
     color: '#0F172A',
   },
   statLabel: {
     fontSize: 10,
     color: '#64748B',
-    fontFamily: 'DMSans-Medium',
+    fontFamily: 'Poppins-Medium',
     marginTop: 2,
   },
   statusBadge: {
@@ -439,13 +442,13 @@ const styles = StyleSheet.create({
   statusText: {
     fontSize: 10,
     color: '#15803D',
-    fontFamily: 'DMSans-Bold',
+    fontFamily: 'Poppins-SemiBold',
   },
 
   /* Section Title */
   sectionTitle: {
     fontSize: 10,
-    fontFamily: 'DMSans-Bold',
+    fontFamily: 'Poppins-SemiBold',
     color: '#64748B',
     letterSpacing: 0.8,
     marginBottom: 6,
@@ -467,7 +470,7 @@ const styles = StyleSheet.create({
   },
   badgeCountText: {
     fontSize: 9,
-    fontFamily: 'DMSans-Bold',
+    fontFamily: 'Poppins-SemiBold',
     color: BRAND_COLOR,
   },
 
@@ -501,7 +504,7 @@ const styles = StyleSheet.create({
   quickLabel: {
     flex: 1,
     fontSize: 12,
-    fontFamily: 'DMSans-Medium',
+    fontFamily: 'Poppins-Medium',
     color: '#1E293B',
   },
 
@@ -529,7 +532,7 @@ const styles = StyleSheet.create({
   },
   batchName: {
     fontSize: 13,
-    fontFamily: 'DMSans-Bold',
+    fontFamily: 'Poppins-SemiBold',
     color: '#0F172A',
     flex: 1,
   },
@@ -551,14 +554,14 @@ const styles = StyleSheet.create({
   },
   infoLabel: {
     fontSize: 9,
-    fontFamily: 'DMSans-Bold',
+    fontFamily: 'Poppins-SemiBold',
     color: '#94A3B8',
     letterSpacing: 0.5,
     marginBottom: 2,
   },
   infoVal: {
     fontSize: 11,
-    fontFamily: 'DMSans-Medium',
+    fontFamily: 'Poppins-Medium',
     color: '#334155',
   },
   yearTag: {
@@ -571,7 +574,7 @@ const styles = StyleSheet.create({
   },
   yearText: {
     fontSize: 10,
-    fontFamily: 'DMSans-Bold',
+    fontFamily: 'Poppins-SemiBold',
     color: BRAND_COLOR,
   },
 
@@ -588,13 +591,13 @@ const styles = StyleSheet.create({
   },
   emptyTitle: {
     fontSize: 12,
-    fontFamily: 'DMSans-Bold',
+    fontFamily: 'Poppins-SemiBold',
     color: '#334155',
     marginTop: 6,
   },
   emptySub: {
     fontSize: 11,
-    fontFamily: 'DMSans-Regular',
+    fontFamily: 'Poppins-Regular',
     color: '#94A3B8',
     textAlign: 'center',
     marginTop: 2,

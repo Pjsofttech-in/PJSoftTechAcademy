@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
@@ -10,7 +10,7 @@ import {
 import TeacherHeader from '../../../components/TeacherComponent/TeacherHeader';
 import TeacherFooter from '../../../components/TeacherComponent/TeacherFooter';
 import ResultNavComponent from '../../../components/TeacherComponent/ResultNavComponent';
-import {useRoute} from '@react-navigation/native';
+import { useRoute } from '@react-navigation/native';
 import PieChartComponent from '../../../components/PieChartComponent';
 import Result from './Result';
 import DetailedResult from './DetailedResult';
@@ -25,9 +25,9 @@ const P = {
 
 // ── Tab Config ────────────────────────────────────────────────────────────────
 const TABS = [
-  {id: 'Analytics', label: 'Analytics'},
-  {id: 'Result', label: 'Result'},
-  {id: 'DetailedResult', label: 'Detailed'},
+  { id: 'Analytics', label: 'Analytics' },
+  { id: 'Result', label: 'Result' },
+  { id: 'DetailedResult', label: 'Detailed' },
 ];
 
 /* ── Main Component ──────────────────────────────────────────────────────────── */
@@ -85,7 +85,8 @@ const ResultContainer = () => {
           <ScrollView
             style={styles.scrollContent}
             contentContainerStyle={styles.scrollContentContainer}
-            showsVerticalScrollIndicator={false}>
+            showsVerticalScrollIndicator={false}
+          >
             <View style={styles.contentContainer}>
               <PieChartComponent />
             </View>
@@ -163,7 +164,7 @@ const styles = StyleSheet.create({
   },
   loadingText: {
     fontSize: 14,
-    fontFamily: 'DMSans-Medium',
+    fontFamily: 'Poppins-Medium',
     color: P.sub,
     marginTop: 12,
   },

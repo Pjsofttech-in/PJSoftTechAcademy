@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useCallback} from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import {
   StyleSheet,
   Text,
@@ -12,9 +12,9 @@ import {
   Image,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {useRoute} from '@react-navigation/native';
-import {useAuth} from '../../auth/AuthContext';
-import {fetchStudentsByClass} from '../../util/Apicall';
+import { useRoute } from '@react-navigation/native';
+import { useAuth } from '../../auth/AuthContext';
+import { fetchStudentsByClass } from '../../util/Apicall';
 
 // ── HELPERS ──
 const fmtDate = d => (d ? d.split('-').reverse().join('/') : '—');
@@ -44,7 +44,7 @@ const avatarColor = (name = '') => {
 };
 
 // ── STUDENT CARD ──
-const StudentCard = ({item, srNo}) => {
+const StudentCard = ({ item, srNo }) => {
   const [expanded, setExpanded] = useState(false);
   const [imgError, setImgError] = useState(false);
 
@@ -85,12 +85,12 @@ const StudentCard = ({item, srNo}) => {
           <View style={styles.avatarWrapper}>
             {imageUri && !imgError ? (
               <Image
-                source={{uri: imageUri}}
+                source={{ uri: imageUri }}
                 style={styles.avatarCircle}
                 onError={() => setImgError(true)}
               />
             ) : (
-              <View style={[styles.avatarCircle, {backgroundColor: color}]}>
+              <View style={[styles.avatarCircle, { backgroundColor: color }]}>
                 <Text style={styles.avatarText}>{getInitials(name)}</Text>
               </View>
             )}
@@ -115,7 +115,7 @@ const StudentCard = ({item, srNo}) => {
                   name="school"
                   size={10}
                   color="#3b82f6"
-                  style={{marginRight: 3}}
+                  style={{ marginRight: 3 }}
                 />
                 <Text style={styles.courseBadgeText} numberOfLines={1}>
                   {course}
@@ -132,7 +132,8 @@ const StudentCard = ({item, srNo}) => {
           <TouchableOpacity
             style={styles.expandIconWrap}
             onPress={() => setExpanded(prev => !prev)}
-            hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}>
+            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+          >
             <View style={styles.expandCircle}>
               <Icon
                 name={expanded ? 'keyboard-arrow-up' : 'keyboard-arrow-down'}
@@ -242,7 +243,7 @@ const StudentCard = ({item, srNo}) => {
               </View>
 
               <View style={styles.detailRow}>
-                <View style={[styles.detailItem, {flex: 1}]}>
+                <View style={[styles.detailItem, { flex: 1 }]}>
                   <Text style={styles.detailLabel}>Subjects</Text>
                   <Text style={styles.detailValue}>{subjectsText}</Text>
                 </View>
@@ -257,7 +258,7 @@ const StudentCard = ({item, srNo}) => {
 
 // ── MAIN SCREEN ──
 const StudentList = () => {
-  const {userData} = useAuth();
+  const { userData } = useAuth();
   const route = useRoute();
 
   const classroom = route.params?.classroom;
@@ -348,7 +349,8 @@ const StudentList = () => {
           <Text style={styles.errorText}>{error}</Text>
           <TouchableOpacity
             style={styles.retryBtn}
-            onPress={() => loadStudents()}>
+            onPress={() => loadStudents()}
+          >
             <Text style={styles.retryBtnText}>Retry</Text>
           </TouchableOpacity>
         </View>
@@ -408,7 +410,7 @@ const StudentList = () => {
           keyExtractor={(item, index) =>
             item.id?.toString() || index.toString()
           }
-          renderItem={({item, index}) => (
+          renderItem={({ item, index }) => (
             <StudentCard item={item} srNo={index + 1} />
           )}
           contentContainerStyle={styles.listContent}
@@ -431,7 +433,7 @@ export default StudentList;
 
 // ── STYLES ──
 const styles = StyleSheet.create({
-  container: {flex: 1, backgroundColor: '#f1f5f9'},
+  container: { flex: 1, backgroundColor: '#f1f5f9' },
   screenHeader: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -442,12 +444,16 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#e2e8f0',
   },
-  screenTitle: {fontSize: 18, fontWeight: '800', color: '#1e293b'},
+  screenTitle: {
+    fontSize: 18,
+    fontFamily: 'Poppins-SemiBold',
+    color: '#1e293b',
+  },
   screenSubtitle: {
     fontSize: 12,
     color: '#64748b',
     marginTop: 2,
-    fontWeight: '500',
+    fontFamily: 'Poppins-Medium',
   },
   countBadge: {
     backgroundColor: '#3b82f6',
@@ -455,7 +461,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 4,
   },
-  countText: {color: '#fff', fontSize: 13, fontWeight: '700'},
+  countText: { color: '#fff', fontSize: 13, fontFamily: 'Poppins-SemiBold' },
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -469,21 +475,27 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#e2e8f0',
   },
-  searchIcon: {marginRight: 8},
-  searchInput: {flex: 1, fontSize: 13, color: '#1e293b', paddingVertical: 0},
-  listContent: {paddingTop: 8, paddingBottom: 20, paddingHorizontal: 12},
-  cardWrapper: {marginBottom: 10},
+  searchIcon: { marginRight: 8 },
+  searchInput: {
+    flex: 1,
+    fontSize: 13,
+    color: '#1e293b',
+    paddingVertical: 0,
+    fontFamily: 'Poppins-Regular',
+  },
+  listContent: { paddingTop: 8, paddingBottom: 20, paddingHorizontal: 12 },
+  cardWrapper: { marginBottom: 10 },
   card: {
     backgroundColor: '#fff',
     borderRadius: 14,
     shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.07,
     shadowRadius: 6,
     elevation: 3,
     overflow: 'hidden',
   },
-  cardExpanded: {shadowOpacity: 0.12, elevation: 5},
+  cardExpanded: { shadowOpacity: 0.12, elevation: 5 },
   cardHeader: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -491,7 +503,7 @@ const styles = StyleSheet.create({
     paddingTop: 12,
     paddingBottom: 10,
   },
-  avatarWrapper: {alignItems: 'center', marginRight: 10},
+  avatarWrapper: { alignItems: 'center', marginRight: 10 },
   avatarCircle: {
     width: 40,
     height: 40,
@@ -499,8 +511,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  avatarText: {color: '#fff', fontSize: 14, fontWeight: '700'},
-  cardHeaderInfo: {flex: 1, marginRight: 4},
+  avatarText: { color: '#fff', fontSize: 14, fontFamily: 'Poppins-SemiBold' },
+  cardHeaderInfo: { flex: 1, marginRight: 4 },
   nameDateRow: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -510,7 +522,7 @@ const styles = StyleSheet.create({
   },
   studentName: {
     fontSize: 15,
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
     color: '#1e293b',
     flexShrink: 1,
   },
@@ -523,7 +535,11 @@ const styles = StyleSheet.create({
     paddingVertical: 2,
     gap: 3,
   },
-  rollPillText: {fontSize: 10, color: '#64748b', fontWeight: '500'},
+  rollPillText: {
+    fontSize: 10,
+    color: '#64748b',
+    fontFamily: 'Poppins-Medium',
+  },
   badgeRow: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -538,15 +554,23 @@ const styles = StyleSheet.create({
     paddingHorizontal: 7,
     paddingVertical: 3,
   },
-  courseBadgeText: {fontSize: 10, color: '#1d4ed8', fontWeight: '600'},
+  courseBadgeText: {
+    fontSize: 10,
+    color: '#1d4ed8',
+    fontFamily: 'Poppins-SemiBold',
+  },
   yearBadge: {
     backgroundColor: '#d1fae5',
     borderRadius: 8,
     paddingHorizontal: 7,
     paddingVertical: 3,
   },
-  yearBadgeText: {fontSize: 10, color: '#065f46', fontWeight: '600'},
-  expandIconWrap: {marginLeft: 'auto'},
+  yearBadgeText: {
+    fontSize: 10,
+    color: '#065f46',
+    fontFamily: 'Poppins-SemiBold',
+  },
+  expandIconWrap: { marginLeft: 'auto' },
   expandCircle: {
     width: 32,
     height: 32,
@@ -562,19 +586,19 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 10,
   },
-  summaryBox: {flex: 1, alignItems: 'center'},
-  summaryDivider: {width: 1, backgroundColor: '#e2e8f0', marginVertical: 2},
+  summaryBox: { flex: 1, alignItems: 'center' },
+  summaryDivider: { width: 1, backgroundColor: '#e2e8f0', marginVertical: 2 },
   summaryLabel: {
     fontSize: 10,
     color: '#94a3b8',
-    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold',
     textTransform: 'uppercase',
     marginBottom: 2,
   },
   summaryValue: {
     fontSize: 12,
     color: '#1e293b',
-    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold',
     textAlign: 'center',
   },
   infoStrip: {
@@ -588,12 +612,16 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     gap: 4,
   },
-  infoStripItem: {flexDirection: 'row', alignItems: 'center'},
-  infoStripLabel: {fontSize: 11, color: '#94a3b8', fontWeight: '500'},
+  infoStripItem: { flexDirection: 'row', alignItems: 'center' },
+  infoStripLabel: {
+    fontSize: 11,
+    color: '#94a3b8',
+    fontFamily: 'Poppins-Medium',
+  },
   infoStripValue: {
     fontSize: 11,
     color: '#475569',
-    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold',
     flexShrink: 1,
   },
   infoStripDot: {
@@ -611,13 +639,13 @@ const styles = StyleSheet.create({
   },
   expandedSectionTitle: {
     fontSize: 11,
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
     color: '#64748b',
     textTransform: 'uppercase',
     marginBottom: 10,
   },
-  detailsGrid: {gap: 2},
-  detailRow: {flexDirection: 'row', marginBottom: 8, gap: 8},
+  detailsGrid: { gap: 2 },
+  detailRow: { flexDirection: 'row', marginBottom: 8, gap: 8 },
   detailItem: {
     flex: 1,
     backgroundColor: '#f8fafc',
@@ -629,11 +657,15 @@ const styles = StyleSheet.create({
   detailLabel: {
     fontSize: 9,
     color: '#94a3b8',
-    fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
     textTransform: 'uppercase',
     marginBottom: 3,
   },
-  detailValue: {fontSize: 12, color: '#1e293b', fontWeight: '600'},
+  detailValue: {
+    fontSize: 12,
+    color: '#1e293b',
+    fontFamily: 'Poppins-SemiBold',
+  },
   centeredState: {
     flex: 1,
     justifyContent: 'center',
@@ -641,18 +673,18 @@ const styles = StyleSheet.create({
     gap: 12,
     paddingHorizontal: 32,
   },
-  loadingText: {fontSize: 14, color: '#64748b', fontWeight: '500'},
+  loadingText: { fontSize: 14, color: '#64748b', fontFamily: 'Poppins-Medium' },
   emptyText: {
     fontSize: 14,
     color: '#94a3b8',
     textAlign: 'center',
-    fontWeight: '400',
+    fontFamily: 'Poppins-Regular',
   },
   errorText: {
     fontSize: 14,
     color: '#ef4444',
     textAlign: 'center',
-    fontWeight: '500',
+    fontFamily: 'Poppins-Medium',
   },
   retryBtn: {
     backgroundColor: '#3b82f6',
@@ -661,5 +693,5 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginTop: 4,
   },
-  retryBtnText: {color: '#fff', fontWeight: '700', fontSize: 13},
+  retryBtnText: { color: '#fff', fontFamily: 'Poppins-SemiBold', fontSize: 13 },
 });

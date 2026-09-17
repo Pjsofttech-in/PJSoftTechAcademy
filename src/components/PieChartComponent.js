@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   View,
   Text,
@@ -8,14 +8,14 @@ import {
   ActivityIndicator,
   Animated,
 } from 'react-native';
-import {PieChart} from 'react-native-gifted-charts';
+import { PieChart } from 'react-native-gifted-charts';
 import ExamPaperTypeSelector from './ExamPaperTypeSelector';
 import {
   fetchPassFailData,
   fetchExamTypes,
   fetchPaperTypes,
 } from '../util/Apicall';
-import {useAuth} from '../auth/AuthContext';
+import { useAuth } from '../auth/AuthContext';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -32,8 +32,8 @@ const P = {
   cardBg: '#FFFFFF',
 };
 
-const PieChartComponent = ({userData: propUserData}) => {
-  const {userData: authUserData} = useAuth();
+const PieChartComponent = ({ userData: propUserData }) => {
+  const { userData: authUserData } = useAuth();
   const userData = propUserData || authUserData;
 
   const [selectedExamType, setSelectedExamType] = useState('ALL');
@@ -72,7 +72,7 @@ const PieChartComponent = ({userData: propUserData}) => {
       let chartData = [];
       if (total === 0) {
         chartData = [
-          {value: 1, actualValue: 0, color: '#E2E8F0', label: 'NO DATA'},
+          { value: 1, actualValue: 0, color: '#E2E8F0', label: 'NO DATA' },
         ];
       } else {
         if (pass > 0) {
@@ -104,7 +104,7 @@ const PieChartComponent = ({userData: propUserData}) => {
     } catch (err) {
       console.error('Error loading pass/fail analytics:', err);
       setPassFailData([
-        {value: 1, actualValue: 0, color: '#E2E8F0', label: 'NO DATA'},
+        { value: 1, actualValue: 0, color: '#E2E8F0', label: 'NO DATA' },
       ]);
     } finally {
       setLoading(false);
@@ -162,7 +162,7 @@ const PieChartComponent = ({userData: propUserData}) => {
             onExamTypeChange={handleExamTypeChange}
             onPaperTypeChange={handlePaperTypeChange}
             userData={userData}
-            customTextStyle={{fontSize: 12}}
+            customTextStyle={{ fontSize: 12, fontFamily: 'Poppins-Regular' }}
           />
         </View>
       </View>
@@ -175,7 +175,7 @@ const PieChartComponent = ({userData: propUserData}) => {
             <Text style={S.loadingText}>Updating analytics...</Text>
           </View>
         ) : (
-          <Animated.View style={[S.contentWrapper, {opacity: fadeAnim}]}>
+          <Animated.View style={[S.contentWrapper, { opacity: fadeAnim }]}>
             {/* ── ERP Quick Metrics Bar ── */}
             <View style={S.metricsBar}>
               <View style={S.metricTile}>
@@ -185,21 +185,21 @@ const PieChartComponent = ({userData: propUserData}) => {
               <View style={S.metricDivider} />
               <View style={S.metricTile}>
                 <Text style={S.metricLabel}>Passed</Text>
-                <Text style={[S.metricValue, {color: P.pass}]}>
+                <Text style={[S.metricValue, { color: P.pass }]}>
                   {passCount}
                 </Text>
               </View>
               <View style={S.metricDivider} />
               <View style={S.metricTile}>
                 <Text style={S.metricLabel}>Failed</Text>
-                <Text style={[S.metricValue, {color: P.fail}]}>
+                <Text style={[S.metricValue, { color: P.fail }]}>
                   {failCount}
                 </Text>
               </View>
               <View style={S.metricDivider} />
               <View style={S.metricTile}>
                 <Text style={S.metricLabel}>Pass Rate</Text>
-                <Text style={[S.metricValue, {color: P.pass}]}>
+                <Text style={[S.metricValue, { color: P.pass }]}>
                   {passPercent}%
                 </Text>
               </View>
@@ -234,9 +234,9 @@ const PieChartComponent = ({userData: propUserData}) => {
               {/* Legend Cards */}
               <View style={S.legendWrapper}>
                 {/* PASS Card */}
-                <View style={[S.legendCard, {borderLeftColor: P.pass}]}>
+                <View style={[S.legendCard, { borderLeftColor: P.pass }]}>
                   <View style={S.legendTop}>
-                    <Text style={[S.legendTitle, {color: P.pass}]}>PASS</Text>
+                    <Text style={[S.legendTitle, { color: P.pass }]}>PASS</Text>
                     <Text style={S.legendPercent}>{passPercent}%</Text>
                   </View>
                   <Text style={S.legendSub}>
@@ -246,16 +246,16 @@ const PieChartComponent = ({userData: propUserData}) => {
                     <View
                       style={[
                         S.trackFill,
-                        {width: `${passPercent}%`, backgroundColor: P.pass},
+                        { width: `${passPercent}%`, backgroundColor: P.pass },
                       ]}
                     />
                   </View>
                 </View>
 
                 {/* FAIL Card */}
-                <View style={[S.legendCard, {borderLeftColor: P.fail}]}>
+                <View style={[S.legendCard, { borderLeftColor: P.fail }]}>
                   <View style={S.legendTop}>
-                    <Text style={[S.legendTitle, {color: P.fail}]}>FAIL</Text>
+                    <Text style={[S.legendTitle, { color: P.fail }]}>FAIL</Text>
                     <Text style={S.legendPercent}>{failPercent}%</Text>
                   </View>
                   <Text style={S.legendSub}>
@@ -265,7 +265,7 @@ const PieChartComponent = ({userData: propUserData}) => {
                     <View
                       style={[
                         S.trackFill,
-                        {width: `${failPercent}%`, backgroundColor: P.fail},
+                        { width: `${failPercent}%`, backgroundColor: P.fail },
                       ]}
                     />
                   </View>
@@ -294,11 +294,11 @@ const S = StyleSheet.create({
     ...Platform.select({
       ios: {
         shadowColor: P.text,
-        shadowOffset: {width: 0, height: 2},
+        shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.05,
         shadowRadius: 6,
       },
-      android: {elevation: 2},
+      android: { elevation: 2 },
     }),
   },
   header: {
@@ -315,7 +315,7 @@ const S = StyleSheet.create({
   },
   title: {
     fontSize: 15,
-    fontFamily: 'DMSans-Bold',
+    fontFamily: 'Poppins-SemiBold',
     color: P.text,
   },
   totalBadge: {
@@ -326,7 +326,7 @@ const S = StyleSheet.create({
   },
   totalBadgeTxt: {
     fontSize: 11,
-    fontFamily: 'DMSans-Medium',
+    fontFamily: 'Poppins-Medium',
     color: P.sub,
   },
   filtersCard: {
@@ -359,13 +359,13 @@ const S = StyleSheet.create({
   },
   metricLabel: {
     fontSize: 10,
-    fontFamily: 'DMSans-Medium',
+    fontFamily: 'Poppins-Medium',
     color: P.sub,
     marginBottom: 2,
   },
   metricValue: {
     fontSize: 15,
-    fontFamily: 'DMSans-Bold',
+    fontFamily: 'Poppins-Bold',
     color: P.text,
   },
   metricDivider: {
@@ -389,13 +389,13 @@ const S = StyleSheet.create({
   },
   centerVal: {
     fontSize: 20,
-    fontFamily: 'DMSans-Bold',
+    fontFamily: 'Poppins-Bold',
     color: P.text,
     lineHeight: 22,
   },
   centerSub: {
     fontSize: 9,
-    fontFamily: 'DMSans-Medium',
+    fontFamily: 'Poppins-Medium',
     color: P.sub,
   },
   legendWrapper: {
@@ -419,17 +419,17 @@ const S = StyleSheet.create({
   },
   legendTitle: {
     fontSize: 11,
-    fontFamily: 'DMSans-Bold',
+    fontFamily: 'Poppins-Bold',
     letterSpacing: 0.3,
   },
   legendPercent: {
     fontSize: 11,
-    fontFamily: 'DMSans-Bold',
+    fontFamily: 'Poppins-Bold',
     color: P.text,
   },
   legendSub: {
     fontSize: 11,
-    fontFamily: 'DMSans-Regular',
+    fontFamily: 'Poppins-Regular',
     color: P.sub,
     marginBottom: 6,
   },
@@ -450,7 +450,7 @@ const S = StyleSheet.create({
   },
   loadingText: {
     fontSize: 13,
-    fontFamily: 'DMSans-Medium',
+    fontFamily: 'Poppins-Medium',
     color: P.sub,
     marginTop: 10,
   },

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -10,16 +10,16 @@ import {
   Alert,
 } from 'react-native';
 import { Ionicons } from '@react-native-vector-icons/ionicons';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {fetchClassroomByTeacher} from '../../../util/Apicall';
-import {useAuth} from '../../../auth/AuthContext';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { fetchClassroomByTeacher } from '../../../util/Apicall';
+import { useAuth } from '../../../auth/AuthContext';
 
-const TeacherProfile = ({navigation}) => {
+const TeacherProfile = ({ navigation }) => {
   const insets = useSafeAreaInsets();
   const [teacher, setTeacher] = useState(null);
   const [classrooms, setClassrooms] = useState([]);
   const [loading, setLoading] = useState(true);
-  const {userData} = useAuth();
+  const { userData } = useAuth();
 
   useEffect(() => {
     const loadTeacherData = async () => {
@@ -59,10 +59,11 @@ const TeacherProfile = ({navigation}) => {
   if (loading) {
     return (
       <View style={styles.container}>
-        <View style={[styles.header, {paddingTop: insets.top + 10}]}>
+        <View style={[styles.header, { paddingTop: insets.top + 10 }]}>
           <TouchableOpacity
             onPress={() => navigation.goBack()}
-            style={styles.backBtn}>
+            style={styles.backBtn}
+          >
             <Ionicons name="arrow-back" size={22} color="#1e293b" />
           </TouchableOpacity>
           <Text style={styles.headerTitle}>My Profile</Text>
@@ -79,10 +80,11 @@ const TeacherProfile = ({navigation}) => {
   if (!teacher) {
     return (
       <View style={styles.container}>
-        <View style={[styles.header, {paddingTop: insets.top + 10}]}>
+        <View style={[styles.header, { paddingTop: insets.top + 10 }]}>
           <TouchableOpacity
             onPress={() => navigation.goBack()}
-            style={styles.backBtn}>
+            style={styles.backBtn}
+          >
             <Ionicons name="arrow-back" size={22} color="#1e293b" />
           </TouchableOpacity>
           <Text style={styles.headerTitle}>My Profile</Text>
@@ -104,10 +106,11 @@ const TeacherProfile = ({navigation}) => {
   return (
     <View style={styles.container}>
       {/* Dynamic Top Padding Header for Edge-to-Edge */}
-      <View style={[styles.header, {paddingTop: insets.top + 10}]}>
+      <View style={[styles.header, { paddingTop: insets.top + 10 }]}>
         <TouchableOpacity
           onPress={() => navigation.goBack()}
-          style={styles.backBtn}>
+          style={styles.backBtn}
+        >
           <Ionicons name="arrow-back" size={22} color="#1e293b" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>My Profile</Text>
@@ -116,9 +119,10 @@ const TeacherProfile = ({navigation}) => {
       <ScrollView
         contentContainerStyle={[
           styles.scrollContent,
-          {paddingBottom: insets.bottom + 24},
+          { paddingBottom: insets.bottom + 24 },
         ]}
-        showsVerticalScrollIndicator={false}>
+        showsVerticalScrollIndicator={false}
+      >
         {/* Compact Hero Card */}
         <View style={styles.compactHeroCard}>
           <View style={styles.heroRow}>
@@ -145,7 +149,8 @@ const TeacherProfile = ({navigation}) => {
                 </Text>
                 <TouchableOpacity
                   onPress={() => copyToClipboard(teacher.id, 'Teacher ID')}
-                  style={styles.copyIconBtn}>
+                  style={styles.copyIconBtn}
+                >
                   <Ionicons name="copy-outline" size={14} color="#6366F1" />
                 </TouchableOpacity>
               </View>
@@ -344,7 +349,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: 18,
-    fontWeight: '700',
+    fontFamily: 'Poppins-Bold',
     color: '#0f172a',
   },
   scrollContent: {
@@ -358,11 +363,13 @@ const styles = StyleSheet.create({
   loadingText: {
     marginTop: 10,
     fontSize: 13,
+    fontFamily: 'Poppins-Medium',
     color: '#64748b',
   },
   errorText: {
     marginTop: 10,
     fontSize: 14,
+    fontFamily: 'Poppins-Medium',
     color: '#ef4444',
   },
 
@@ -374,7 +381,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     elevation: 2,
     shadowColor: '#000',
-    shadowOffset: {width: 0, height: 1},
+    shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.05,
     shadowRadius: 4,
   },
@@ -397,7 +404,7 @@ const styles = StyleSheet.create({
   avatarInitials: {
     color: '#ffffff',
     fontSize: 22,
-    fontWeight: '700',
+    fontFamily: 'Poppins-Bold',
   },
   activeDot: {
     position: 'absolute',
@@ -415,7 +422,7 @@ const styles = StyleSheet.create({
   },
   teacherName: {
     fontSize: 16,
-    fontWeight: '700',
+    fontFamily: 'Poppins-Bold',
     color: '#0f172a',
   },
   idRow: {
@@ -427,11 +434,11 @@ const styles = StyleSheet.create({
   idSubText: {
     fontSize: 12,
     color: '#64748b',
-    fontWeight: '500',
+    fontFamily: 'Poppins-Medium',
   },
   idValue: {
     color: '#1e293b',
-    fontWeight: '700',
+    fontFamily: 'Poppins-Bold',
   },
   copyIconBtn: {
     marginLeft: 6,
@@ -450,7 +457,7 @@ const styles = StyleSheet.create({
   tagPillText: {
     fontSize: 10,
     color: '#6366F1',
-    fontWeight: '700',
+    fontFamily: 'Poppins-Bold',
   },
   branchPill: {
     backgroundColor: '#e0f2fe',
@@ -458,7 +465,7 @@ const styles = StyleSheet.create({
   branchPillText: {
     fontSize: 10,
     color: '#0369a1',
-    fontWeight: '700',
+    fontFamily: 'Poppins-Bold',
   },
 
   /* Metric Grid */
@@ -479,17 +486,18 @@ const styles = StyleSheet.create({
   },
   gridTitle: {
     fontSize: 11,
-    fontWeight: '700',
+    fontFamily: 'Poppins-Bold',
     color: '#64748b',
     textTransform: 'uppercase',
   },
   metricHighlight: {
     fontSize: 18,
-    fontWeight: '800',
+    fontFamily: 'Poppins-Bold',
     color: '#6366F1',
   },
   metricSubText: {
     fontSize: 10,
+    fontFamily: 'Poppins-Regular',
     color: '#64748b',
     marginTop: 2,
   },
@@ -502,13 +510,13 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     elevation: 1,
     shadowColor: '#000',
-    shadowOffset: {width: 0, height: 1},
+    shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.04,
     shadowRadius: 3,
   },
   sectionHeaderTitle: {
     fontSize: 12,
-    fontWeight: '700',
+    fontFamily: 'Poppins-Bold',
     color: '#64748b',
     textTransform: 'uppercase',
     letterSpacing: 0.5,
@@ -524,12 +532,13 @@ const styles = StyleSheet.create({
   },
   infoLabel: {
     fontSize: 12,
+    fontFamily: 'Poppins-Regular',
     color: '#64748b',
     width: 90,
   },
   infoValue: {
     fontSize: 12,
-    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold',
     color: '#0f172a',
     flex: 1,
   },
@@ -551,7 +560,7 @@ const styles = StyleSheet.create({
   },
   batchName: {
     fontSize: 14,
-    fontWeight: '700',
+    fontFamily: 'Poppins-Bold',
     color: '#0f172a',
   },
   yearBadge: {
@@ -563,7 +572,7 @@ const styles = StyleSheet.create({
   yearBadgeText: {
     fontSize: 10,
     color: '#475569',
-    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold',
   },
   subjectContainer: {
     flexDirection: 'row',
@@ -572,6 +581,7 @@ const styles = StyleSheet.create({
   },
   subjectLabel: {
     fontSize: 12,
+    fontFamily: 'Poppins-Regular',
     color: '#64748b',
     width: 90,
   },
@@ -590,7 +600,7 @@ const styles = StyleSheet.create({
   miniChipText: {
     fontSize: 10,
     color: '#4338ca',
-    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold',
   },
 });
 
