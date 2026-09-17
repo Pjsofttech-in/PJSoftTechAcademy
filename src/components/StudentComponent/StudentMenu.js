@@ -1,4 +1,4 @@
-import React, {useRef, useState, useCallback} from 'react';
+import React, { useRef, useState, useCallback } from 'react';
 import {
   View,
   TouchableOpacity,
@@ -12,26 +12,26 @@ import {
   Image,
 } from 'react-native';
 
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Feather } from '@react-native-vector-icons/feather';
 import { MaterialIcons } from '@react-native-vector-icons/material-icons';
-import {useNavigation, useNavigationState} from '@react-navigation/native';
-import {useAuth} from '../../auth/AuthContext';
+import { useNavigation, useNavigationState } from '@react-navigation/native';
+import { useAuth } from '../../auth/AuthContext';
 import companyLogo from '../../assets/companyLogo.jpg';
 
 // ─────────────────────────────────────────────
-const {width: SCREEN_WIDTH} = Dimensions.get('window');
+const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const MENU_WIDTH = Math.min(SCREEN_WIDTH * 0.72, 290);
 
 // Spring config — same as TeacherMenu
-const SPRING_OPEN = {tension: 180, friction: 22, useNativeDriver: true};
-const SPRING_CLOSE = {tension: 240, friction: 26, useNativeDriver: true};
+const SPRING_OPEN = { tension: 180, friction: 22, useNativeDriver: true };
+const SPRING_CLOSE = { tension: 240, friction: 26, useNativeDriver: true };
 // ─────────────────────────────────────────────
 
 const StudentMenu = () => {
   const navigation = useNavigation();
-  const {logout} = useAuth();
+  const { logout } = useAuth();
   const [visible, setVisible] = useState(false);
 
   // translateX:  0 = fully open,  -MENU_WIDTH = fully closed
@@ -101,7 +101,7 @@ const StudentMenu = () => {
       Animated.spring(translateX, {
         toValue: -MENU_WIDTH,
         ...SPRING_CLOSE,
-      }).start(({finished}) => {
+      }).start(({ finished }) => {
         if (finished) {
           setVisible(false);
           translateX.setValue(-MENU_WIDTH);
@@ -120,7 +120,7 @@ const StudentMenu = () => {
           await logout();
           navigation.getParent?.()?.reset?.({
             index: 0,
-            routes: [{name: 'Role'}],
+            routes: [{ name: 'Role' }],
           });
         } catch (error) {
           console.error('Logout failed:', error);
@@ -149,10 +149,12 @@ const StudentMenu = () => {
         key={index}
         style={[styles.option, isActive && styles.activeOption]}
         onPress={() => handleOptionPress(option.value)}
-        activeOpacity={0.7}>
+        activeOpacity={0.7}
+      >
         {/* Icon badge */}
         <View
-          style={[styles.optionIconBadge, isActive && styles.activeIconBadge]}>
+          style={[styles.optionIconBadge, isActive && styles.activeIconBadge]}
+        >
           <IconComponent
             name={option.icon}
             size={16}
@@ -163,7 +165,8 @@ const StudentMenu = () => {
         {/* Labels */}
         <View style={styles.optionLabels}>
           <Text
-            style={[styles.optionText, isActive && styles.activeOptionText]}>
+            style={[styles.optionText, isActive && styles.activeOptionText]}
+          >
             {option.label}
           </Text>
           {option.description ? (
@@ -187,10 +190,11 @@ const StudentMenu = () => {
       {/* Hamburger trigger */}
       <Pressable
         onPress={springOpen}
-        style={({pressed}) => [
+        style={({ pressed }) => [
           styles.menuButton,
           pressed && styles.menuButtonPressed,
-        ]}>
+        ]}
+      >
         <Feather name="menu" size={22} color="#5b5b5b" />
       </Pressable>
 
@@ -201,11 +205,12 @@ const StudentMenu = () => {
           animationType="none"
           visible={visible}
           onRequestClose={() => springClose()}
-          statusBarTranslucent>
+          statusBarTranslucent
+        >
           <View style={styles.root}>
             {/* Dimmed overlay */}
             <Animated.View
-              style={[styles.overlay, {opacity: overlayOpacity}]}
+              style={[styles.overlay, { opacity: overlayOpacity }]}
               pointerEvents="none"
             />
 
@@ -218,7 +223,8 @@ const StudentMenu = () => {
 
             {/* Drawer */}
             <Animated.View
-              style={[styles.menuContainer, {transform: [{translateX}]}]}>
+              style={[styles.menuContainer, { transform: [{ translateX }] }]}
+            >
               <SafeAreaView style={styles.safeArea}>
                 {/* Header */}
                 <View style={styles.drawerHeader}>
@@ -230,7 +236,8 @@ const StudentMenu = () => {
                   <TouchableOpacity
                     onPress={() => springClose()}
                     style={styles.closeBtn}
-                    activeOpacity={0.7}>
+                    activeOpacity={0.7}
+                  >
                     <View style={styles.closeBtnInner}>
                       <Feather name="x" size={16} color="#6B7A8D" />
                     </View>
@@ -257,7 +264,8 @@ const StudentMenu = () => {
                 <ScrollView
                   style={styles.menuOptions}
                   showsVerticalScrollIndicator={false}
-                  bounces={false}>
+                  bounces={false}
+                >
                   {menuOptions.map(renderMenuItem)}
                 </ScrollView>
 
@@ -267,7 +275,8 @@ const StudentMenu = () => {
                   <TouchableOpacity
                     style={styles.logoutOption}
                     onPress={() => handleOptionPress('Logout')}
-                    activeOpacity={0.7}>
+                    activeOpacity={0.7}
+                  >
                     <View style={styles.logoutIconBadge}>
                       <Feather name="log-out" size={16} color="#D93025" />
                     </View>
@@ -301,7 +310,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#6366f1',
     elevation: 24,
     shadowColor: '#1A2332',
-    shadowOffset: {width: 4, height: 0},
+    shadowOffset: { width: 4, height: 0 },
     shadowOpacity: 0.18,
     shadowRadius: 16,
   },
@@ -363,7 +372,7 @@ const styles = StyleSheet.create({
   },
   appName: {
     fontSize: 13,
-    fontWeight: '700',
+    fontFamily: 'Poppins-Bold',
     color: '#1A2332',
     letterSpacing: -0.2,
   },
@@ -381,7 +390,7 @@ const styles = StyleSheet.create({
   },
   sectionLabel: {
     fontSize: 9,
-    fontFamily: 'DMSans-Medium',
+    fontFamily: 'Poppins-Medium',
     color: '#6366f1',
     letterSpacing: 1,
     paddingHorizontal: 18,
@@ -429,17 +438,17 @@ const styles = StyleSheet.create({
   optionText: {
     fontSize: 12,
     color: '#3D4F62',
-    fontFamily: 'DMSans-Medium',
+    fontFamily: 'Poppins-Medium',
   },
   activeOptionText: {
     color: '#6366f1',
-    fontFamily: 'DMSans-Bold',
+    fontFamily: 'Poppins-Bold',
   },
   optionDescription: {
     fontSize: 10,
     color: '#9AAABB',
     marginTop: 1,
-    fontFamily: 'DMSans-Medium',
+    fontFamily: 'Poppins-Medium',
   },
   activeChevronBadge: {
     width: 20,
@@ -479,7 +488,7 @@ const styles = StyleSheet.create({
   logoutText: {
     fontSize: 12,
     color: '#D93025',
-    fontFamily: 'DMSans-Medium',
+    fontFamily: 'Poppins-Medium',
   },
 
   // Hamburger button

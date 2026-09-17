@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -7,8 +7,8 @@ import {
   Dimensions,
   Keyboard,
 } from 'react-native';
-import {useNavigation, useRoute} from '@react-navigation/native';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@react-native-vector-icons/ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -36,7 +36,7 @@ const StudentFooter = () => {
   }, []);
 
   useEffect(() => {
-    const onChange = ({window}) => setScreenWidth(window.width);
+    const onChange = ({ window }) => setScreenWidth(window.width);
 
     const keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
@@ -63,28 +63,28 @@ const StudentFooter = () => {
       label: 'Home',
       icon: 'home-outline',
       activeIcon: 'home',
-      onPress: () => navigation.navigate('SDashboard', {studentData}),
+      onPress: () => navigation.navigate('SDashboard', { studentData }),
     },
     {
       name: 'Attendance',
       label: 'Attendance',
       icon: 'calendar-outline',
       activeIcon: 'calendar',
-      onPress: () => navigation.navigate('Attendance', {studentData}),
+      onPress: () => navigation.navigate('Attendance', { studentData }),
     },
     {
       name: 'Result',
       label: 'Result',
       icon: 'bar-chart-outline',
       activeIcon: 'bar-chart',
-      onPress: () => navigation.navigate('Result', {studentData}),
+      onPress: () => navigation.navigate('Result', { studentData }),
     },
     {
       name: 'TimeTable',
       label: 'Time Table',
       icon: 'time-outline',
       activeIcon: 'time',
-      onPress: () => navigation.navigate('TimeTable', {studentData}),
+      onPress: () => navigation.navigate('TimeTable', { studentData }),
     },
   ];
 
@@ -96,7 +96,8 @@ const StudentFooter = () => {
         key={index}
         style={styles.tabButton}
         onPress={tab.onPress}
-        activeOpacity={0.7}>
+        activeOpacity={0.7}
+      >
         <Ionicons
           name={isActive ? tab.activeIcon : tab.icon}
           size={20}
@@ -113,8 +114,9 @@ const StudentFooter = () => {
     <View
       style={[
         styles.container,
-        {width: screenWidth, paddingBottom: insets.bottom},
-      ]}>
+        { width: screenWidth, paddingBottom: insets.bottom },
+      ]}
+    >
       <View style={styles.topBorder} />
       <View style={styles.footer}>
         <View style={styles.tabsContainer}>
@@ -129,7 +131,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#FFFFFF',
     shadowColor: '#1A2332',
-    shadowOffset: {width: 0, height: -2},
+    shadowOffset: { width: 0, height: -2 },
     shadowOpacity: 0.05,
     shadowRadius: 8,
     elevation: 8,
@@ -158,14 +160,14 @@ const styles = StyleSheet.create({
   tabLabel: {
     color: '#6B7A8D',
     fontSize: 10,
-    fontWeight: '500',
+    fontFamily: 'Poppins-Medium',
     textAlign: 'center',
     marginTop: 3,
     letterSpacing: 0.1,
   },
   activeTabLabel: {
     color: '#6366f1',
-    fontWeight: '700',
+    fontFamily: 'Poppins-Bold',
   },
 });
 
