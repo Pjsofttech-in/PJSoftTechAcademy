@@ -7,4 +7,7 @@
 # For more details, see
 #   http://developer.android.com/guide/developing/tools/proguard.html
 
-# Add any project specific keep options here:
+# Fix for PDFBox missing JP2Decoder class during R8 minification
+-dontwarn com.gemalto.jp2.**
+-keep class com.gemalto.jp2.** { *; }
+-dontwarn com.tom_roush.pdfbox.filter.JPXFilter
