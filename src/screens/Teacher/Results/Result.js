@@ -413,12 +413,6 @@ const Result = () => {
                 options={list}
                 selected={selected}
                 onSelect={setter}
-                fontFamily="Poppins-Medium"
-                labelStyle={{ fontFamily: 'Poppins-Medium' }}
-                labelTextStyle={{ fontFamily: 'Poppins-Medium' }}
-                textStyle={{ fontFamily: 'Poppins-Regular' }}
-                inputStyle={{ fontFamily: 'Poppins-Regular' }}
-                dropdownTextStyle={{ fontFamily: 'Poppins-Regular' }}
               />
             ))}
 

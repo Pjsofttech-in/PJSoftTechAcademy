@@ -8,7 +8,7 @@ import {
   Modal,
   StyleSheet,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import { ChevronDown } from 'lucide-react-native';
 
 const AnimatedDropdownField = ({
   label,
@@ -23,6 +23,10 @@ const AnimatedDropdownField = ({
   const [dropdownPos, setDropdownPos] = useState({ x: 0, y: 0, width: 0 });
   const [dropdownHeight] = useState(new Animated.Value(0));
   const [dropdownOpacity] = useState(new Animated.Value(0));
+
+  // Animated Value for Icon Rotation
+  const [iconRotateAnim] = useState(new Animated.Value(0));
+
   const ref = useRef(null);
 
   useEffect(() => {
@@ -47,7 +51,6 @@ const AnimatedDropdownField = ({
       const itemHeight = 48;
       const maxItems = 4;
 
-      // Calculate actual items count
       const itemsCount = options.length + (showAllOption ? 1 : 0);
       const calculatedHeight = Math.min(
         itemsCount * itemHeight,
@@ -59,6 +62,7 @@ const AnimatedDropdownField = ({
       dropdownOpacity.setValue(0);
       setIsOpen(true);
 
+      // Animate Icon to Rotate Up (Value: 1)
       Animated.parallel([
         Animated.timing(dropdownHeight, {
           toValue: calculatedHeight,
@@ -70,6 +74,11 @@ const AnimatedDropdownField = ({
           duration: 200,
           useNativeDriver: false,
         }),
+        Animated.timing(iconRotateAnim, {
+          toValue: 1,
+          duration: 200,
+          useNativeDriver: true,
+        }),
       ]).start();
     });
   };
@@ -77,6 +86,7 @@ const AnimatedDropdownField = ({
   const closeDropdown = () => {
     if (!selected) animateLabel(0);
 
+    // Animate Icon back to Down (Value: 0)
     Animated.parallel([
       Animated.timing(dropdownHeight, {
         toValue: 0,
@@ -87,6 +97,11 @@ const AnimatedDropdownField = ({
         toValue: 0,
         duration: 150,
         useNativeDriver: false,
+      }),
+      Animated.timing(iconRotateAnim, {
+        toValue: 0,
+        duration: 200,
+        useNativeDriver: true,
       }),
     ]).start(() => {
       setIsOpen(false);
@@ -109,10 +124,15 @@ const AnimatedDropdownField = ({
     outputRange: [0, 0.5, 1],
   });
 
+  // Interpolate Rotation from 0deg to 180deg
+  const iconSpin = iconRotateAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['0deg', '180deg'],
+  });
+
   return (
     <View style={styles.container}>
       <View style={styles.dropdownWrapper}>
-        {/* Floating Label */}
         <Animated.View
           style={[
             styles.floatingLabel,
@@ -125,7 +145,6 @@ const AnimatedDropdownField = ({
           <Text style={styles.floatingLabelText}>{label}</Text>
         </Animated.View>
 
-        {/* Dropdown Trigger */}
         <Pressable
           ref={ref}
           style={styles.dropdownButton}
@@ -137,11 +156,13 @@ const AnimatedDropdownField = ({
             {selected === 'ALL' ? 'All' : selected || label}
           </Text>
 
-          <Icon name="chevron-down" size={16} color="#6B7280" />
+          {/* 5. Wrap Icon in Animated.View with rotation transform */}
+          <Animated.View style={{ transform: [{ rotate: iconSpin }] }}>
+            <ChevronDown size={18} color="#6B7280" strokeWidth={2} />
+          </Animated.View>
         </Pressable>
       </View>
 
-      {/* Dropdown Modal */}
       {isOpen && (
         <Modal transparent visible onRequestClose={closeDropdown}>
           <Pressable style={styles.modalOverlay} onPressOut={closeDropdown}>
